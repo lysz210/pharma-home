@@ -8,6 +8,6 @@ import android.view.View;
  *
  * interfaccia per la gestione dell'evento aggiungi nuovo
  */
-public interface OnAggiungiConfezione {
-    public void onAggiungiConfezione(View v, Bundle info);
+public interface OnLeftButtonClickHandler {
+    public void onLeftButtonClick(View v, Bundle info);
 }

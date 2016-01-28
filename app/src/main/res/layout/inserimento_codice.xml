@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:fillViewport="true">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margine_input_view"
+            android:paddingRight="@dimen/margine_input_view">
+
+            <ImageButton
+                android:id="@+id/btn_scan_cb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/input_spacing"
+                android:scaleType="fitCenter"
+                android:src="@drawable/barcode_scan" />
+
+            <EditText
+                android:id="@+id/input_cb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/input_spacing"
+                android:hint="@string/input_cb"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/input_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/input_spacing"
+                android:hint="@string/input_nome"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btn_avanti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/input_spacing"
+                android:text="@string/btn_avanti" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

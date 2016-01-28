@@ -46,15 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
             getSupportFragmentManager().beginTransaction().add(R.id.main_container, farmaci).commit();
         }
 
-        ImageButton aggiungi = (ImageButton) findViewById(R.id.btn_left);
-        aggiungi.setImageResource(R.drawable.icon_plus);
-        aggiungi.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                onAggiungiConfezione();
-            }
-        });
+        initMenuSecondarioHandlers();
 
         // codice di test iniziale
 //        super.onCreate(savedInstanceState);
@@ -112,8 +104,25 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
     }
 
-    private void onAggiungiConfezione() {
-        return;
+    private void initMenuSecondarioHandlers(){
+        ((ImageButton)findViewById(R.id.btn_left)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualPage.onLeftButtonClick(v, null);
+            }
+        });
+        ((ImageButton)findViewById(R.id.btn_center)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualPage.onScrollDown(v);
+            }
+        });
+        ((ImageButton)findViewById(R.id.btn_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualPage.onScrollUp(v);
+            }
+        });
     }
 
     @Override

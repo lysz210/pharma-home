@@ -103,7 +103,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     }
 
     @Override
-    public void onAggiungiConfezione(View v, Bundle info) {
+    public void onLeftButtonClick(View v, Bundle info) {
         return;
     }
 
