@@ -6,6 +6,10 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.pharmahome.pharmahome.core.db.FarmacoContract;
+import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+
 import org.json.JSONException;
 
 import java.text.ParseException;
@@ -37,23 +41,33 @@ public class ListaHome extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ItemListaHomeAdapter adapter = null;
+        ListaConfezioni lista = null;
         try {
-            adapter = new ItemListaHomeAdapter(getActivity(), MainActivity.getDBManager().getAllConfezioni());
+            lista = MainActivity.getDBManager().getAllConfezioni();
+            if(lista.size() == 0){
+                String[] mock = new String[] {
+                        "12/08/2016",
+                        "13/08/2016",
+                        "14/08/2016"
+                };
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        ItemListaHomeAdapter adapter = null;
+        adapter = new ItemListaHomeAdapter(getActivity(), lista);
         setListAdapter(adapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //String item = (String) getListAdapter().getItem(position);
+        Confezione item = (Confezione) getListAdapter().getItem(position);
         // Toast.makeText(getActivity(), item + " selected", Toast.LENGTH_LONG).show();
 
-        mCallback.onFarmacoSelected(position);
+        mCallback.onFarmacoSelected(item);
 
     }
 

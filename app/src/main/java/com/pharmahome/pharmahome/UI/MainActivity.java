@@ -3,6 +3,7 @@ package com.pharmahome.pharmahome.UI;
 // TODO attenzione inserire unique su campo aic db
 
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,8 +12,15 @@ import android.widget.ImageButton;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
+import com.pharmahome.pharmahome.core.middleware.Confezione;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener {
+
+    private HashMap<String, Object> data = new HashMap<>();
+
+    public static final String KEY_CONFEZIONE = "confezione";
 
     private static DBController _db = null;
     public static DBController getDBManager(){
@@ -106,7 +114,20 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     @Override
-    public void onFarmacoSelected(int position) {
+    public void onFarmacoSelected(Confezione confezione) {
+        data.put(KEY_CONFEZIONE, confezione);
+        DettaglioFarmaco farmaco = new DettaglioFarmaco();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.main_container, farmaco);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
         return;
     }
+
+    public Confezione getConfezione(){
+        return (Confezione) data.get(KEY_CONFEZIONE);
+    }
+
 }
