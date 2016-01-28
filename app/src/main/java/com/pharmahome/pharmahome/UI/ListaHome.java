@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.pharmahome.pharmahome.core.db.FarmacoContract;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -17,7 +16,7 @@ import java.text.ParseException;
 /**
  * Created by ciao on 24/01/16.
  */
-public class ListaHome extends ListFragment {
+public class ListaHome extends ListFragment implements Pagina {
     OnFarmacoSelectedListener mCallback;
 
     public final static String[] values = new String[] {
@@ -57,9 +56,11 @@ public class ListaHome extends ListFragment {
             e.printStackTrace();
         }
 
+        Activity activity = getActivity();
         ItemListaHomeAdapter adapter = null;
-        adapter = new ItemListaHomeAdapter(getActivity(), lista);
+        adapter = new ItemListaHomeAdapter(activity, lista);
         setListAdapter(adapter);
+        ((PaginatoreSingolo)activity).setActualPage(this);
     }
 
     @Override
@@ -82,4 +83,18 @@ public class ListaHome extends ListFragment {
         }
     }
 
+    @Override
+    public void onAggiungiConfezione(View v, Bundle info) {
+        return;
+    }
+
+    @Override
+    public void onScrollUp(View v) {
+
+    }
+
+    @Override
+    public void onScrollDown(View v) {
+
+    }
 }

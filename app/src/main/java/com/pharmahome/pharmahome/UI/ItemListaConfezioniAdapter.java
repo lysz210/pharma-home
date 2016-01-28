@@ -33,7 +33,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     private final ListaConfezioni values;
     private int i = 0;
     private int[] fascie = {R.drawable.led_buono, R.drawable.led_in_scadenza, R.drawable.led_scaduto};
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     public ItemListaConfezioniAdapter(Context context, ListaConfezioni values) {
         super(context, -1, values);

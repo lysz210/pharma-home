@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class Confezione extends Farmaco {
 
-
+    public static final String KEY_CONFEZIONE = "confezione";
     public static int RANGE = 15;
 
     private Calendar scadenza;

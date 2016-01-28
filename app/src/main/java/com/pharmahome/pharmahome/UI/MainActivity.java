@@ -16,11 +16,14 @@ import com.pharmahome.pharmahome.core.middleware.Confezione;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
+
+    private Pagina actualPage = null;
+    public void setActualPage(Pagina pagina){
+        this.actualPage = pagina;
+    }
 
     private HashMap<String, Object> data = new HashMap<>();
-
-    public static final String KEY_CONFEZIONE = "confezione";
 
     private static DBController _db = null;
     public static DBController getDBManager(){
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         }
 
         ImageButton aggiungi = (ImageButton) findViewById(R.id.btn_left);
-
+        aggiungi.setImageResource(R.drawable.icon_plus);
         aggiungi.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
     @Override
     public void onFarmacoSelected(Confezione confezione) {
-        data.put(KEY_CONFEZIONE, confezione);
+        data.put(Confezione.KEY_CONFEZIONE, confezione);
         DettaglioFarmaco farmaco = new DettaglioFarmaco();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -127,7 +130,10 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     public Confezione getConfezione(){
-        return (Confezione) data.get(KEY_CONFEZIONE);
+        return (Confezione) data.get(Confezione.KEY_CONFEZIONE);
+    }
+    public void removeConfezione(){
+        data.remove(Confezione.KEY_CONFEZIONE);
     }
 
 }

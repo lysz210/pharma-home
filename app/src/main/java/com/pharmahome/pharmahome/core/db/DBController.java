@@ -118,6 +118,21 @@ public class DBController extends SQLiteOpenHelper {
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Confezione.toListaConfezioni(cur);
     }
+    public Confezione getConfezioneById(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String select = FarmacoContract.Farmaco.BASE_SEL + "WHERE " + FarmacoContract.Farmaco._ID + "=?";
+        String[] args = {id};
+        Cursor cur = db.rawQuery(select, args);
+        ListaConfezioni lc = null;
+        try {
+            lc = FarmacoContract.Confezione.toListaConfezioni(cur);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lc != null && lc.size() > 0 ? lc.get(0) : null;
+    }
     public ListaConfezioni ricercaPerAIC(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.BASE_SEL + " WHERE aic = ?";
