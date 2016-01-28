@@ -1,4 +1,4 @@
-package com.pharmahome.core.middleware;
+package com.pharmahome.pharmahome.core.middleware;
 
 import java.util.ArrayList;
 

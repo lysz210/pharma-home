@@ -1,6 +1,6 @@
-package com.pharmahome.core.middleware;
+package com.pharmahome.pharmahome.core.middleware;
 
-import com.pharmahome.core.db.FarmacoContract;
+import com.pharmahome.pharmahome.core.db.FarmacoContract;
 
 import org.json.JSONException;
 import org.json.JSONObject;

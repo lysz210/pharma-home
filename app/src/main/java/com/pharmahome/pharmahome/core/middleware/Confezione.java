@@ -1,6 +1,4 @@
-package com.pharmahome.core.middleware;
-
-import com.pharmahome.core.db.FarmacoContract;
+package com.pharmahome.pharmahome.core.middleware;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

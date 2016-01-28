@@ -1,4 +1,4 @@
-package com.pharmahome.core.db;
+package com.pharmahome.pharmahome.core.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,12 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.util.Log;
 
-import com.pharmahome.core.middleware.Confezione;
-import com.pharmahome.core.middleware.Farmaco;
-import com.pharmahome.core.middleware.ListaConfezioni;
-import com.pharmahome.core.middleware.ListaFarmaci;
-import com.pharmahome.core.util.PharmaIterator;
+import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.Farmaco;
+import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
+import com.pharmahome.pharmahome.core.util.PharmaIterator;
 
 import org.json.JSONException;
 
@@ -109,6 +110,14 @@ public class DBController extends SQLiteOpenHelper {
     }
 
 
+    public ListaConfezioni getAllConfezioni() throws JSONException, ParseException{
+        SQLiteDatabase db = getWritableDatabase();
+        String select = FarmacoContract.Confezione.CONFEZIONI_X_HOME;
+        Log.d("DB INTEROGAZIONE", select);
+        String[] args = null;
+        Cursor cur = db.rawQuery(select, args);
+        return FarmacoContract.Confezione.toListaConfezioni(cur);
+    }
     public ListaConfezioni ricercaPerAIC(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.BASE_SEL + " WHERE aic = ?";

@@ -1,11 +1,11 @@
-package com.pharmahome.core.db;
+package com.pharmahome.pharmahome.core.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import com.pharmahome.core.middleware.ListaConfezioni;
-import com.pharmahome.core.middleware.ListaFarmaci;
+import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,9 +80,9 @@ public class FarmacoContract {
                 "SELECT * FROM " + TABLE_NAME;
                 ;
 
-        public static final ContentValues createRecordValues(com.pharmahome.core.middleware.Farmaco record){
+        public static final ContentValues createRecordValues(com.pharmahome.pharmahome.core.middleware.Farmaco record){
             ContentValues values = new ContentValues();
-            for(String key: com.pharmahome.core.middleware.Farmaco.KEYS){
+            for(String key: com.pharmahome.pharmahome.core.middleware.Farmaco.KEYS){
                 values.put(key, record.get(key));
             }
             return values;
@@ -95,13 +95,13 @@ public class FarmacoContract {
             }
             String[] colNames = cur.getColumnNames();
             JSONObject tmpo = null;
-            com.pharmahome.core.middleware.Farmaco tmpf = null;
+            com.pharmahome.pharmahome.core.middleware.Farmaco tmpf = null;
             do {
                 tmpo = new JSONObject();
                 for(String k: colNames){
                     tmpo.put(k, cur.getString(cur.getColumnIndex(k)));
                 }
-                tmpf = new com.pharmahome.core.middleware.Farmaco(tmpo);
+                tmpf = new com.pharmahome.pharmahome.core.middleware.Farmaco(tmpo);
                 lista.add(tmpf);
             }while(cur.moveToNext());
             return lista;
@@ -144,7 +144,11 @@ public class FarmacoContract {
         public static String BASE_SEL =
                 "SELECT * FROM " + VIEW_NAME;
 
-        public static final ContentValues createRecordValues(com.pharmahome.core.middleware.Confezione record){
+        public static String CONFEZIONI_X_HOME = "SELECT * FROM " + VIEW_NAME + " AS C " +
+                "WHERE C." + COLUMN_NAME_SCADENZA + " = ( SELECT min(" + COLUMN_NAME_SCADENZA + ") FROM " + TABLE_NAME +
+                    " WHERE " + COLUMN_NAME_FARMACO + " = C." + COLUMN_NAME_FARMACO + ")";
+
+        public static final ContentValues createRecordValues(com.pharmahome.pharmahome.core.middleware.Confezione record){
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME_FARMACO, record.getFarmacoId());
             values.put(COLUMN_NAME_SCADENZA, new SimpleDateFormat("yyyy-MM-dd").format(record.getScadenza().getTime()));
@@ -159,15 +163,15 @@ public class FarmacoContract {
             }
             String[] colNames = cur.getColumnNames();
             JSONObject tmpo = null;
-            com.pharmahome.core.middleware.Confezione tmpc = null;
-            com.pharmahome.core.middleware.Farmaco tmpf = null;
+            com.pharmahome.pharmahome.core.middleware.Confezione tmpc = null;
+            com.pharmahome.pharmahome.core.middleware.Farmaco tmpf = null;
             do {
                 tmpo = new JSONObject();
                 for(String k: colNames){
                     tmpo.put(k, cur.getString(cur.getColumnIndex(k)));
                 }
-                tmpf = new com.pharmahome.core.middleware.Farmaco(tmpo);
-                tmpc = new com.pharmahome.core.middleware.Confezione(tmpf, tmpo.getString(COLUMN_NAME_SCADENZA), tmpo.getInt(COLUMN_NAME_NUOVA_CONFEZIONE) == 0 ? false : true, tmpo.getLong(_ID));
+                tmpf = new com.pharmahome.pharmahome.core.middleware.Farmaco(tmpo);
+                tmpc = new com.pharmahome.pharmahome.core.middleware.Confezione(tmpf, tmpo.getString(COLUMN_NAME_SCADENZA), tmpo.getInt(COLUMN_NAME_NUOVA_CONFEZIONE) == 0 ? false : true, tmpo.getLong(_ID));
                 lista.add(tmpc);
             }while(cur.moveToNext());
             return lista;

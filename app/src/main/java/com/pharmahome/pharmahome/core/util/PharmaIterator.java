@@ -1,6 +1,6 @@
-package com.pharmahome.core.util;
+package com.pharmahome.pharmahome.core.util;
 
-import com.pharmahome.core.middleware.Farmaco;
+import com.pharmahome.pharmahome.core.middleware.Farmaco;
 
 import org.json.JSONArray;
 import org.json.JSONException;
