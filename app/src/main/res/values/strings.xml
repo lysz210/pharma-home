@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">PharmaHome</string>
+    <string name="app_name">My Application</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="input_cb">Codice a barre</string>
+    <string name="input_nome">Nome del farmaco</string>
+    <string name="btn_avanti">Avanti</string>
+    <string name="salva_confezione">Salva confezione</string>
+
+
+    <string name="msg_ins_nome_cb">Devi riempire uno dei 2 campi</string>
 </resources>

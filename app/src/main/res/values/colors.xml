@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--
+    colori per il semaforo di segnalazione fascia di appartenenza
+    di un farmaco
+    -->
+    <color name="in_scadenza">#FFFF00</color>
+    <color name="buono">#00FF00</color>
+    <color name="scaduto">#FF0000</color>
+
+    <color name="trasparente">#00000000</color>
 </resources>
