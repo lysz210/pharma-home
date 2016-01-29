@@ -5,12 +5,31 @@ import com.pharmahome.pharmahome.core.db.FarmacoContract;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by ciao on 04/12/15.
  */
 public class Farmaco {
+
+    public class Info {
+        private String voce;
+        public String voce(){
+            return voce;
+        }
+        private String descrizione;
+        public String descrizione(){
+            return descrizione;
+        }
+        public Info(String voce, String descrizione){
+            this.voce = voce;
+            this.descrizione = descrizione;
+        }
+        public boolean isEmpty(){
+            return descrizione == null || descrizione.length() == 0;
+        }
+    }
 
     public static final String[] KEYS = {
             "aic",
@@ -54,6 +73,19 @@ public class Farmaco {
             _farmacoId = f.getInt(FarmacoContract.Farmaco._ID);
         }
         return;
+    }
+
+    public ArrayList<Info> getAsInfoList(){
+        ArrayList<Info> tmp = new ArrayList<>();
+        Info tInfo = null;
+        for(String k: KEYS){
+            if(k == "linkFogliettoIllustrativo")
+                continue;
+            tInfo = new Info(k, get(k));
+            if(!tInfo.isEmpty())
+                tmp.add(tInfo);
+        }
+        return tmp;
     }
 
     public long getFarmacoId(){

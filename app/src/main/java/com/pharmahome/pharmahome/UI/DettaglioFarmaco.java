@@ -3,6 +3,8 @@ package com.pharmahome.pharmahome.UI;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -57,6 +60,19 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         Utility.disableListViewTouch(listView);
         updateListaConfezioni();
         ((PaginatoreSingolo)activity).setActualPage(this);
+
+        ListView infos = (ListView) v.findViewById(R.id.lista_info_farmaco);
+        infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), (((MainActivity)activity).getConfezione().getAsInfoList())));
+        Utility.disableListViewTouch(infos);
+        Utility.updateListConfezioniHeight(infos);
+
+        ((Button)v.findViewById(R.id.link_bugiardino)).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                apriBugiardino(v);
+            }
+        });
         return v;
     }
 
@@ -117,7 +133,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     public void updateArticleView(int position) {
         TextView article = (TextView) getActivity().findViewById(R.id.intestazione_scheda_dettaglio);
-        article.setText(((MainActivity)getActivity()).getConfezione().getNome());
+        article.setText(((MainActivity) getActivity()).getConfezione().getNome());
         mCurrentPosition = position;
     }
 
@@ -166,5 +182,13 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public void onScrollDown(View v) {
 
+    }
+
+    public void apriBugiardino(View v) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        MainActivity activity = (MainActivity)getActivity();
+        String url = activity.getConfezione().getLinkFogliettoIllustrativo();
+        intent.setData(Uri.parse(url));
+        activity.startActivity(intent);
     }
 }

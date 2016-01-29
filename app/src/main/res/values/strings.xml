@@ -9,4 +9,6 @@
 
 
     <string name="msg_ins_nome_cb">Devi riempire uno dei 2 campi</string>
+
+    <string name="ling_bugiarni_btn">Bugiardino AIFA</string>
 </resources>
