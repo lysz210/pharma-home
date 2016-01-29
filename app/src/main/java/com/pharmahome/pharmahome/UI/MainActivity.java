@@ -3,12 +3,14 @@ package com.pharmahome.pharmahome.UI;
 // TODO attenzione inserire unique su campo aic db
 
 
+import android.media.Image;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
@@ -21,6 +23,16 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     private Pagina actualPage = null;
     public void setActualPage(Pagina pagina){
         this.actualPage = pagina;
+    }
+
+    @Override
+    public void visualizzaMessaggio(String msg, int dur) {
+        Toast toast = Toast.makeText(this, msg, dur);
+        toast.show();
+    }
+    @Override
+    public void visualizzaMessaggio(String msg){
+        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
     }
 
     private HashMap<String, Object> data = new HashMap<>();
@@ -105,19 +117,23 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     private void initMenuSecondarioHandlers(){
-        ((ImageButton)findViewById(R.id.btn_left)).setOnClickListener(new View.OnClickListener() {
+        ImageButton leftBtn = ((ImageButton) findViewById(R.id.btn_left));
+        ImageButton centerBtn = ((ImageButton)findViewById(R.id.btn_center));
+        ImageButton rightBtn = ((ImageButton)findViewById(R.id.btn_right));
+        leftBtn.setImageResource(R.drawable.icon_plus);
+        leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onLeftButtonClick(v, null);
             }
         });
-        ((ImageButton)findViewById(R.id.btn_center)).setOnClickListener(new View.OnClickListener() {
+        centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onScrollDown(v);
             }
         });
-        ((ImageButton)findViewById(R.id.btn_right)).setOnClickListener(new View.OnClickListener() {
+        rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onScrollUp(v);

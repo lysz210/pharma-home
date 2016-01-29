@@ -5,4 +5,6 @@ package com.pharmahome.pharmahome.UI;
  */
 public interface PaginatoreSingolo {
     public void setActualPage(Pagina  pagina);
+    public void visualizzaMessaggio(String msg, int dur);
+    public void visualizzaMessaggio(String msg);
 }

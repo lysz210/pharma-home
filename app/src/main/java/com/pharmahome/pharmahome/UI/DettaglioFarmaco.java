@@ -1,12 +1,8 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +82,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     @Override
     public void onDestroyView(){
+        super.onDestroyView();
         ((MainActivity)getActivity()).removeConfezione();
     }
 
@@ -104,7 +101,9 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        return;
+        ((PaginatoreSingolo)getActivity()).visualizzaMessaggio("saluti da DettaglioFarmaco!!!");
+
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -85,7 +86,9 @@ public class ListaHome extends ListFragment implements Pagina {
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        return;
+        ((PaginatoreSingolo)getActivity()).visualizzaMessaggio("saluti da ListaHome!!!");
+        Intent i = new Intent(getActivity(), InsertActivity.class);
+        getActivity().startActivity(i);
     }
 
     @Override

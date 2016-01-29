@@ -101,4 +101,14 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     public void setActualPage(Pagina pagina) {
 
     }
+
+    @Override
+    public void visualizzaMessaggio(String msg, int dur) {
+
+    }
+
+    @Override
+    public void visualizzaMessaggio(String msg) {
+
+    }
 }

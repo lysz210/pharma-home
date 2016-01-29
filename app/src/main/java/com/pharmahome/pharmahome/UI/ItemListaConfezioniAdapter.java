@@ -1,6 +1,5 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,10 +18,7 @@ import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 
 /**
  * Created by ciao on 24/01/16.
