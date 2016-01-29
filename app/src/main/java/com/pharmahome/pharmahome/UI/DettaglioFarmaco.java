@@ -1,21 +1,23 @@
 package com.pharmahome.pharmahome.UI;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
-import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import org.json.JSONException;
@@ -52,6 +54,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         View v = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
 
         listView = (ListView) v.findViewById(R.id.listaConfezioni);
+        Utility.disableListViewTouch(listView);
         updateListaConfezioni();
         ((PaginatoreSingolo)activity).setActualPage(this);
         return v;
@@ -83,8 +86,10 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
             adapter.setNewData(lc);
             listView.invalidateViews();
         }
-
+        Utility.updateListConfezioniHeight(listView);
     }
+
+
 
     @Override
     public void onStart() {

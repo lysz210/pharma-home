@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final ViewGroup viewGroup = parent;
         View rowView = inflater.inflate(R.layout.confezione_item, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.scadenza);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.semaforo);
@@ -56,7 +58,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
         elimina.setOnClickListener(new View.OnClickListener() {
             private int pos = position;
             public void onClick(View v) {
-                elimina(v, pos);
+                elimina(v, pos, viewGroup);
             }
         });
         modifica.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +72,13 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     }
 
 
-    private void elimina(View view, int pos){
+    private void elimina(View view, int pos, ViewGroup viewGroup){
         Toast.makeText(getContext(), "Eliminazione confezione " + pos, Toast.LENGTH_SHORT).show();
         Confezione confezione = (Confezione)getItem(pos);
         MainActivity.getDBManager().eliminaConfezione(confezione);
         remove(confezione);
         notifyDataSetChanged();
+        Utility.updateListConfezioniHeight((ListView) viewGroup);
     }
 
     private void modifica(View view, int pos){
@@ -109,8 +112,8 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     }
 
     public void setNewData(ListaConfezioni lc) {
-        int len = confezioni.size();
-        for(int i=0; i<len; i++){
+        int len;
+        while (getCount() > 0){
             remove(getItem(0));
         }
         notifyDataSetChanged();

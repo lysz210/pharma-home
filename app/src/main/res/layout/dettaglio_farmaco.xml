@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com"
+    android:name=".UI.DettaglioFarmaco"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_gravity="center_horizontal" >
+<LinearLayout
     android:id="@+id/dettaglio_farmaco"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -16,7 +23,8 @@
     <ListView
         android:id="@+id/listaConfezioni"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         />
     <include layout="@layout/farmaco_info" />
 </LinearLayout>
+    </ScrollView>
