@@ -25,8 +25,8 @@ import java.util.GregorianCalendar;
  */
 public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
-    private final Context context;
-    private final ListaConfezioni values;
+    private Context context;
+    private ListaConfezioni confezioni;
     private int i = 0;
     private int[] fascie = {R.drawable.led_buono, R.drawable.led_in_scadenza, R.drawable.led_scaduto};
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -34,7 +34,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     public ItemListaConfezioniAdapter(Context context, ListaConfezioni values) {
         super(context, -1, values);
         this.context = context;
-        this.values = values;
+        this.confezioni = values;
     }
 
     @Override
@@ -104,6 +104,22 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                 oggi.get(GregorianCalendar.MONTH),
                 oggi.get(GregorianCalendar.DATE)
         );
+        d.setTitle("Nuova Confezione");
         d.show();
+    }
+
+    public void setNewData(ListaConfezioni lc) {
+        int len = confezioni.size();
+        for(int i=0; i<len; i++){
+            remove(getItem(0));
+        }
+        notifyDataSetChanged();
+        confezioni = lc;
+        len = lc.size();
+        for(int i=0; i<len; i++){
+            insert(lc.get(i), i);
+        }
+
+
     }
 }

@@ -1,21 +1,27 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import org.json.JSONException;
 
 import java.text.ParseException;
+import java.util.GregorianCalendar;
 
 public class DettaglioFarmaco extends Fragment implements Pagina {
     final static String ARG_POSITION = "position";
@@ -27,6 +33,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     };
 
     ScrollView scroller = null;
+    private ListView listView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +51,15 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
 
-        ListView lv = (ListView) v.findViewById(R.id.listaConfezioni);
+        listView = (ListView) v.findViewById(R.id.listaConfezioni);
+        updateListaConfezioni();
+        ((PaginatoreSingolo)activity).setActualPage(this);
+        return v;
+    }
+
+    private void updateListaConfezioni(){
         ListaConfezioni lc = null;
+        Activity activity = getActivity();
         try {
             lc = MainActivity.getDBManager().ricercaPerAIC(
                     ((MainActivity)activity).getConfezione().getAic()
@@ -56,10 +70,20 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
             e.printStackTrace();
         }
 
-        ItemListaConfezioniAdapter adapter = new ItemListaConfezioniAdapter(getActivity(), lc);
-        lv.setAdapter(adapter);
-        ((PaginatoreSingolo)activity).setActualPage(this);
-        return v;
+        if(lc == null || lc.size()==0){
+            ListaHome farmaci = new ListaHome();
+            ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().add(R.id.main_container, farmaci).commit();
+        }
+
+        ItemListaConfezioniAdapter adapter = (ItemListaConfezioniAdapter) listView.getAdapter();
+        if(adapter == null){
+            adapter = new ItemListaConfezioniAdapter(getContext(), lc);
+            listView.setAdapter(adapter);
+        }else {
+            adapter.setNewData(lc);
+            listView.invalidateViews();
+        }
+
     }
 
     @Override
@@ -103,6 +127,29 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     public void onLeftButtonClick(View v, Bundle info) {
         ((PaginatoreSingolo)getActivity()).visualizzaMessaggio("saluti da DettaglioFarmaco!!!");
 
+        GregorianCalendar oggi = new GregorianCalendar();
+        final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
+        DatePickerDialog d = new DatePickerDialog(
+                getContext(),
+                new DatePickerDialog.OnDateSetListener(){
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                        try {
+                            c.setScadenza(data);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        MainActivity.getDBManager().aggiungiConfezione(c);
+                        updateListaConfezioni();
+                    }
+                },
+                oggi.get(GregorianCalendar.YEAR),
+                oggi.get(GregorianCalendar.MONTH),
+                oggi.get(GregorianCalendar.DATE)
+        );
+        d.show();
 
     }
 
