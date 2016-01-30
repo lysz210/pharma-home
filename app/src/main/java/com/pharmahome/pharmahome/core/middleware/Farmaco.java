@@ -31,6 +31,8 @@ public class Farmaco {
         }
     }
 
+    public static final int MIN_LEN_AIC = 9;
+
     public static final String[] KEYS = {
             "aic",
             "nome",

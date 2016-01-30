@@ -20,23 +20,6 @@ import java.text.ParseException;
 public class ListaHome extends ListFragment implements Pagina {
     OnFarmacoSelectedListener mCallback;
 
-    public final static String[] values = new String[] {
-            "Aspirina",
-            "Tachipirina",
-            "Medicina A",
-            "Medicina B",
-            "Medicina C",
-            "Medicina D",
-            "Medicina E",
-            "Medicina F",
-            "Medicina G",
-            "Medicina H",
-            "Medicina I",
-            "Medicina L",
-            "Medicina M",
-            "Medicina N"
-    };
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,13 +27,6 @@ public class ListaHome extends ListFragment implements Pagina {
         ListaConfezioni lista = null;
         try {
             lista = MainActivity.getDBManager().getAllConfezioni();
-            if(lista.size() == 0){
-                String[] mock = new String[] {
-                        "12/08/2016",
-                        "13/08/2016",
-                        "14/08/2016"
-                };
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -67,10 +43,7 @@ public class ListaHome extends ListFragment implements Pagina {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Confezione item = (Confezione) getListAdapter().getItem(position);
-        // Toast.makeText(getActivity(), item + " selected", Toast.LENGTH_LONG).show();
-
         mCallback.onFarmacoSelected(item);
-
     }
 
     @Override
@@ -86,7 +59,6 @@ public class ListaHome extends ListFragment implements Pagina {
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        ((PaginatoreSingolo)getActivity()).visualizzaMessaggio("saluti da ListaHome!!!");
         Intent i = new Intent(getActivity(), InsertActivity.class);
         getActivity().startActivity(i);
     }

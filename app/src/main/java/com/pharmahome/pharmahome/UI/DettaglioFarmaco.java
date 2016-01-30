@@ -1,6 +1,5 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -9,12 +8,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,11 +28,6 @@ import java.util.GregorianCalendar;
 public class DettaglioFarmaco extends Fragment implements Pagina {
     final static String ARG_POSITION = "position";
     int mCurrentPosition = 0;
-    public final static String[] values = new String[] {
-            "12/08/2016",
-            "13/08/2016",
-            "14/08/2016"
-    };
 
     ScrollView scroller = null;
     private ListView listView = null;
@@ -43,10 +35,6 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // If activity recreated (such as from screen rotate), restore
-        // the previous article selection set by onSaveInstanceState().
-        // This is primarily necessary when in the two-pane layout.
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
         }
@@ -110,11 +98,6 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public void onStart() {
         super.onStart();
-
-        // During startup, check if there are arguments passed to the fragment.
-        // onStart is a good place to do this because the layout has already been
-        // applied to the fragment at this point so we can safely call the method
-        // below that sets the article text.
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
@@ -146,8 +129,6 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        ((PaginatoreSingolo)getActivity()).visualizzaMessaggio("saluti da DettaglioFarmaco!!!");
-
         GregorianCalendar oggi = new GregorianCalendar();
         final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
         DatePickerDialog d = new DatePickerDialog(

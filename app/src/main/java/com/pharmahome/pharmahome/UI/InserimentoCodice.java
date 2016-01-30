@@ -57,7 +57,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
     }
 
     private void initView(View view, Bundle savedInstance){
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         final DBController db = new DBController(getContext());
         avanti = (Button) view.findViewById(R.id.btn_avanti);
         scan = (ImageButton) view.findViewById(R.id.btn_scan_cb);
@@ -72,7 +72,19 @@ public class InserimentoCodice extends Fragment implements Pagina {
 
         scan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                String tcb = cb.getText().toString();
+                String tnome = nome.getText().toString();
+                try {
+                    if (tcb.length() >= Farmaco.MIN_LEN_AIC) {
+                        avanti(db.ricercaFarmacoPerAIC(tcb));
+                    } else if(tnome.length() >= 0) {
+                        avanti(db.ricercaFarmacoPerNome(tnome));
+                    } else {
+                        ((PaginatoreSingolo)activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

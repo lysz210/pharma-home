@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
@@ -105,11 +106,12 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     @Override
     public void visualizzaMessaggio(String msg, int dur) {
-
+        Toast toast = Toast.makeText(this, msg, dur);
+        toast.show();
     }
 
     @Override
     public void visualizzaMessaggio(String msg) {
-
+        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
     }
 }
