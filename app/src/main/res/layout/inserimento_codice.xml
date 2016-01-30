@@ -33,6 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/input_spacing"
                 android:hint="@string/input_cb"
+                android:imeOptions="actionDone"
                 android:inputType="text" />
 
             <EditText
@@ -41,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/input_spacing"
                 android:hint="@string/input_nome"
+                android:imeOptions="actionDone"
                 android:inputType="text" />
 
             <Button

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.Farmaco;
 
 import java.util.HashMap;
 
@@ -65,12 +66,12 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         });
     }
 
-    public void setFarmaco(String farmaco){
+    public void setFarmaco(Farmaco farmaco){
         this.data.put(KEY_FARMACO, farmaco);
     }
 
-    public String getFarmaco(){
-        return (String) this.data.get(KEY_FARMACO);
+    public Farmaco getFarmaco(){
+        return (Farmaco) this.data.get(KEY_FARMACO);
     }
 
     public void setListaFarmaci(String[] lista){
@@ -99,7 +100,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     private Pagina actualPage = null;
     @Override
     public void setActualPage(Pagina pagina) {
-
+        this.actualPage = pagina;
     }
 
     @Override

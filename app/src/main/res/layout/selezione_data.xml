@@ -53,12 +53,7 @@
 
             </TableLayout>
 
-            <ListView
-                android:id="@+id/info_farmaco"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </ListView>
+            <include layout="@layout/farmaco_info" />
 
             <Button
                 android:id="@+id/btn_salva"

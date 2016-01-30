@@ -210,7 +210,7 @@ public class DBController extends SQLiteOpenHelper {
     public ListaFarmaci ricercaFarmacoPerNome(String q) throws JSONException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Farmaco.BASE_SEL + " WHERE nome LIKE ?";
-        String[] args = {q};
+        String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Farmaco.toListaFarmaci(cur);
     }

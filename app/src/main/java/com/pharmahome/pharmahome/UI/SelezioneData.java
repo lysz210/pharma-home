@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
@@ -23,7 +24,7 @@ public class SelezioneData extends Fragment implements Pagina {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selezione_data, container, false);
         InsertActivity activity = (InsertActivity) getActivity();
-        ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco());
+        ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
         salva = (Button) view.findViewById(R.id.btn_salva);
         salva.setOnClickListener(new View.OnClickListener(){
 
@@ -33,6 +34,12 @@ public class SelezioneData extends Fragment implements Pagina {
         });
 
         ((PaginatoreSingolo)activity).setActualPage(this);
+
+        ListView infos = (ListView) view.findViewById(R.id.lista_info_farmaco);
+        infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), (activity.getFarmaco().getAsInfoList())));
+        Utility.disableListViewTouch(infos);
+        Utility.updateListConfezioniHeight(infos);
+
         return view;
     }
 
