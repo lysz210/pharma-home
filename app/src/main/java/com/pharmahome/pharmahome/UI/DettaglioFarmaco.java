@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;

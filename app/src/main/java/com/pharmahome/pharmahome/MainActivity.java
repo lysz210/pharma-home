@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.UI;
+package com.pharmahome.pharmahome;
 
 // TODO attenzione inserire unique su campo aic db
 
@@ -6,11 +6,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.DettaglioFarmaco;
+import com.pharmahome.pharmahome.UI.ListaHome;
+import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.Pagina;
+import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 
@@ -103,6 +109,13 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
     public void removeConfezione(){
         data.remove(Confezione.KEY_CONFEZIONE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
 }

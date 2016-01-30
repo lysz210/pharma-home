@@ -11,16 +11,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
-import com.pharmahome.pharmahome.core.db.FarmacoContract;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
 

@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.UI;
+package com.pharmahome.pharmahome;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +11,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.InserimentoCodice;
+import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.Pagina;
+import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.SelezioneData;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 
@@ -113,5 +118,12 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     @Override
     public void visualizzaMessaggio(String msg) {
         visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }

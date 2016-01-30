@@ -7,6 +7,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.pharmahome.pharmahome.InsertActivity;
+import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
