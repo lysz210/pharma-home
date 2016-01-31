@@ -24,6 +24,7 @@ public class FarmacoContract {
     private static final String INTEGER_TYPE = " INT";
     private static final String REAL_TYPE = " REAL";
     private static final String COMMA_SEP = ",";
+    private static final String UNIQUE = " UNIQUE";
 
     public static abstract class Farmaco implements BaseColumns {
         public static final String TABLE_NAME = "Farmaci";
@@ -52,7 +53,7 @@ public class FarmacoContract {
                 "CREATE TABLE " + FarmacoContract.Farmaco.TABLE_NAME +
                         " (" +
                         _ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
-                        COLUMN_NAME_AIC  + TEXT_TYPE + COMMA_SEP +
+                        COLUMN_NAME_AIC  + TEXT_TYPE + UNIQUE + COMMA_SEP +
                         COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_PRINCIPIO_ATTIVO + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_DITTA + TEXT_TYPE + COMMA_SEP +
@@ -117,6 +118,9 @@ public class FarmacoContract {
 
         public static final String VIEW_NAME = TABLE_NAME + "View";
 
+
+        public static String SQL_ORDERBY_SCADENZA = " ORDER BY " + COLUMN_NAME_SCADENZA + " ASC";
+
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME +
                         " (" +
@@ -131,7 +135,7 @@ public class FarmacoContract {
         public static final String SQL_CREATE_VIEW =
                 "CREATE VIEW " + VIEW_NAME + " AS " +
                         "SELECT * FROM " + FarmacoContract.Farmaco.TABLE_NAME + " f JOIN " + TABLE_NAME + " c" +
-                        " ON c." + COLUMN_NAME_FARMACO + " = f." + FarmacoContract.Farmaco._ID
+                        " ON c." + COLUMN_NAME_FARMACO + " = f." + FarmacoContract.Farmaco._ID + SQL_ORDERBY_SCADENZA
                 ;
 
         public static final String SQL_DROP_VIEW =
@@ -144,9 +148,11 @@ public class FarmacoContract {
         public static String BASE_SEL =
                 "SELECT * FROM " + VIEW_NAME;
 
-        public static String CONFEZIONI_X_HOME = "SELECT * FROM " + VIEW_NAME + " AS C " +
-                "WHERE C." + COLUMN_NAME_SCADENZA + " = ( SELECT min(" + COLUMN_NAME_SCADENZA + ") FROM " + TABLE_NAME +
-                    " WHERE " + COLUMN_NAME_FARMACO + " = C." + COLUMN_NAME_FARMACO + ")";
+//        public static String CONFEZIONI_X_HOME = "SELECT * FROM " + VIEW_NAME + " AS C " +
+//                "WHERE C." + COLUMN_NAME_SCADENZA + " = ( SELECT min(" + COLUMN_NAME_SCADENZA + ") FROM " + TABLE_NAME +
+//                    " WHERE " + COLUMN_NAME_FARMACO + " = C." + COLUMN_NAME_FARMACO + ")";
+        public static String CONFEZIONI_X_HOME = "SELECT * FROM " + VIEW_NAME + " GROUP BY " + COLUMN_NAME_FARMACO;
+
 
         public static final ContentValues createRecordValues(com.pharmahome.pharmahome.core.middleware.Confezione record){
             ContentValues values = new ContentValues();

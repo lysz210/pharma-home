@@ -33,8 +33,10 @@ public class DBController extends SQLiteOpenHelper {
 
     private static final String SQL_DELETE_CONFEZIONI = FarmacoContract.Confezione.SQL_DROP_TABLE;
 
+    private static final String SQL_ORDERBY_SCADENZA = FarmacoContract.Confezione.SQL_ORDERBY_SCADENZA;
+
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "PharmaHome.db";
 
     public DBController(Context context) {
@@ -57,6 +59,7 @@ public class DBController extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_FARMACI);
         db.execSQL(SQL_DELETE_CONF_VIEW);
         onCreate(db);
+        update();
     }
 
     @Override
@@ -72,7 +75,7 @@ public class DBController extends SQLiteOpenHelper {
 
             protected String doInBackground(String... command) {
 
-                System.out.println("Asinctask doInBG");
+                System.out.println("Asynctask doInBG");
                 System.out.println(command[0]);
                 PharmaIterator tf = new PharmaIterator();
                 int i = 0;
@@ -82,7 +85,7 @@ public class DBController extends SQLiteOpenHelper {
                     if(++i%100 == 0)
                         publishProgress(i);
 
-                    if(i==5) {
+                    if(i==100) {
                         return "Done!";
                     }
                 }
@@ -144,7 +147,7 @@ public class DBController extends SQLiteOpenHelper {
     public ListaConfezioni ricercaPerNome(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.BASE_SEL + " WHERE nome LIKE ?";
-        String[] args = {q};
+        String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Confezione.toListaConfezioni(cur);
     }
@@ -152,14 +155,14 @@ public class DBController extends SQLiteOpenHelper {
     public ListaConfezioni ricercaPerPA(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.BASE_SEL + " WHERE principioAttivo LIKE ?";
-        String[] args = {q};
+        String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Confezione.toListaConfezioni(cur);
     }
     public ListaConfezioni ricercaPerProduttore(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.BASE_SEL + " WHERE ditta LIKE ?";
-        String[] args = {q};
+        String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Confezione.toListaConfezioni(cur);
     }
@@ -217,11 +220,12 @@ public class DBController extends SQLiteOpenHelper {
     private void modificaFarmaco(Farmaco record) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = FarmacoContract.Farmaco.createRecordValues(record);
+        String[] args = {record.getAic()};
         int response = db.update(
                 FarmacoContract.Farmaco.TABLE_NAME,
                 values,
-                FarmacoContract.Farmaco._ID + " = " + record.getFarmacoId(),
-                null
+                FarmacoContract.Farmaco.COLUMN_NAME_AIC + " = ?",
+                args
         );
         if(response == 0){
             aggiungiFarmaco(record);

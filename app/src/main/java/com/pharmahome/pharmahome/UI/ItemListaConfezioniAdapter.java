@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,8 +54,8 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
         // inserimento degli eventi per ciascun bottone
         // ogni bottone riceve un gestore personalizzato
-        final Button elimina = (Button) rowView.findViewById(R.id.elimina);
-        Button modifica = (Button) rowView.findViewById(R.id.modifica);
+        final ImageButton elimina = (ImageButton) rowView.findViewById(R.id.elimina);
+        ImageButton modifica = (ImageButton) rowView.findViewById(R.id.modifica);
 
         elimina.setOnClickListener(new View.OnClickListener() {
             private int pos = position;

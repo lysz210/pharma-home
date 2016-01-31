@@ -19,20 +19,16 @@
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
 
-    <Button
-        android:layout_column="3"
-        style="?android:attr/buttonStyleSmall"
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/ic_menu_edit"
-        android:id="@+id/modifica" />
-
-    <Button
-        android:layout_column="4"
-        style="?android:attr/buttonStyleSmall"
+        android:src="@android:drawable/ic_menu_edit"
+        android:id="@+id/modifica"
+        />
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/ic_menu_delete"
+        android:src="@android:drawable/ic_menu_delete"
         android:id="@+id/elimina"
         />
 </LinearLayout>

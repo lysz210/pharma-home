@@ -2,6 +2,7 @@ package com.pharmahome.pharmahome;
 
 // TODO attenzione inserire unique su campo aic db
 
+import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.DettaglioFarmaco;
 import com.pharmahome.pharmahome.UI.ListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
@@ -52,7 +51,14 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowCustomEnabled(true);
+        ab.setDisplayShowTitleEnabled(false);
+
         _db = new DBController(this.getApplicationContext());
+        //_db.update();
 
         if(findViewById(R.id.main_container) != null){
             ListaHome farmaci = new ListaHome();
