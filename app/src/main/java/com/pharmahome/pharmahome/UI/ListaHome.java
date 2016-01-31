@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
+import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -44,6 +47,12 @@ public class ListaHome extends ListFragment implements Pagina {
         adapter = new ItemListaHomeAdapter(activity, lista);
         setListAdapter(adapter);
         ((PaginatoreSingolo)activity).setActualPage(this);
+        try{
+            mCallback = (OnFarmacoSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
     }
 
     @Override
@@ -52,16 +61,6 @@ public class ListaHome extends ListFragment implements Pagina {
         mCallback.onFarmacoSelected(item);
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-        try{
-            mCallback = (OnFarmacoSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
-        }
-    }
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {

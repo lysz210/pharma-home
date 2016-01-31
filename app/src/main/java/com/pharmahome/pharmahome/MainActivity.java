@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,11 +26,9 @@ import com.pharmahome.pharmahome.UI.ListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
 import com.pharmahome.pharmahome.UI.Pagina;
 import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.RisultatiRicerca;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
-import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
-
-import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -107,11 +105,25 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                         Log.d("NOME FARMACO", q);
                         handled = true;
                         onSwitch();
+                        RisultatiRicerca res = new RisultatiRicerca();
+                        Bundle args = getIntent().getExtras();
+                        if(args == null){
+                            args = new Bundle();
+                        }
+                        args.putString(RisultatiRicerca.KEY_Q, q);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        res.setArguments(args);
+
+                        transaction.replace(R.id.main_container, res);
+                        transaction.addToBackStack(null);
+
+                        transaction.commit();
                         break;
                 }
                 return handled;
             }
         });
+        LayoutInflater inflater = getLayoutInflater();
     }
 
     private void initMenuSecondarioHandlers(){

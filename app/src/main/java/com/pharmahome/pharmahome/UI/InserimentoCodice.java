@@ -69,18 +69,15 @@ public class InserimentoCodice extends Fragment implements Pagina {
 
         avanti.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
-            }
-        });
-
-        scan.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
                 String tcb = cb.getText().toString();
                 String tnome = nome.getText().toString();
+                InputMethodManager imm =
+                        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(cb.getWindowToken(), 0);
                 try {
                     if (tcb.length() >= Farmaco.MIN_LEN_AIC) {
                         avanti(db.ricercaFarmacoPerAIC(tcb));
-                    } else if(tnome.length() >= 0) {
+                    } else if(tnome.length() >o 0) {
                         avanti(db.ricercaFarmacoPerNome(tnome));
                     } else {
                         ((PaginatoreSingolo)activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");
@@ -88,6 +85,12 @@ public class InserimentoCodice extends Fragment implements Pagina {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        scan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((PaginatoreSingolo)activity).visualizzaMessaggio("Ancora da implementare");
             }
         });
 

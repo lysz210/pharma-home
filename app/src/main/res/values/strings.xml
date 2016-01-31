@@ -15,4 +15,10 @@
     <!-- menu strings -->
     <string name="menu_item_cerca">Cerca</string>
     <string name="hint_input_cerca">Cerca</string>
+
+    <string name="intestazione_risultato_aic">Risultato per aic</string>
+    <string name="intestazione_risultato_nome">Risultato per nome</string>
+    <string name="intestazione_risultato_principio_attivo">Risultato per principio attivo</string>
+    <string name="intestazione_risultato_sintomo">Risultato per sintomo</string>
+    <string name="msg_nessun_risultato">Non e\' stato trovato nessun risultato</string>
 </resources>
