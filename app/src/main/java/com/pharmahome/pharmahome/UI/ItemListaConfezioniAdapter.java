@@ -109,7 +109,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                 oggi.get(GregorianCalendar.MONTH),
                 oggi.get(GregorianCalendar.DATE)
         );
-        d.setTitle("Nuova Confezione");
+        d.setTitle("Modifica scadenza");
         d.show();
     }
 

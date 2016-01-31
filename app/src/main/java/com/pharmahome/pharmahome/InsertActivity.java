@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
@@ -106,6 +107,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     private Pagina actualPage = null;
     @Override
     public void setActualPage(Pagina pagina) {
+        pagina.updateTitolo((TextView)findViewById(R.id.titolo_pagina));
         this.actualPage = pagina;
     }
 

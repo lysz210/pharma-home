@@ -1,6 +1,7 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,6 +40,8 @@ public class InserimentoCodice extends Fragment implements Pagina {
     private EditText nome;
     private String lastNome = "";
     private void setLastNome(String s){ lastNome = s;}
+
+    public final static String TITOLO = "Inserimento nuova confezione";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -136,18 +141,22 @@ public class InserimentoCodice extends Fragment implements Pagina {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 String nome = v.getText().toString();
-                int ek = event.getKeyCode();
-                if (ek == KeyEvent.KEYCODE_ENTER || ek == KeyEvent.KEYCODE_TAB || ek == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                    try {
-                        ListaFarmaci lf = db.ricercaFarmacoPerNome(nome);
+                switch (actionId){
+                    case EditorInfo.IME_ACTION_DONE:
+                        try {
+                            ListaFarmaci lf = db.ricercaFarmacoPerNome(nome);
 
-                        Log.d("NOME FARMACO", nome + lf.size());
-                        avanti(lf);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return handled;
-                    }
-                    handled = false;
+                            Log.d("NOME FARMACO", nome + lf.size());
+                            avanti(lf);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return handled;
+                        }
+                        handled = true;
+                        InputMethodManager imm =
+                                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        break;
                 }
                 return handled;
             }
@@ -173,6 +182,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
             }
             case 1: {
                 avanti(listaFarmaci.get(0));
+                break;
             }
             default: {
                 String[] lista = new String[listaFarmaci.size()];
@@ -218,5 +228,11 @@ public class InserimentoCodice extends Fragment implements Pagina {
     @Override
     public void onScrollDown(View v) {
 
+    }
+
+    @Override
+    public String updateTitolo(TextView v) {
+        v.setText(TITOLO);
+        return TITOLO;
     }
 }

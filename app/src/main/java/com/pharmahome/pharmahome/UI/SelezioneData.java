@@ -27,6 +27,8 @@ import java.util.GregorianCalendar;
  */
 public class SelezioneData extends Fragment implements Pagina {
 
+    public final static String TITOLO = "Seleziona la data di scadenza";
+
     private Button salva;
     private ImageButton modifica;
     private TextView scadenzaView = null;
@@ -117,5 +119,11 @@ public class SelezioneData extends Fragment implements Pagina {
                 oggi.get(GregorianCalendar.DATE)
         );
         d.show();
+    }
+
+    @Override
+    public String updateTitolo(TextView v) {
+        v.setText(TITOLO);
+        return TITOLO;
     }
 }

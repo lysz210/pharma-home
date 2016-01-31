@@ -27,6 +27,8 @@ import java.text.ParseException;
 import java.util.GregorianCalendar;
 
 public class DettaglioFarmaco extends Fragment implements Pagina {
+
+    public final static String TITOLO = "Scheda dettagliata";
     final static String ARG_POSITION = "position";
     int mCurrentPosition = 0;
 
@@ -152,6 +154,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
                 oggi.get(GregorianCalendar.MONTH),
                 oggi.get(GregorianCalendar.DATE)
         );
+        d.setTitle("Modifica scadenza");
         d.show();
 
     }
@@ -172,5 +175,11 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         String url = activity.getConfezione().getLinkFogliettoIllustrativo();
         intent.setData(Uri.parse(url));
         activity.startActivity(intent);
+    }
+
+    @Override
+    public String updateTitolo(TextView v) {
+        v.setText(TITOLO);
+        return TITOLO;
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
@@ -20,6 +21,9 @@ import java.text.ParseException;
  * Created by ciao on 24/01/16.
  */
 public class ListaHome extends ListFragment implements Pagina {
+
+    public static final String TITOLO = "Le tue confezioni";
+
     OnFarmacoSelectedListener mCallback;
 
     @Override
@@ -73,5 +77,11 @@ public class ListaHome extends ListFragment implements Pagina {
     @Override
     public void onScrollDown(View v) {
 
+    }
+
+    @Override
+    public String updateTitolo(TextView v) {
+        v.setText(TITOLO);
+        return TITOLO;
     }
 }

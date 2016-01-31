@@ -14,4 +14,5 @@
 
     <!-- menu strings -->
     <string name="menu_item_cerca">Cerca</string>
+    <string name="hint_input_cerca">Cerca</string>
 </resources>
