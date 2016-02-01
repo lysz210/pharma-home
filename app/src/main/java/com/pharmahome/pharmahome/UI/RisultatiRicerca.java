@@ -1,6 +1,6 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,9 +45,19 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_result, container, false);
+
+
         this.inflater = inflater;
         this.risultatiContainer = (ViewGroup) view.findViewById(R.id.contenitore_risultati_ricerca);
         MainActivity activity = (MainActivity) getActivity();
+
+        try{
+            mCallback = (OnFarmacoSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+
         db = activity.getDBManager();
 
         mCallback = activity;
@@ -54,9 +65,18 @@ public class RisultatiRicerca extends Fragment implements Pagina {
         activity.setActualPage(this);
 
         String q = getArguments().getString(KEY_Q);
+        if(q == null || q.length() < 1){
+            activity.getSupportFragmentManager().popBackStack();
+            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+            Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.main_container);
+            if(currentFragment != null){
+                transaction.remove(currentFragment);
+            }
+            transaction.commit();
+        }
         iniziaSequenzaRicerca(q);
         if(tutteLeConfezioni.size() == 0){
-            inflater.inflate(R.layout.nessun_risultato, container, true);
+            inflater.inflate(R.layout.nessun_risultato, (ViewGroup) view.findViewById(R.id.contenitore_risultati_ricerca), true);
         }
         return view;
     }
@@ -119,7 +139,7 @@ public class RisultatiRicerca extends Fragment implements Pagina {
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
-        // cercaPerSintomo(q);
+         cercaPerSintomo(q);
     }
 
     private void cercaPerSintomo(String q){
@@ -143,9 +163,10 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     }
 
     private void addListaRisultati(int src, ItemListaHomeAdapter adapter){
-        View view = inflater.inflate(src, risultatiContainer, true);
-        ListView lv = (ListView)view.findViewById(R.id.lista_risultati);
+        LinearLayout view = (LinearLayout) inflater.inflate(src, risultatiContainer, true);
+        ListView lv = new ListView(getContext());//(ListView)view.findViewById(R.id.lista_risultati);
         lv.setAdapter(adapter);
+        view.addView(lv);
         Utility.disableListViewTouch(lv);
         Utility.updateListConfezioniHeight(lv);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -155,23 +176,6 @@ public class RisultatiRicerca extends Fragment implements Pagina {
                 mCallback.onFarmacoSelected(item);
             }
         });
-    }
-
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        Confezione item = (Confezione) getListAdapter().getItem(position);
-//        mCallback.onFarmacoSelected(item);
-//    }
-
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-        try{
-            mCallback = (OnFarmacoSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
-        }
     }
 
     @Override

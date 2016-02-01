@@ -77,7 +77,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
                 try {
                     if (tcb.length() >= Farmaco.MIN_LEN_AIC) {
                         avanti(db.ricercaFarmacoPerAIC(tcb));
-                    } else if(tnome.length() >o 0) {
+                    } else if(tnome.length() > 0) {
                         avanti(db.ricercaFarmacoPerNome(tnome));
                     } else {
                         ((PaginatoreSingolo)activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");

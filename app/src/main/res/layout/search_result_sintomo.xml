@@ -13,10 +13,5 @@
         android:text="@string/intestazione_risultato_sintomo"
         android:id="@+id/intestazione"
         android:layout_gravity="center_horizontal" />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lista_risultati"
-        />
 
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     private HashMap<String, Object> data = new HashMap<>();
-
+//TODO elimminare questa parte crea problemi con versioni vecchi
     private static DBController _db = null;
     public static DBController getDBManager(){
         return _db;
@@ -197,14 +198,17 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     private void onSwitch(){
+        InputMethodManager imm =
+                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         searchItem.setIcon(inputIcons[searchState ? 0 : 1]);
         inputSearch.setText("");
-        inputSearch.clearFocus();
-        inputSearch.clearComposingText();
-        if(inputSearch.hasFocus()){
-            InputMethodManager imm =
-                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if(searchState){
+            getCurrentFocus().clearFocus();
             imm.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        } else {
+            inputSearch.requestFocus();
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
         searchState = !searchState;
         switcher.showNext();

@@ -85,4 +85,13 @@ public class Confezione extends Farmaco {
         return fascia;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        return !(obj instanceof Confezione) || equals((Confezione) obj);
+    }
+
+    public boolean equals(Confezione c){
+        return c == this || this._confezioneId == c.getConfezioneId();
+    }
+
 }
