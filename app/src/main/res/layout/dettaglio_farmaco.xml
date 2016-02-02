@@ -24,6 +24,7 @@
         android:id="@+id/listaConfezioni"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         />
     <include layout="@layout/farmaco_info" />
 </LinearLayout>

@@ -40,5 +40,6 @@ public class Utility {
                 return false;
             }
         });
+        listView.setVerticalScrollBarEnabled(false);
     }
 }

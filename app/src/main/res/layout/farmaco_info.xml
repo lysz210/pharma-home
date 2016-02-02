@@ -8,10 +8,11 @@
 
 
     <ListView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/lista_info_farmaco"
-    android:layout_gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lista_info_farmaco"
+        android:scrollbars="none"
+        />
 
 
     <Button
