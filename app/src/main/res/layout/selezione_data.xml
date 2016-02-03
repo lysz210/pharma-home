@@ -46,14 +46,15 @@
                     android:src="@android:drawable/ic_menu_edit" />
             </LinearLayout>
 
-            <include layout="@layout/farmaco_info" />
-
             <Button
                 android:id="@+id/btn_salva"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/salva_confezione" />
+
+            <include layout="@layout/farmaco_info" />
+
 
         </LinearLayout>
     </ScrollView>

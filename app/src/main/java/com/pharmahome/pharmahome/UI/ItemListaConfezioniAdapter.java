@@ -85,7 +85,6 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
         final int p = pos;
         new ScadenzaDialog(
                 getContext(),
-                new GregorianCalendar(),
                 new DatePickerDialog.OnDateSetListener(){
 
                     @Override

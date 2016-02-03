@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * Created by ciao on 29/01/16.
  */
@@ -66,5 +72,45 @@ public class Utility {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * esegue la copia di un file in assets dentro a un file dei dati sui data in locate
+     * @param context   context da utilizzare per recuperare gli assets e il package name
+     * @param asset     path relativo della risorsa da copiare
+     * @param tmpFile   eventuale nome temporaneo per il file
+     * @return          il nome del file temporaneo se la copia ha avuto successo
+     *                  null altrimenti
+     */
+    public static String cpAsset2Data(Context context, String asset, String tmpFile){
+        String result = null;
+        if(asset == null || asset.length() < 1){
+            return result;
+        }
+        if(tmpFile == null || tmpFile.length() < 1){
+            tmpFile = "tmp_file.tmp";
+        }
+        try {
+            InputStream tmpfile =  context.getAssets().open(asset);
+            String tmppath = "/data/data/" + context.getPackageName() + "/" + tmpFile;
+            OutputStream tmpdest = new FileOutputStream(tmppath);
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while((len=tmpfile.read(buffer)) > 0){
+                tmpdest.write(buffer);
+            }
+            tmpfile.close();
+            tmpdest.flush();
+            tmpdest.close();
+            result = tmppath;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean rmFile(String path){
+        File file = new File(path);
+        return file.delete();
     }
 }

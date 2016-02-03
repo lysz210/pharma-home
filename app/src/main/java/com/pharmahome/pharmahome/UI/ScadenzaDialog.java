@@ -21,8 +21,8 @@ import java.util.Calendar;
 public class ScadenzaDialog extends DatePickerDialog {
 
     private View customTitolo = null;
-    public ScadenzaDialog(Context context, Calendar calendar, OnDateSetListener onDateSetListener){
-        super(context, onDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    public ScadenzaDialog(Context context, OnDateSetListener onDateSetListener){
+        super(context, onDateSetListener, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         Log.d("Dialog", "creazione dialog");
         customTitolo = getLayoutInflater().inflate(R.layout.titolo_nuova_confezione_calendario, null);
         setCustomTitle(customTitolo);

@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         _db = new DBController(this.getApplicationContext());
         // TODO  verifica connessione internet durante l'update
         //_db.update();
+        //_db.onUpgrade(_db.getWritableDatabase(), 1, 2);
 
         if(findViewById(R.id.main_container) != null){
             ListaHome farmaci = new ListaHome();

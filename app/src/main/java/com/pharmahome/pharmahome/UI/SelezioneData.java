@@ -64,10 +64,8 @@ public class SelezioneData extends Fragment implements Pagina {
 
         ((PaginatoreSingolo)activity).setActualPage(this);
 
-        ListView infos = (ListView) view.findViewById(R.id.lista_info_farmaco);
-        infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), (activity.getFarmaco().getAsInfoList())));
-        Utility.disableListViewTouch(infos);
-        Utility.updateListConfezioniHeight(infos);
+        ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
+        infos.addView(new FarmacoInfoView(getContext(), (((InsertActivity)activity).getFarmaco().getAsInfoList())));
 
         view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -118,7 +116,6 @@ public class SelezioneData extends Fragment implements Pagina {
         final TextView v = view;
         new ScadenzaDialog(
             getContext(),
-            new GregorianCalendar(),
             new DatePickerDialog.OnDateSetListener(){
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

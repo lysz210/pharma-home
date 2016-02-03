@@ -23,7 +23,6 @@ import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 import org.json.JSONException;
 
 import java.text.ParseException;
-import java.util.GregorianCalendar;
 
 public class DettaglioFarmaco extends Fragment implements Pagina {
 
@@ -51,10 +50,11 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         updateListaConfezioni();
         ((PaginatoreSingolo)activity).setActualPage(this);
 
-        ListView infos = (ListView) v.findViewById(R.id.lista_info_farmaco);
-        infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), (((MainActivity)activity).getConfezione().getAsInfoList())));
-        Utility.disableListViewTouch(infos);
-        Utility.updateListConfezioniHeight(infos);
+        ViewGroup infos = (ViewGroup) v.findViewById(R.id.lista_info_farmaco);
+        infos.addView(new FarmacoInfoView(getContext(), (((MainActivity)activity).getConfezione().getAsInfoList())));
+        //infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), );
+        //Utility.disableListViewTouch(infos);
+        //Utility.updateListConfezioniHeight(infos);
 
         v.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -134,7 +134,6 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
         new ScadenzaDialog(
                 getContext(),
-                new GregorianCalendar(),
                 new DatePickerDialog.OnDateSetListener(){
 
                     @Override

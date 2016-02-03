@@ -43,14 +43,14 @@ public class Farmaco {
             "linkFogliettoIllustrativo",
             "ecipienti",
             "categoria",
-            "precauziooni",
+            "precauzioni",
             "effettiIndesiderati",
             "avvertenzeSpeciali",
             "interazioni",
             "posologia",
             "somministrazione",
             "sovradosaggio",
-            "sintomi",
+            "indicazioniTerapeutiche",
             "comportamentoEmergenza"
     };
 
@@ -95,6 +95,9 @@ public class Farmaco {
     }
 
     public String get(String key){
+        if(key == "sintomi") {
+            key = "indicazioniTerapeutiche";
+        }
         return farmaco.containsKey(key) ? farmaco.get(key) : "";
     }
 
@@ -179,8 +182,11 @@ public class Farmaco {
     /**
      * @return the sintomi
      */
-    public String getSintomi() {
-        return farmaco.containsKey("sintomi") ? farmaco.get("sintomi") : "";
+    public String getIndicazioniTerapeutiche() {
+        return farmaco.containsKey("indicazioniTerapeutiche") ? farmaco.get("indicazioniTerapeutiche") : "";
+    }
+    public String getSintomi(){
+        return getIndicazioniTerapeutiche();
     }
     /**
      * @return the comportamentoEmergenza
