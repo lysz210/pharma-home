@@ -57,7 +57,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         Utility.disableListViewTouch(infos);
         Utility.updateListConfezioniHeight(infos);
 
-        ((Button)v.findViewById(R.id.link_bugiardino)).setOnClickListener(new View.OnClickListener(){
+        v.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -169,12 +169,21 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     }
 
+    /**
+     * richiede ad Android per l'apertura del link al bugiardino online
+     * direttamente dal sito ufficiale AIFA
+     * @param v     la view che effettua la richiesta di apertura del bugiardino
+     */
     public void apriBugiardino(View v) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
         MainActivity activity = (MainActivity)getActivity();
-        String url = activity.getConfezione().getLinkFogliettoIllustrativo();
-        intent.setData(Uri.parse(url));
-        activity.startActivity(intent);
+        if(Utility.isNetworkAvailable(getContext())){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            String url = activity.getConfezione().getLinkFogliettoIllustrativo();
+            intent.setData(Uri.parse(url));
+            activity.startActivity(intent);
+        } else {
+            activity.visualizzaMessaggio("Apertura bugiarnido fallita! Non e' disponibile nessuna connessione a internet.");
+        }
     }
 
     @Override

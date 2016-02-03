@@ -9,7 +9,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textAlignment="center"
         android:text="Large Text"
-        android:id="@+id/textView" />
+        android:id="@+id/titolo_dialog" />
 
     <TextView
         android:layout_width="match_parent"
@@ -17,5 +17,5 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textAlignment="center"
         android:text="Medium Text"
-        android:id="@+id/textView2" />
+        android:id="@+id/sottotilo_ialog" />
 </LinearLayout>

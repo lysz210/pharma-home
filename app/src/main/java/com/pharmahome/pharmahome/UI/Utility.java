@@ -1,6 +1,9 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,12 @@ import android.widget.ListView;
  */
 
 public class Utility {
+    /**
+     * Ridimensione l'altezza della listView in base al suo contenuto
+     * utilizzato principalmente in situazioni dove il sistema
+     * di renderizzazione automatico fallisce
+     * @param   listView    elemento che deve essere riadattato in base al suo contenuto
+     */
     public static void updateListConfezioniHeight(ListView listView){
         // aggiornamento altezza della view
         ListAdapter listAdapter = listView.getAdapter();
@@ -33,6 +42,10 @@ public class Utility {
         }
     }
 
+    /**
+     * disattiva i touchEvents dall listView e disabilita la scrollbar
+     * @param listView listView su cui disattivare i touchEvent
+     */
     public static void disableListViewTouch(ListView listView){
         listView.setOnTouchListener(new ListView.OnTouchListener(){
             @Override
@@ -41,5 +54,17 @@ public class Utility {
             }
         });
         listView.setVerticalScrollBarEnabled(false);
+    }
+
+    /**
+     * predicato che verifica lo stato della connessione a internet.
+     * @param context   context su cui viene effettuato la richiesca per il recupero del ConnectivityManager
+     * @return  true    se la il dispositivo e' connesso a internet
+     *          false   altrimenti
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

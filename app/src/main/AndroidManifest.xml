@@ -2,8 +2,14 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pharmahome.pharmahome">
+    <!-- richiesta di autorizzazioni per la connessione a internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- richiesta di autorizzazione per ottenere le informazioni di rete -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- richiesta di autorizzazione per avviare scripts onDeviceBoot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- descrizione dell'app -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--
+            attivita' principale
+            gestione della home page
+            ricerca
+            visualizzazione dettagliata di un farmaco
+         -->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -23,7 +35,12 @@
             </intent-filter>
         </activity>
 
-
+        <!--
+            attivita' per la gestione dell'inserimento di un nuovo farmaco
+            composto da:
+                -richiesta input per il codice a barre oppure il nome del farmaco
+                -inserimento della data di scadenza
+        -->
         <activity
             android:name=".InsertActivity"
             android:label="@string/app_name"

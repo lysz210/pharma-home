@@ -2,6 +2,7 @@ package com.pharmahome.pharmahome.UI;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -68,6 +69,14 @@ public class SelezioneData extends Fragment implements Pagina {
         Utility.disableListViewTouch(infos);
         Utility.updateListConfezioniHeight(infos);
 
+        view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                apriBugiardino(v);
+            }
+        });
+
         return view;
     }
 
@@ -125,5 +134,22 @@ public class SelezioneData extends Fragment implements Pagina {
     public String updateTitolo(TextView v) {
         v.setText(TITOLO);
         return TITOLO;
+    }
+
+    /**
+     * richiede ad Android per l'apertura del link al bugiardino online
+     * direttamente dal sito ufficiale AIFA
+     * @param v     la view che effettua la richiesta di apertura del bugiardino
+     */
+    public void apriBugiardino(View v) {
+        InsertActivity activity = (InsertActivity)getActivity();
+        if(Utility.isNetworkAvailable(getContext())){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            String url = activity.getFarmaco().getLinkFogliettoIllustrativo();
+            intent.setData(Uri.parse(url));
+            activity.startActivity(intent);
+        } else {
+            activity.visualizzaMessaggio("Apertura bugiarnido fallita! Non e' disponibile nessuna connessione a internet.");
+        }
     }
 }
