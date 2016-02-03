@@ -6,11 +6,12 @@
     <string name="input_nome">Nome del farmaco</string>
     <string name="btn_avanti">Avanti</string>
     <string name="salva_confezione">Salva confezione</string>
+    <string name="titolo_dialog_scadenza">Inserisci la scadenza</string>
 
 
     <string name="msg_ins_nome_cb">Devi riempire uno dei 2 campi</string>
 
-    <string name="ling_bugiarni_btn">Bugiardino AIFA</string>
+    <string name="link_bugiarni_btn">Bugiardino AIFA</string>
 
     <!-- menu strings -->
     <string name="menu_item_cerca">Cerca</string>

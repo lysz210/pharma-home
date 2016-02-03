@@ -18,7 +18,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ling_bugiarni_btn"
+        android:text="@string/link_bugiarni_btn"
         android:id="@+id/link_bugiardino"
         android:layout_gravity="bottom" />
 

@@ -109,25 +109,25 @@ public class SelezioneData extends Fragment implements Pagina {
 
     }
 
+    /**
+     * apre un selettore per scegliere una data di scadenza opportuna
+     * @param view  textview dove va inserito la data selezionata
+     */
     private void selezionaScadenza(TextView view){
-        GregorianCalendar oggi = new GregorianCalendar();
+        // TODO DA IMPLEMENTARE LA SELEZIONE IN MODO TALE CHE SIA IMPOSTOTA ALLA DATA SCELTA COME PRIMO GIORNO
         final TextView v = view;
-        DatePickerDialog d = new DatePickerDialog(
-                getContext(),
-                new DatePickerDialog.OnDateSetListener(){
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                        v.setText(data);
-                        setScadenza(year, monthOfYear, dayOfMonth);
-                    }
-                },
-                oggi.get(GregorianCalendar.YEAR),
-                oggi.get(GregorianCalendar.MONTH),
-                oggi.get(GregorianCalendar.DATE)
+        new ScadenzaDialog(
+            getContext(),
+            new GregorianCalendar(),
+            new DatePickerDialog.OnDateSetListener(){
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                    v.setText(data);
+                    setScadenza(year, monthOfYear, dayOfMonth);
+                }
+            }
         );
-        d.show();
     }
 
     @Override

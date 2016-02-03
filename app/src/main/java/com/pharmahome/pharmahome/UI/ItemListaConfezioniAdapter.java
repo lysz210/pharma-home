@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +30,6 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     private Context context;
     private ListaConfezioni confezioni;
     private int i = 0;
-    private int[] fascie = {R.drawable.led_buono, R.drawable.led_in_scadenza, R.drawable.led_scaduto};
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     public ItemListaConfezioniAdapter(Context context, ListaConfezioni values) {
@@ -85,10 +83,9 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
     private void modifica(View view, int pos){
         final int p = pos;
-        GregorianCalendar oggi = new GregorianCalendar();
-
-        DatePickerDialog d = new DatePickerDialog(
+        new ScadenzaDialog(
                 getContext(),
+                new GregorianCalendar(),
                 new DatePickerDialog.OnDateSetListener(){
 
                     @Override
@@ -104,13 +101,8 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                         remove(c);
                         insert(c, p);
                     }
-                },
-                oggi.get(GregorianCalendar.YEAR),
-                oggi.get(GregorianCalendar.MONTH),
-                oggi.get(GregorianCalendar.DATE)
+                }
         );
-        d.setTitle("Modifica scadenza");
-        d.show();
     }
 
     public void setNewData(ListaConfezioni lc) {

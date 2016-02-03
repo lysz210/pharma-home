@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -132,10 +131,10 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        GregorianCalendar oggi = new GregorianCalendar();
         final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
-        DatePickerDialog d = new DatePickerDialog(
+        new ScadenzaDialog(
                 getContext(),
+                new GregorianCalendar(),
                 new DatePickerDialog.OnDateSetListener(){
 
                     @Override
@@ -149,13 +148,8 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
                         MainActivity.getDBManager().aggiungiConfezione(c);
                         updateListaConfezioni();
                     }
-                },
-                oggi.get(GregorianCalendar.YEAR),
-                oggi.get(GregorianCalendar.MONTH),
-                oggi.get(GregorianCalendar.DATE)
+                }
         );
-        d.setTitle("Modifica scadenza");
-        d.show();
 
     }
 
