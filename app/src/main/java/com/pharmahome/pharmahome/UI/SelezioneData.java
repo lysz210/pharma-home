@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
@@ -35,6 +36,7 @@ public class SelezioneData extends Fragment implements Pagina {
     private TextView scadenzaView = null;
     private Calendar scadenza = null;
     private PaginatoreSingolo parent = null;
+    private ScrollView scroller = null;
 
     private void setScadenza(int anno, int mese, int giorno){
         scadenza = new GregorianCalendar(anno, mese, giorno);
@@ -44,6 +46,7 @@ public class SelezioneData extends Fragment implements Pagina {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selezione_data, container, false);
+        scroller = (ScrollView)view;
         InsertActivity activity = (InsertActivity) getActivity();
         ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
         salva = (Button) view.findViewById(R.id.btn_salva);
@@ -101,12 +104,14 @@ public class SelezioneData extends Fragment implements Pagina {
 
     @Override
     public void onScrollUp(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, -y);
     }
 
     @Override
     public void onScrollDown(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, y);
     }
 
     /**

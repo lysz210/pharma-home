@@ -31,6 +31,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     int mCurrentPosition = 0;
 
     ScrollView scroller = null;
+    public final static int SCROLL_Y = 50;
     private ListView listView = null;
     private PaginatoreSingolo parent = null;
 
@@ -45,27 +46,28 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         setParent((PaginatoreSingolo)activity);
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
+        View view = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
+        scroller = (ScrollView) view;
 
-        listView = (ListView) v.findViewById(R.id.listaConfezioni);
+        listView = (ListView) view.findViewById(R.id.listaConfezioni);
         Utility.disableListViewTouch(listView);
         updateListaConfezioni();
         ((PaginatoreSingolo)activity).setActualPage(this);
 
-        ViewGroup infos = (ViewGroup) v.findViewById(R.id.lista_info_farmaco);
+        ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
         infos.addView(new FarmacoInfoView(getContext(), (((MainActivity)activity).getConfezione().getAsInfoList())));
         //infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), );
         //Utility.disableListViewTouch(infos);
         //Utility.updateListConfezioniHeight(infos);
 
-        v.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 apriBugiardino(v);
             }
         });
-        return v;
+        return view;
     }
 
     private void updateListaConfezioni(){
@@ -151,17 +153,18 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
                     }
                 }
         );
-
     }
 
     @Override
     public void onScrollUp(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, -y);
     }
 
     @Override
     public void onScrollDown(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, y);
     }
 
     /**

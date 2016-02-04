@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
-import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -30,6 +27,8 @@ public class ListaHome extends ListFragment implements Pagina {
     OnFarmacoSelectedListener mCallback;
 
     private PaginatoreSingolo parent = null;
+
+    private ListView scroller = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,6 +55,7 @@ public class ListaHome extends ListFragment implements Pagina {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
+        scroller = getListView();
     }
 
     @Override
@@ -73,12 +73,14 @@ public class ListaHome extends ListFragment implements Pagina {
 
     @Override
     public void onScrollUp(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, -y);
     }
 
     @Override
     public void onScrollDown(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, y);
     }
 
     @Override
