@@ -48,7 +48,12 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         }
 
         initMenuSecondarioHandlers();
-
+        findViewById(R.id.action_home).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualPage.onHomeClickedListener();
+            }
+        });
 
     }
 

@@ -32,6 +32,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
 
     ScrollView scroller = null;
     private ListView listView = null;
+    private PaginatoreSingolo parent = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +42,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         }
 
         Activity activity = getActivity();
+        setParent((PaginatoreSingolo)activity);
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
@@ -183,5 +185,20 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
     public String updateTitolo(TextView v) {
         v.setText(TITOLO);
         return TITOLO;
+    }
+
+    @Override
+    public void onHomeClickedListener() {
+        parent.visualizzaMessaggio("premuto home da scheda dettagliata");
+    }
+
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 }

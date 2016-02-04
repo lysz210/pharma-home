@@ -112,7 +112,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
                 incounter();
                 Log.d("COUNTER", "" + getcounter());
                 String aic = v.getText().toString();
-                if (aic.length() < 9 ) {
+                if (aic.length() < 9) {
                     return handled;
                 }
                 int ek = event.getKeyCode();
@@ -144,7 +144,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 String nome = v.getText().toString();
-                switch (actionId){
+                switch (actionId) {
                     case EditorInfo.IME_ACTION_DONE:
                         try {
                             ListaFarmaci lf = db.ricercaFarmacoPerNome(nome);
@@ -166,6 +166,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
         });
 
         ((PaginatoreSingolo)activity).setActualPage(this);
+        setParent((PaginatoreSingolo)activity);
     }
 
     // handlers
@@ -237,5 +238,21 @@ public class InserimentoCodice extends Fragment implements Pagina {
     public String updateTitolo(TextView v) {
         v.setText(TITOLO);
         return TITOLO;
+    }
+
+    @Override
+    public void onHomeClickedListener() {
+        parent.visualizzaMessaggio("home click da inserimento codice");
+    }
+
+    private PaginatoreSingolo parent = null;
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 }

@@ -11,6 +11,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/action_home"
+            android:src="@drawable/icon_pharmahome_notifiche"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:background="#00000000"
+            />
         <ViewSwitcher
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/title_search_swicher"
@@ -23,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="hello"
                 android:gravity="center_vertical"
                 />
             <EditText
@@ -31,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:hint="@string/hint_input_cerca"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 />

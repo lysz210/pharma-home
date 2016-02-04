@@ -40,6 +40,7 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     private DBController db = null;
 
     OnFarmacoSelectedListener mCallback;
+    private PaginatoreSingolo parent = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +51,7 @@ public class RisultatiRicerca extends Fragment implements Pagina {
         this.inflater = inflater;
         this.risultatiContainer = (ViewGroup) view.findViewById(R.id.contenitore_risultati_ricerca);
         MainActivity activity = (MainActivity) getActivity();
+        setParent(activity);
 
         try{
             mCallback = (OnFarmacoSelectedListener) activity;
@@ -198,5 +200,20 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     public String updateTitolo(TextView v) {
         v.setText(TITOLO);
         return TITOLO;
+    }
+
+    @Override
+    public void onHomeClickedListener() {
+        parent.visualizzaMessaggio("home click da risultati ricerca");
+    }
+
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 }

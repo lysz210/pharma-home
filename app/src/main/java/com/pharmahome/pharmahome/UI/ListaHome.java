@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +29,8 @@ public class ListaHome extends ListFragment implements Pagina {
 
     OnFarmacoSelectedListener mCallback;
 
+    private PaginatoreSingolo parent = null;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -42,7 +44,8 @@ public class ListaHome extends ListFragment implements Pagina {
             e.printStackTrace();
         }
 
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
+        setParent((PaginatoreSingolo)activity);
         ItemListaHomeAdapter adapter = null;
         adapter = new ItemListaHomeAdapter(activity, lista);
         setListAdapter(adapter);
@@ -82,5 +85,20 @@ public class ListaHome extends ListFragment implements Pagina {
     public String updateTitolo(TextView v) {
         v.setText(TITOLO);
         return TITOLO;
+    }
+
+    @Override
+    public void onHomeClickedListener() {
+        parent.visualizzaMessaggio("premuto home da lista home");
+    }
+
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public PaginatoreSingolo getParent() {
+        return parent;
     }
 }

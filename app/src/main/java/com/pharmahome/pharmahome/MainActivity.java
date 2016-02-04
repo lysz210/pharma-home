@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(false);
         ab.setDisplayShowCustomEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
 
@@ -126,7 +126,14 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 return handled;
             }
         });
-        LayoutInflater inflater = getLayoutInflater();
+
+
+        findViewById(R.id.action_home).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actualPage.onHomeClickedListener();
+            }
+        });
     }
 
     private void initMenuSecondarioHandlers(){
@@ -183,12 +190,16 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        visualizzaMessaggio("premuto " + item.getItemId());
         switch (item.getItemId()) {
             case R.id.action_search:
                 if(searchItem == null){
                     searchItem = item;
                 }
                 onSwitch();
+                return true;
+            case R.id.action_home:
+                visualizzaMessaggio("premuto home");
                 return true;
 
             default:

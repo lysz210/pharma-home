@@ -34,6 +34,8 @@ public class SelezioneData extends Fragment implements Pagina {
     private ImageButton modifica;
     private TextView scadenzaView = null;
     private Calendar scadenza = null;
+    private PaginatoreSingolo parent = null;
+
     private void setScadenza(int anno, int mese, int giorno){
         scadenza = new GregorianCalendar(anno, mese, giorno);
     }
@@ -61,7 +63,7 @@ public class SelezioneData extends Fragment implements Pagina {
         });
 
         scadenzaView = (TextView) view.findViewById(R.id.scadenza);
-
+        setParent(activity);
         ((PaginatoreSingolo)activity).setActualPage(this);
 
         ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
@@ -148,5 +150,20 @@ public class SelezioneData extends Fragment implements Pagina {
         } else {
             activity.visualizzaMessaggio("Apertura bugiarnido fallita! Non e' disponibile nessuna connessione a internet.");
         }
+    }
+
+    @Override
+    public void onHomeClickedListener() {
+        parent.visualizzaMessaggio("Home click da selezione data");
+    }
+
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 }

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 /**
  * Created by ciao on 03/02/16.
+ * layout personalizzato per per la creazione della lista informazioni relativo al farmaco
+ * Semplifica la gestione rispetto ad avere una ListView d amodificare ogni volta
+ * che presenta molti problemi di ridemensionamento all'interno della ScrollView
  */
 public class FarmacoInfoView extends LinearLayout {
     public FarmacoInfoView(Context context, ArrayList<Farmaco.Info> infos) {
