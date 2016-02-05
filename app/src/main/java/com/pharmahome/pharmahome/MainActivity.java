@@ -4,6 +4,7 @@ package com.pharmahome.pharmahome;
 
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     @Override
     public void visualizzaMessaggio(String msg){
         visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public AlertDialog.Builder getAlertBuilder() {
+        return new AlertDialog.Builder(this);
     }
 
     private HashMap<String, Object> data = new HashMap<>();

@@ -20,32 +20,14 @@
             android:layout_gravity="center"
             android:background="#00000000"
             />
-        <ViewSwitcher
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/title_search_swicher"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/titolo_pagina"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:id="@+id/titolo_pagina"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="hello"
-                android:gravity="center_vertical"
-                />
-            <EditText
-                android:id="@+id/input_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:hint="@string/hint_input_cerca"
-                android:gravity="bottom"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                />
-        </ViewSwitcher>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="hello"
+            android:gravity="center_vertical"
+            />
 
     </LinearLayout>
 

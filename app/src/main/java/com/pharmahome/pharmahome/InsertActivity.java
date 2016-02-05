@@ -2,6 +2,7 @@ package com.pharmahome.pharmahome;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.InserimentoCodice;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
 import com.pharmahome.pharmahome.UI.Pagina;
@@ -128,9 +128,35 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     }
 
     @Override
+    public AlertDialog.Builder getAlertBuilder() {
+        return new AlertDialog.Builder(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_ricerca, menu);
         return true;
+    }
+
+    /**
+     * gestione del menu principale
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        visualizzaMessaggio("premuto " + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.action_home:
+                visualizzaMessaggio("premuto home");
+                return true;
+            case R.id.action_break:
+                visualizzaMessaggio(("premuto interrompi"));
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

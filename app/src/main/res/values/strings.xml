@@ -16,6 +16,9 @@
     <!-- menu strings -->
     <string name="menu_item_cerca">Cerca</string>
     <string name="hint_input_cerca">Cerca</string>
+    <string name="menu_item_upload">Aggiorna dati</string>
+
+    <string name="btn_dialog_negative">Chiudi</string>
 
     <string name="intestazione_risultato_aic">Risultato per aic</string>
     <string name="intestazione_risultato_nome">Risultato per nome</string>

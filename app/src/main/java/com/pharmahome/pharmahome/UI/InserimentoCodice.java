@@ -193,13 +193,19 @@ public class InserimentoCodice extends Fragment implements Pagina {
                 for(int i=0; i<len; i++) {
                     lista[i] = listaFarmaci.get(i).getNome();
                 }
-                AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
-                b.setTitle("ciao");
+                AlertDialog.Builder b = parent.getAlertBuilder();
+                b.setTitle("Seleziona il farmaco");
                 b.setItems(lista, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         avanti(lf.get(which));
+                    }
+                });
+                b.setNegativeButton(getString(R.string.btn_dialog_negative), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
                     }
                 });
                 AlertDialog a = b.create();
