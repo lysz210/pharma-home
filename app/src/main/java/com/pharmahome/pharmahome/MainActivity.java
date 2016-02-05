@@ -2,6 +2,7 @@ package com.pharmahome.pharmahome;
 
 // TODO attenzione inserire unique su campo aic db
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 actualPage.onHomeClickedListener();
             }
         });
+
+        sendBroadcast(new Intent("ciao"));
     }
 
     private void initMenuSecondarioHandlers(){
