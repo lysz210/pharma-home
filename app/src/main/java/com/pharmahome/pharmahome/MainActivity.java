@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
             }
         });
 
-        sendBroadcast(new Intent("ciao"));
+        sendBroadcast(new Intent(ScadenzeManager.NOTIFICA_INTENT_ACTION));
     }
 
     private void initMenuSecondarioHandlers(){

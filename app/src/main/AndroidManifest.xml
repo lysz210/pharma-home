@@ -64,9 +64,14 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="ciao" />
+                <action android:name="ScadenzeManager.NOTIFICA_INTENT_ACTION" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".UI.NotificatoreScadenzeService"
+            android:enabled="true"
+            />
     </application>
 
 </manifest>
