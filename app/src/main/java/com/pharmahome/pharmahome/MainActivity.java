@@ -141,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 actualPage.onHomeClickedListener();
             }
         });
-
-        sendBroadcast(new Intent(ScadenzeManager.NOTIFICA_INTENT_ACTION));
     }
 
     private void initMenuSecondarioHandlers(){

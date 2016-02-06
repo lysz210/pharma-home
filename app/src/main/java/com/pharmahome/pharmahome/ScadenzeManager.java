@@ -32,7 +32,7 @@ public class ScadenzeManager extends BroadcastReceiver {
             // richiama la notifica da lanciare oggi
             lanciaNotificaOggi(context, intent);
             // inserimento del task per il richiamo di questa funzione domani
-            setNotificaGiornaliera(context, intent);
+            //setNotificaGiornaliera(context, intent);
         }
     }
     private void setNotificaNuovaConfezione(Context context, Intent intent){

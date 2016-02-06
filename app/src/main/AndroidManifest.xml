@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pharmahome.pharmahome">
+    package="com.pharmahome.pharmahome"
+    >
     <!-- richiesta di autorizzazioni per la connessione a internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- richiesta di autorizzazione per ottenere le informazioni di rete -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- richiesta di autorizzazione per avviare scripts onDeviceBoot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- richiesta di autorizzazione per accedere alla fotocamera -->
+
 
     <!-- descrizione dell'app -->
     <application
@@ -51,7 +54,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InsertActivity"
                 />
+
         </activity>
+
 
         <!--
             receiver per la gestione delle notifiche

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
@@ -90,7 +91,8 @@ public class InserimentoCodice extends Fragment implements Pagina {
 
         scan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ((PaginatoreSingolo)activity).visualizzaMessaggio("Ancora da implementare");
+                IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
+                scanIntegrator.initiateScan();
             }
         });
 
