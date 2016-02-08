@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.ScadenzeManager;
 
 /**
  * Created by ciao on 06/02/16.
@@ -23,7 +24,7 @@ public class NotificatoreScadenzeService extends IntentService {
      *
      */
     public NotificatoreScadenzeService() {
-        super("Ciao");
+        super(NOME);
     }
 
     @Override
@@ -33,18 +34,17 @@ public class NotificatoreScadenzeService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.icon_pharmahome_notifiche)
                 .setContentTitle("Pharma home notifica nuova app")
-                .setContentText("NOTIFICA intent: " + intent.getIntExtra("prova", -1));
-
+                .setContentText("NOTIFICA intent: notifica PharmHome")
+                .setAutoCancel(true)
+                .setCategory(ScadenzeManager.NOTIFICA_CATEGORY);
         Intent resultIntent = new Intent(context, MainActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
 
-        // Sets an ID for the notification
-        int mNotificationId = 444;
 // Gets an instance of the NotificationManager service
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
 // Builds the notification and issues it.
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        mNotifyMgr.notify(ScadenzeManager.NOTIFICA_CODE, mBuilder.build());
     }
 }

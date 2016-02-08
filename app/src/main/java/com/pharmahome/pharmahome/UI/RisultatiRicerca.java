@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
@@ -42,11 +43,14 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     OnFarmacoSelectedListener mCallback;
     private PaginatoreSingolo parent = null;
 
+
+    private ScrollView scroller = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_result, container, false);
-
+        scroller = (ScrollView) view;
 
         this.inflater = inflater;
         this.risultatiContainer = (ViewGroup) view.findViewById(R.id.contenitore_risultati_ricerca);
@@ -185,14 +189,17 @@ public class RisultatiRicerca extends Fragment implements Pagina {
         getActivity().startActivity(i);
     }
 
+
     @Override
     public void onScrollUp(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, -y);
     }
 
     @Override
     public void onScrollDown(View v) {
-
+        int y = (4 * scroller.getHeight()) / 5;
+        scroller.scrollBy(0, y);
     }
 
     @Override

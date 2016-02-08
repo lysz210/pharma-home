@@ -1,14 +1,11 @@
 package com.pharmahome.pharmahome;
 
-import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.IntentService;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.pharmahome.pharmahome.UI.NotificatoreScadenzeService;
@@ -22,25 +19,28 @@ import java.util.Calendar;
  */
 public class ScadenzeManager extends BroadcastReceiver {
     public static final String NOTIFICA_INTENT_ACTION = "ScadenzeManager.NOTIFICA_INTENT_ACTION";
+    public static final String NOTIFICA_CATEGORY = "ScadenzaManager.NOTIFICA_CATEGORY";
     public static final String BOOT_INTENT_ACTION = "android.intent.action.BOOT_COMPLETED";
+    public static final String SHARED_KEY_DELAY = "ScadenzaManager.INTERVALLO";
+    public static final String SHARED_KEY_HOUR = "ScadenzaManager.HOUR";
+    public static final String SHARED_KEY_MINUTE = "ScadenzaManager.MINUTE";
+    public static final long DEFAULT_DELAY = AlarmManager.INTERVAL_DAY;
+    public static final int DEFAULT_HOUR = 8;
+    public static final int DEFAULT_MINUTE = 00;
+    public static final String SHARED_NAME = "ScadenzaManager.SHARED";
     public static final int NOTIFICA_CODE = 444;
-    public static int test = 1;
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(NOTIFICA_INTENT_ACTION.equals(intent.getAction()) || BOOT_INTENT_ACTION.equals(intent.getAction())) {
-            Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
-            // richiama la notifica da lanciare oggi
-            lanciaNotificaOggi(context, intent);
-            // inserimento del task per il richiamo di questa funzione domani
-            //setNotificaGiornaliera(context, intent);
+        Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
+        switch (intent.getAction()){
+            case BOOT_INTENT_ACTION:
+                // inserimento del task per il richiamo di questa funzione domani
+                setNotificaGiornaliera(context, intent);
+            case NOTIFICA_INTENT_ACTION:
+                // richiama la notifica da lanciare oggi
+                lanciaNotificaOggi(context, intent);
+                break;
         }
-    }
-    private void setNotificaNuovaConfezione(Context context, Intent intent){
-        Log.w("myLog", "Avvio nuova activity intent: " + intent.getAction());
-        Intent i = new Intent(context, InsertActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
-        return;
     }
 
     /**
@@ -51,17 +51,20 @@ public class ScadenzeManager extends BroadcastReceiver {
      */
     private void setNotificaGiornaliera(Context context, Intent intent){
         Log.w("ScadenzeManager", "setNofiticaGiornaliera, intent: " + intent.getAction() + " " + intent.getIntExtra("prova", -1));
+        AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        SharedPreferences shared = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
+        long delay = shared.getLong(SHARED_KEY_DELAY, DEFAULT_DELAY);
+        int hour = shared.getInt(SHARED_KEY_HOUR, DEFAULT_HOUR);
+        int minute = shared.getInt(SHARED_KEY_MINUTE, DEFAULT_MINUTE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.MINUTE, 5);
-
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.MINUTE, minute);
         Intent t_intent = new Intent(context, ScadenzeManager.class);
-        t_intent.putExtra("prova", test);
         t_intent.setAction(NOTIFICA_INTENT_ACTION);
-        test++;
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, NOTIFICA_CODE, t_intent, 0);
-        AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis() + 12000, 5000, alarmIntent);
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), delay, alarmIntent);
     }
 
     /**
