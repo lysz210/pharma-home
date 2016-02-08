@@ -4,11 +4,15 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,6 +22,7 @@ import java.io.OutputStream;
 
 /**
  * Created by ciao on 29/01/16.
+ * Classe che raccoglie alcune funzionalita' generali del sistema
  */
 
 public class Utility {
@@ -35,15 +40,56 @@ public class Utility {
             int totalHeight = 0;
             View tView = null;
             for(int i=0; i < listAdapter.getCount(); i++){
-                tView = listAdapter.getView(i, tView, listView);
                 if(i==0){
                     tView.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ActionBar.LayoutParams.WRAP_CONTENT));
                 }
-                tView.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                totalHeight += tView.getMeasuredHeight();
+                tView.measure(0, 0);
+                int th = tView.getMeasuredHeight();
+                totalHeight += th;
             }
             ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
+            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) ;
+            listView.setLayoutParams(params);
+        }
+    }
+
+    /**
+     * risoluzione delle dimensioni della ListView quando sono presenti delle textView che possono
+     * occupare piu' di una riga e impedire il corretto calcolo delle dimensioni complessive
+     * @param listView  listView su cui calcalare la nuova dimensione
+     * @param textID    l'id del textView che potrebbe occupare anche piu' di una riga
+     */
+    public static void updateListConfezioniHeight(ListView listView, int textID){
+        // aggiornamento altezza della view
+        ListAdapter listAdapter = listView.getAdapter();
+        WindowManager wm = (WindowManager)listView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int screenW = display.getWidth();
+        if(listAdapter != null){
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            int totalHeight = 0;
+            View tView = null;
+            for(int i=0; i < listAdapter.getCount(); i++){
+                tView = listAdapter.getView(i, null, listView);
+                TextView test;
+                int h = 0;
+                test = (TextView)tView.findViewById(textID);
+                if(test != null){
+                    test.measure(0, 0);
+                    h = test.getMeasuredHeight();
+                }
+//                int w = test.getMeasuredWidth();
+//                int textW = (int) test.getPaint().measureText(test.getText().toString());
+                if(i==0){
+                    tView.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ActionBar.LayoutParams.WRAP_CONTENT));
+                }
+                tView.measure(0, 0);
+                int th = tView.getMeasuredHeight();
+                int tw = tView.getMeasuredWidth();
+                totalHeight += th + ((tw >= screenW) ? h : 0);
+            }
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) ;
             listView.setLayoutParams(params);
         }
     }
@@ -109,6 +155,11 @@ public class Utility {
         return result;
     }
 
+    /**
+     * Cancella il file dal path passato come parametro
+     * @param path  path della risorsa da eliminare
+     * @return  true se l'eliminazione e' andato a buon fine, false altrimenti.
+     */
     public static boolean rmFile(String path){
         File file = new File(path);
         return file.delete();

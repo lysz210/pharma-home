@@ -161,7 +161,6 @@ public class RisultatiRicerca extends Fragment implements Pagina {
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
-
     }
 
     private void addListaRisultati(int src, ItemListaHomeAdapter adapter){
@@ -170,7 +169,7 @@ public class RisultatiRicerca extends Fragment implements Pagina {
         lv.setAdapter(adapter);
         view.addView(lv);
         Utility.disableListViewTouch(lv);
-        Utility.updateListConfezioniHeight(lv);
+        Utility.updateListConfezioniHeight(lv, R.id.nome_farmaco);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

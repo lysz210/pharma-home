@@ -25,4 +25,11 @@
     <string name="intestazione_risultato_principio_attivo">Risultato per principio attivo</string>
     <string name="intestazione_risultato_sintomo">Risultato per sintomo</string>
     <string name="msg_nessun_risultato">Non e\' stato trovato nessun risultato</string>
+
+    <string name="msg_nessun_farmaco_titolo">Farmaco non trovato</string>
+    <string name="msg_nessun_farmaco_corpo">Mi spiace ma non siamo riusciti a trovare nessun farmaco.</string>
+
+    <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
+
+    <string name="btn_chiudi">chiudi</string>
 </resources>

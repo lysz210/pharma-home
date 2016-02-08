@@ -1,5 +1,6 @@
 package com.pharmahome.pharmahome;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -20,8 +21,12 @@ import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
 import com.pharmahome.pharmahome.UI.Pagina;
 import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
 import com.pharmahome.pharmahome.UI.SelezioneData;
+import com.pharmahome.pharmahome.UI.VisualizzatoreDialog;
+import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
+
+import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -136,6 +141,49 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     }
 
     @Override
+    public void visualizzaDialog(int titoloID, int contenuto) {
+        AlertDialog.Builder builder = getAlertBuilder();
+        builder.setMessage(contenuto);
+        builder.setTitle(titoloID);
+        builder.setNeutralButton(R.string.btn_chiudi, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void visualizzaDialog(int titoloID, int contenuto, HashMap<String, OnClickListenerValue> listeners) {
+        String[] keys = VisualizzatoreDialog.KEYS_BTN_AVAILBLE;
+        if(listeners.size() <= 0){
+            visualizzaDialog(titoloID, contenuto);
+            return;
+        }
+        AlertDialog.Builder builder = getAlertBuilder();
+        builder.setMessage(contenuto);
+        builder.setTitle(titoloID);
+        for(String k: keys){
+            VisualizzatoreDialog.OnClickListenerValue tmp = listeners.get(k);
+            if(tmp == null){
+                continue;
+            }
+            switch (k){
+                case VisualizzatoreDialog.KEY_BTN_POSITIVE:
+                    builder.setPositiveButton(tmp.getNomeID(), tmp.getListener());
+                    break;
+                case VisualizzatoreDialog.KEY_BTN_NEGATIVE:
+                    builder.setNegativeButton(tmp.getNomeID(), tmp.getListener());
+                    break;
+                case VisualizzatoreDialog.KEY_BTN_NEUTRAL:
+                    builder.setNeutralButton(tmp.getNomeID(), tmp.getListener());
+                    break;
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_ricerca, menu);
@@ -163,10 +211,22 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         }
     }
 
+    /**
+     * all'inserimento del codice a barre viene lanciato l'inserimento
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(scanningResult != null){
+            DBController db = new DBController(this);
+            try {
+                ((InserimentoCodice)actualPage).avanti(db.ricercaFarmacoPerAIC(scanningResult.getContents()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             visualizzaMessaggio("Barcode " + scanningResult.getContents());
         }
     }

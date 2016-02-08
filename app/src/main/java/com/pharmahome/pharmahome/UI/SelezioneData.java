@@ -1,5 +1,8 @@
 package com.pharmahome.pharmahome.UI;
 
+// TODO VERIFICA DELLA DATA PRIMA DI SALVARE.
+// TODO MESSAGGIO DI NOTIFICA PER LA CONFERMA
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;

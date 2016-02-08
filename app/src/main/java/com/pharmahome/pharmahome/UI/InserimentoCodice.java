@@ -52,14 +52,6 @@ public class InserimentoCodice extends Fragment implements Pagina {
         return view;
     }
 
-    public int counter = 0;
-    public int getcounter(){
-        return counter;
-    }
-    public void incounter(){
-        counter++;
-    }
-
     private void initView(View view, Bundle savedInstance){
         final Activity activity = getActivity();
         final DBController db = new DBController(getContext());
@@ -75,6 +67,9 @@ public class InserimentoCodice extends Fragment implements Pagina {
                 InputMethodManager imm =
                         (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(cb.getWindowToken(), 0);
+                // TODO migliorare il sistema di verifica dell'input
+                // settare un messaggio per gli intermedi
+                // settare una lunghezza minima anche per il nome
                 try {
                     if (tcb.length() >= Farmaco.MIN_LEN_AIC) {
                         avanti(db.ricercaFarmacoPerAIC(tcb));
@@ -111,8 +106,6 @@ public class InserimentoCodice extends Fragment implements Pagina {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
-                incounter();
-                Log.d("COUNTER", "" + getcounter());
                 String aic = v.getText().toString();
                 if (aic.length() < 9) {
                     return handled;
@@ -173,17 +166,28 @@ public class InserimentoCodice extends Fragment implements Pagina {
 
     // handlers
 
-    private void avanti(Farmaco farmaco){
+    public void avanti(Farmaco farmaco){
         InsertActivity activity = (InsertActivity) getActivity();
         activity.setFarmaco(farmaco);
         avviaSceltaData();
     }
 
-    private void avanti(ListaFarmaci listaFarmaci){
+    public void avanti(ListaFarmaci listaFarmaci){
         final ListaFarmaci lf = listaFarmaci;
         int len = listaFarmaci.size();
         switch (len){
             case 0: {
+                parent.visualizzaDialog(R.string.msg_nessun_farmaco_titolo, R.string.msg_nessun_farmaco_corpo);
+//                AlertDialog.Builder b = parent.getAlertBuilder();
+//                b.setTitle(getString(R.string.msg_nessun_farmaco_titolo));
+//                b.setMessage(getString(R.string.msg_nessun_farmaco_corpo));
+//                b.setNeutralButton(R.string.btn_chiudi, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        return;
+//                    }
+//                });
+//                b.create().show();
                 break;
             }
             case 1: {
@@ -196,7 +200,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
                     lista[i] = listaFarmaci.get(i).getNome();
                 }
                 AlertDialog.Builder b = parent.getAlertBuilder();
-                b.setTitle("Seleziona il farmaco");
+                b.setTitle(getString(R.string.msg_seleziona_farmaco_titolo));
                 b.setItems(lista, new DialogInterface.OnClickListener() {
 
                     @Override
@@ -204,7 +208,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
                         avanti(lf.get(which));
                     }
                 });
-                b.setNegativeButton(getString(R.string.btn_dialog_negative), new DialogInterface.OnClickListener() {
+                b.setNeutralButton(getString(R.string.btn_dialog_negative), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         return;
