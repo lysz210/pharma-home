@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
@@ -31,7 +33,7 @@ import org.json.JSONException;
 /**
  * Created by ciao on 26/01/16.
  */
-public class InserimentoCodice extends Fragment implements Pagina {
+public class PaginaInserimentoCodice extends Fragment implements Pagina {
 
     private Button avanti;
     private ImageButton scan;
@@ -42,7 +44,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
     private String lastNome = "";
     private void setLastNome(String s){ lastNome = s;}
 
-    public final static String TITOLO = "Inserimento nuova confezione";
+    public final static int TITOLO_ID = R.string.titolo_pagina_inserimento_codice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -178,16 +180,6 @@ public class InserimentoCodice extends Fragment implements Pagina {
         switch (len){
             case 0: {
                 parent.visualizzaDialog(R.string.msg_nessun_farmaco_titolo, R.string.msg_nessun_farmaco_corpo);
-//                AlertDialog.Builder b = parent.getAlertBuilder();
-//                b.setTitle(getString(R.string.msg_nessun_farmaco_titolo));
-//                b.setMessage(getString(R.string.msg_nessun_farmaco_corpo));
-//                b.setNeutralButton(R.string.btn_chiudi, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        return;
-//                    }
-//                });
-//                b.create().show();
                 break;
             }
             case 1: {
@@ -221,7 +213,7 @@ public class InserimentoCodice extends Fragment implements Pagina {
     }
 
     private void avviaSceltaData(){
-        Fragment frag = (Fragment) new SelezioneData();
+        Fragment frag = (Fragment) new PaginaSelezioneData();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         frag.setArguments(getActivity().getIntent().getExtras());
@@ -248,8 +240,9 @@ public class InserimentoCodice extends Fragment implements Pagina {
 
     @Override
     public String updateTitolo(TextView v) {
-        v.setText(TITOLO);
-        return TITOLO;
+        String titolo = getString(TITOLO_ID);
+        v.setText(titolo);
+        return titolo;
     }
 
     @Override

@@ -9,9 +9,9 @@ import java.util.GregorianCalendar;
  * Created by ciao on 05/12/15.
  */
 public enum Fasce {
-    buono (2),
-    inScadenza (1),
-    scaduto (0);
+    BUONO(2),
+    IN_SCADENZA(1),
+    SCADUTO(0);
 
     public static int RANGE = 15;
     private int colore;
@@ -40,13 +40,13 @@ public enum Fasce {
     public static Fasce getFasca(Calendar data){
         GregorianCalendar oggi = new GregorianCalendar();
         if(data.before(oggi)){
-            return scaduto;
+            return SCADUTO;
         }
         oggi.add(oggi.DATE, RANGE);
         if(data.before(oggi)){
-            return inScadenza;
+            return IN_SCADENZA;
         }
-        return buono;
+        return BUONO;
     }
 
     public int getColore(){

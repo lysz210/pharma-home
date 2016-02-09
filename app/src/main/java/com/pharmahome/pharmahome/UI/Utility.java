@@ -14,11 +14,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.pharmahome.pharmahome.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by ciao on 29/01/16.
@@ -40,6 +43,7 @@ public class Utility {
             int totalHeight = 0;
             View tView = null;
             for(int i=0; i < listAdapter.getCount(); i++){
+                tView = listAdapter.getView(i, null, listView);
                 if(i==0){
                     tView.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ActionBar.LayoutParams.WRAP_CONTENT));
                 }
@@ -163,5 +167,13 @@ public class Utility {
     public static boolean rmFile(String path){
         File file = new File(path);
         return file.delete();
+    }
+
+    /**
+     * costruisce un oggetto SimpleDateFormat con il pattern DATE_PTN
+     * @return  SimpleDateFormatter per la formattazione di una data
+     */
+    public static SimpleDateFormat getDateFormatter(Context context){
+        return new SimpleDateFormat(context.getString(R.string.DATE_PTN));
     }
 }

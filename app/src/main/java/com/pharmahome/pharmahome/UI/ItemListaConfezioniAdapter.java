@@ -30,10 +30,11 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     private Context context;
     private ListaConfezioni confezioni;
     private int i = 0;
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat formatter = null;
 
     public ItemListaConfezioniAdapter(Context context, ListaConfezioni values) {
         super(context, -1, values);
+        formatter = Utility.getDateFormatter(context);
         this.context = context;
         this.confezioni = values;
     }

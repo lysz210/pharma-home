@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
@@ -27,9 +29,9 @@ import java.text.ParseException;
 /**
  * Created by ciao on 24/01/16.
  */
-public class RisultatiRicerca extends Fragment implements Pagina {
+public class PaginaRisultatiRicerca extends Fragment implements Pagina {
 
-    public static final String TITOLO = "Risultati ricerca";
+    public static final int TITOLO_ID = R.string.titolo_pagina_risultati_ricerca;
 
     public static final String KEY_Q = "search_query";
 
@@ -49,7 +51,7 @@ public class RisultatiRicerca extends Fragment implements Pagina {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_result, container, false);
+        View view = inflater.inflate(R.layout.pagina_search_result, container, false);
         scroller = (ScrollView) view;
 
         this.inflater = inflater;
@@ -204,8 +206,9 @@ public class RisultatiRicerca extends Fragment implements Pagina {
 
     @Override
     public String updateTitolo(TextView v) {
-        v.setText(TITOLO);
-        return TITOLO;
+        String titolo = getString(TITOLO_ID);
+        v.setText(titolo);
+        return titolo;
     }
 
     @Override

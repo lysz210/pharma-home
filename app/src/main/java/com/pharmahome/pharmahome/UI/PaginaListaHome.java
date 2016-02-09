@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
+import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -20,9 +23,9 @@ import java.text.ParseException;
 /**
  * Created by ciao on 24/01/16.
  */
-public class ListaHome extends ListFragment implements Pagina {
+public class PaginaListaHome extends ListFragment implements Pagina {
 
-    public static final String TITOLO = "Le tue confezioni";
+    public static final int TITOLO_ID = R.string.titolo_pagina_lista_home;
 
     OnFarmacoSelectedListener mCallback;
 
@@ -85,8 +88,9 @@ public class ListaHome extends ListFragment implements Pagina {
 
     @Override
     public String updateTitolo(TextView v) {
-        v.setText(TITOLO);
-        return TITOLO;
+        String titolo = getString(TITOLO_ID);
+        v.setText(titolo);
+        return titolo;
     }
 
     @Override

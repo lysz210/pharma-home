@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">FarmaHome</string>
+    <string name="app_name">Farm Home</string>
     <string name="action_settings">Settings</string>
+
+    <string name="titolo_pagina_dettaglio_farmaco">Scheda dettagliata</string>
+    <string name="titolo_pagina_inserimento_codice">Nuova confezione</string>
+    <string name="titolo_pagina_lista_home">Le tue confezioni</string>
+    <string name="titolo_pagina_risultati_ricerca">Risultati ricerca</string>
+    <string name="titolo_pagina_selezione_data">Selezione scadenza</string>
 
     <string name="input_cb">Codice a barre</string>
     <string name="input_nome">Nome del farmaco</string>
@@ -28,8 +34,21 @@
 
     <string name="msg_nessun_farmaco_titolo">Farmaco non trovato</string>
     <string name="msg_nessun_farmaco_corpo">Mi spiace ma non siamo riusciti a trovare nessun farmaco.</string>
+    <string name="msg_fallimento_apertura_bugiardino_titolo">Apertura bugiarnido fallita!</string>
+    <string name="msg_nessuna_connessione_internet">Non e' disponibile nessuna connessione a internet.</string>
 
     <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
 
     <string name="btn_chiudi">chiudi</string>
+
+    <string name="notifica_titolo_principale">Pharm Home avviso scadenze</string>
+    <string name="notifica_contenuto_principale">Hai delle confezioni da visionare</string>
+    <string name="notifica_sommario_header">Sommario: </string>
+    <string name="notifica_sommario_in_scadenza_ptn">in scadenza(%d)</string>
+    <string name="notifica_sommario_scaduto_ptn">scadute(%d)</string>
+    <string name="notifica_sottotilo_scaduti">Confezioni scadute</string>
+    <string name="notifica_sottotilo_in_scadenza">Confezioni in scadenza</string>
+
+
+    <string name="DATE_PTN">dd-MM-yyyy</string>
 </resources>

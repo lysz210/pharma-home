@@ -1,7 +1,5 @@
-package com.pharmahome.pharmahome.UI;
+package com.pharmahome.pharmahome.UI.paginatoreInterface;
 
-
-import android.support.v7.app.AlertDialog;
 
 /**
  * Created by ciao on 28/01/16.

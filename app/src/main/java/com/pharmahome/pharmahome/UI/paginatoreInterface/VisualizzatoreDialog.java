@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.UI;
+package com.pharmahome.pharmahome.UI.paginatoreInterface;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;

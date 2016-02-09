@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.pharmahome.pharmahome.UI.InserimentoCodice;
+import com.pharmahome.pharmahome.UI.PaginaInserimentoCodice;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
-import com.pharmahome.pharmahome.UI.Pagina;
-import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
-import com.pharmahome.pharmahome.UI.SelezioneData;
-import com.pharmahome.pharmahome.UI.VisualizzatoreDialog;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
@@ -45,11 +45,11 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         setSupportActionBar(toolbar);
 
         if(findViewById(R.id.main_container) != null){
-            InserimentoCodice insert = new InserimentoCodice();
+            PaginaInserimentoCodice insert = new PaginaInserimentoCodice();
 
             insert.setArguments(getIntent().getExtras());
 
-            SelezioneData select = new SelezioneData();
+            PaginaSelezioneData select = new PaginaSelezioneData();
             select.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction().add(R.id.main_container, insert).commit();
@@ -102,7 +102,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     }
 
     public void onFarmacoSelected(int position) {
-        SelezioneData selezioneData = new SelezioneData();
+        PaginaSelezioneData selezioneData = new PaginaSelezioneData();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -223,7 +223,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         if(scanningResult != null){
             DBController db = new DBController(this);
             try {
-                ((InserimentoCodice)actualPage).avanti(db.ricercaFarmacoPerAIC(scanningResult.getContents()));
+                ((PaginaInserimentoCodice)actualPage).avanti(db.ricercaFarmacoPerAIC(scanningResult.getContents()));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -14,13 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 
@@ -30,9 +31,9 @@ import java.util.GregorianCalendar;
 /**
  * Created by ciao on 26/01/16.
  */
-public class SelezioneData extends Fragment implements Pagina {
+public class PaginaSelezioneData extends Fragment implements Pagina {
 
-    public final static String TITOLO = "Seleziona la data di scadenza";
+    public final static int TITOLO_ID = R.string.titolo_pagina_selezione_data;
 
     private Button salva;
     private ImageButton modifica;
@@ -48,7 +49,7 @@ public class SelezioneData extends Fragment implements Pagina {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.selezione_data, container, false);
+        View view = inflater.inflate(R.layout.pagina_selezione_data, container, false);
         scroller = (ScrollView)view;
         InsertActivity activity = (InsertActivity) getActivity();
         ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
@@ -139,8 +140,9 @@ public class SelezioneData extends Fragment implements Pagina {
 
     @Override
     public String updateTitolo(TextView v) {
-        v.setText(TITOLO);
-        return TITOLO;
+        String titolo = getString(TITOLO_ID);
+        v.setText(titolo);
+        return titolo;
     }
 
     /**
@@ -156,7 +158,7 @@ public class SelezioneData extends Fragment implements Pagina {
             intent.setData(Uri.parse(url));
             activity.startActivity(intent);
         } else {
-            activity.visualizzaMessaggio("Apertura bugiarnido fallita! Non e' disponibile nessuna connessione a internet.");
+            activity.visualizzaDialog(R.string.msg_fallimento_apertura_bugiardino_titolo, R.string.msg_nessuna_connessione_internet);
         }
     }
 

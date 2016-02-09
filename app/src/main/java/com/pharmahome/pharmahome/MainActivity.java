@@ -3,7 +3,6 @@ package com.pharmahome.pharmahome;
 // TODO attenzione inserire unique su campo aic db
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,13 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.pharmahome.pharmahome.UI.DettaglioFarmaco;
-import com.pharmahome.pharmahome.UI.ListaHome;
+import com.pharmahome.pharmahome.UI.PaginaDettaglioFarmaco;
+import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
-import com.pharmahome.pharmahome.UI.Pagina;
-import com.pharmahome.pharmahome.UI.PaginatoreSingolo;
-import com.pharmahome.pharmahome.UI.RisultatiRicerca;
-import com.pharmahome.pharmahome.UI.VisualizzatoreDialog;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         //_db.onUpgrade(_db.getWritableDatabase(), 1, 2);
 
         if(findViewById(R.id.main_container) != null){
-            ListaHome farmaci = new ListaHome();
+            PaginaListaHome farmaci = new PaginaListaHome();
 
             farmaci.setArguments(getIntent().getExtras());
 
@@ -117,12 +115,12 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                         Log.d("NOME FARMACO", q);
                         handled = true;
                         onSwitch();
-                        RisultatiRicerca res = new RisultatiRicerca();
+                        PaginaRisultatiRicerca res = new PaginaRisultatiRicerca();
                         Bundle args = getIntent().getExtras();
                         if(args == null){
                             args = new Bundle();
                         }
-                        args.putString(RisultatiRicerca.KEY_Q, q);
+                        args.putString(PaginaRisultatiRicerca.KEY_Q, q);
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         res.setArguments(args);
 
@@ -173,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     @Override
     public void onFarmacoSelected(Confezione confezione) {
         data.put(Confezione.KEY_CONFEZIONE, confezione);
-        DettaglioFarmaco farmaco = new DettaglioFarmaco();
+        PaginaDettaglioFarmaco farmaco = new PaginaDettaglioFarmaco();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.main_container, farmaco);

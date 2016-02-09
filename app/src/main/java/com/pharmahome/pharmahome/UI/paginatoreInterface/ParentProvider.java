@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.UI;
+package com.pharmahome.pharmahome.UI.paginatoreInterface;
 
 /**
  * Created by ciao on 04/02/16.

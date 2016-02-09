@@ -24,7 +24,7 @@ public class ScadenzeManager extends BroadcastReceiver {
     public static final String SHARED_KEY_DELAY = "ScadenzaManager.INTERVALLO";
     public static final String SHARED_KEY_HOUR = "ScadenzaManager.HOUR";
     public static final String SHARED_KEY_MINUTE = "ScadenzaManager.MINUTE";
-    public static final long DEFAULT_DELAY = AlarmManager.INTERVAL_DAY;
+    public static final long DEFAULT_DELAY = AlarmManager.INTERVAL_HALF_HOUR;
     public static final int DEFAULT_HOUR = 8;
     public static final int DEFAULT_MINUTE = 00;
     public static final String SHARED_NAME = "ScadenzaManager.SHARED";
@@ -33,6 +33,7 @@ public class ScadenzeManager extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
         switch (intent.getAction()){
+            case "DEBUG_TEST":
             case BOOT_INTENT_ACTION:
                 // inserimento del task per il richiamo di questa funzione domani
                 setNotificaGiornaliera(context, intent);
@@ -58,9 +59,10 @@ public class ScadenzeManager extends BroadcastReceiver {
         int minute = shared.getInt(SHARED_KEY_MINUTE, DEFAULT_MINUTE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
-        calendar.set(Calendar.HOUR, hour);
-        calendar.set(Calendar.MINUTE, minute);
+        // TODO RICORDARSI DI DECCOMENTARE QUESTA RIGA
+         //calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+         calendar.set(Calendar.HOUR_OF_DAY, hour);
+         calendar.set(Calendar.MINUTE, minute);
         Intent t_intent = new Intent(context, ScadenzeManager.class);
         t_intent.setAction(NOTIFICA_INTENT_ACTION);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, NOTIFICA_CODE, t_intent, 0);

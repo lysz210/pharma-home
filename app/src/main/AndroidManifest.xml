@@ -15,7 +15,7 @@
     <!-- descrizione dell'app -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_pharmhome"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -70,6 +70,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="ScadenzeManager.NOTIFICA_INTENT_ACTION" />
+                <action android:name="DEBUG_TEST" />
             </intent-filter>
         </receiver>
 

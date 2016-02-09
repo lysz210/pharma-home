@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -24,9 +26,9 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 
-public class DettaglioFarmaco extends Fragment implements Pagina {
+public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
-    public final static String TITOLO = "Scheda dettagliata";
+    public static int TITOLO_ID = R.string.titolo_pagina_dettaglio_farmaco;
     final static String ARG_POSITION = "position";
     int mCurrentPosition = 0;
 
@@ -41,12 +43,11 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
         }
-
         Activity activity = getActivity();
         setParent((PaginatoreSingolo)activity);
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.dettaglio_farmaco, container, false);
+        View view = inflater.inflate(R.layout.pagina_dettaglio_farmaco, container, false);
         scroller = (ScrollView) view;
 
         listView = (ListView) view.findViewById(R.id.listaConfezioni);
@@ -84,7 +85,7 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
         }
 
         if(lc == null || lc.size()==0){
-            ListaHome farmaci = new ListaHome();
+            PaginaListaHome farmaci = new PaginaListaHome();
             ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().add(R.id.main_container, farmaci).commit();
         }
 
@@ -180,14 +181,15 @@ public class DettaglioFarmaco extends Fragment implements Pagina {
             intent.setData(Uri.parse(url));
             activity.startActivity(intent);
         } else {
-            activity.visualizzaMessaggio("Apertura bugiarnido fallita! Non e' disponibile nessuna connessione a internet.");
+            activity.visualizzaDialog(R.string.msg_fallimento_apertura_bugiardino_titolo, R.string.msg_nessuna_connessione_internet);
         }
     }
 
     @Override
     public String updateTitolo(TextView v) {
-        v.setText(TITOLO);
-        return TITOLO;
+        String titolo = getString(TITOLO_ID);
+        v.setText(titolo);
+        return titolo;
     }
 
     @Override
