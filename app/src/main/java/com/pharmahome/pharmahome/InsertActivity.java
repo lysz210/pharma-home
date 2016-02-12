@@ -25,6 +25,8 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
+import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
 
 import org.json.JSONException;
 
@@ -223,11 +225,16 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         if(scanningResult != null){
             DBController db = new DBController(this);
             try {
-                ((PaginaInserimentoCodice)actualPage).avanti(db.ricercaFarmacoPerAIC(scanningResult.getContents()));
+                String aic = scanningResult.getContents();
+                ListaFarmaci lf = db.ricercaFarmacoPerAIC(aic);
+                Farmaco farmaco = lf.size() > 0 ? lf.get(0) : null;
+                if(farmaco != null)
+                    ((PaginaInserimentoCodice) actualPage).avanti(farmaco);
+                else
+                    visualizzaDialog(R.string.msg_nessun_farmaco_titolo, R.string.msg_nessun_farmaco_corpo);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            visualizzaMessaggio("Barcode " + scanningResult.getContents());
         }
     }
 }

@@ -1,13 +1,17 @@
 package com.pharmahome.pharmahome.core.db;
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.Utility;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
@@ -35,9 +39,13 @@ public class DBController extends SQLiteOpenHelper {
     private static final String SQL_DELETE_CONFEZIONI = FarmacoContract.Confezione.SQL_DROP_TABLE;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "PharmaHome.db";
     private Context context = null;
+    public static final int NOTIFICA_UPDATE_ID = 1;
+
+    private static boolean isUpdating = false;
+    public static boolean isUpdating(){ return isUpdating; }
 
     public DBController(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -98,53 +106,21 @@ public class DBController extends SQLiteOpenHelper {
     }
 
     // funzioni personalizzate
-    public void update() {
-        (new AsyncTask<String, Integer, String>() {
-
-            private Exception exception;
-
-            protected String doInBackground(String... command) {
-                if (!Utility.isNetworkAvailable(context)) {
-                    return "No connection available!";
-                }
-                System.out.println("Asynctask doInBG");
-                System.out.println(command[0]);
-                PharmaIterator tf = new PharmaIterator();
-                int i = 0;
-                for (Farmaco f : tf) {
-                    modificaFarmaco(f);
-                    // System.out.println(f.getLinkFogliettoIllustrativo());
-                    if (++i % 100 == 0)
-                        publishProgress(i);
-
-//                    if (i == 100) {
-//                        return "Done!";
-//                    }
-                }
-                return "Done!";
-            }
-
-            protected void onProgressUpdate(Integer... progress) {
-                System.out.println(progress[0]);
-            }
-
-            protected void onPostExecute(String feed) {
-                // TODO: check this.exception
-                // TODO: do something with the feed
-                System.out.println("#####################################################################");
-                System.out.println(feed);
-            }
-        }).execute("start");
+    public void update(Farmaco farmaco) {
+        modificaFarmaco(farmaco);
     }
-
-    public Cursor selectAll(){
-        //System.out.println("#####################################################################");
-        //System.out.println("selectAll");
-        return getReadableDatabase().rawQuery("SELECT * FROM Farmaci", null);
-    }
-
 
     public ListaConfezioni getAllConfezioni() throws JSONException, ParseException{
+        SQLiteDatabase db = getWritableDatabase();
+        String select = FarmacoContract.Confezione.BASE_SEL;
+        Log.d("DB INTEROGAZIONE", select);
+        String[] args = null;
+        Cursor cur = db.rawQuery(select, args);
+        return FarmacoContract.Confezione.toListaConfezioni(cur);
+    }
+
+
+    public ListaConfezioni getConfezioniHome() throws JSONException, ParseException{
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.CONFEZIONI_X_HOME;
         Log.d("DB INTEROGAZIONE", select);
@@ -255,7 +231,7 @@ public class DBController extends SQLiteOpenHelper {
         Cursor cur = db.rawQuery(select, args);
         return FarmacoContract.Farmaco.toListaFarmaci(cur);
     }
-    private void modificaFarmaco(Farmaco record) {
+    private int modificaFarmaco(Farmaco record) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = FarmacoContract.Farmaco.createRecordValues(record);
         String[] args = {record.getAic()};
@@ -267,6 +243,8 @@ public class DBController extends SQLiteOpenHelper {
         );
         if(response == 0){
             aggiungiFarmaco(record);
+            response = 1;
         }
+        return response;
     }
 }

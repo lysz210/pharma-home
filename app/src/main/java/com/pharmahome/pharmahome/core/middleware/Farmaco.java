@@ -34,24 +34,24 @@ public class Farmaco {
     public static final int MIN_LEN_AIC = 9;
 
     public static final String[] KEYS = {
-            "aic",
-            "nome",
-            "principioAttivo",
-            "ditta",
-            "codiceGruppoEquivalenza",
-            "descrizioneGruppoEquivalenza",
-            "linkFogliettoIllustrativo",
-            "ecipienti",
-            "categoria",
-            "precauzioni",
-            "effettiIndesiderati",
-            "avvertenzeSpeciali",
-            "interazioni",
-            "posologia",
-            "somministrazione",
-            "sovradosaggio",
-            "indicazioniTerapeutiche",
-            "comportamentoEmergenza"
+            FarmacoContract.Farmaco.COLUMN_NAME_AIC,
+            FarmacoContract.Farmaco.COLUMN_NAME_NOME,
+            FarmacoContract.Farmaco.COLUMN_NAME_PRINCIPIO_ATTIVO,
+            FarmacoContract.Farmaco.COLUMN_NAME_DITTA,
+            FarmacoContract.Farmaco.COLUMN_NAME_CODICE_GRUPPO_EQUIVALENZA,
+            FarmacoContract.Farmaco.COLUMN_NAME_DESCRIZIONE_GRUPPO_EQUIVALENZA,
+            FarmacoContract.Farmaco.COLUMN_NAME_LINK_FOGLIETTO_ILLUSTRATIVO,
+            FarmacoContract.Farmaco.COLUMN_NAME_ECIPIENTI,
+            FarmacoContract.Farmaco.COLUMN_NAME_CATEGORIA,
+            FarmacoContract.Farmaco.COLUMN_NAME_PRECAUZIONI,
+            FarmacoContract.Farmaco.COLUMN_NAME_EFFETTI_INDESIDERATI,
+            FarmacoContract.Farmaco.COLUMN_NAME_AVVERTENZE_SPECIALI,
+            FarmacoContract.Farmaco.COLUMN_NAME_INTERAZIONI,
+            FarmacoContract.Farmaco.COLUMN_NAME_POSOLOGIA,
+            FarmacoContract.Farmaco.COLUMN_NAME_SOMMINISTRAZIONE,
+            FarmacoContract.Farmaco.COLUMN_NAME_SOVRADOSAGGIO,
+            FarmacoContract.Farmaco.COLUMN_NAME_INDICAZIONI_TERAPEUTICHE,
+            FarmacoContract.Farmaco.COLUMN_NAME_COMPORTAMENTOEMERGENZA
     };
 
     private long _farmacoId = -1;

@@ -220,7 +220,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         transaction.replace(R.id.main_container, frag);
         transaction.addToBackStack(null);
 
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     @Override

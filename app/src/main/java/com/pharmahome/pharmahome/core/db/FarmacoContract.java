@@ -39,7 +39,7 @@ public class FarmacoContract {
         public static final String COLUMN_NAME_LINK_FOGLIETTO_ILLUSTRATIVO = "linkFogliettoIllustrativo";
         public static final String COLUMN_NAME_ECIPIENTI = "ecipienti";
         public static final String COLUMN_NAME_CATEGORIA = "categoria";
-        public static final String COLUMN_NAME_PRECAUZIOONI = "precauzioni";
+        public static final String COLUMN_NAME_PRECAUZIONI = "precauzioni";
         public static final String COLUMN_NAME_EFFETTI_INDESIDERATI = "effettiIndesiderati";
         public static final String COLUMN_NAME_AVVERTENZE_SPECIALI = "avvertenzeSpeciali";
         public static final String COLUMN_NAME_INTERAZIONI = "interazioni";
@@ -62,7 +62,7 @@ public class FarmacoContract {
                         COLUMN_NAME_LINK_FOGLIETTO_ILLUSTRATIVO + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_ECIPIENTI + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_CATEGORIA + TEXT_TYPE + COMMA_SEP +
-                        COLUMN_NAME_PRECAUZIOONI + TEXT_TYPE + COMMA_SEP +
+                        COLUMN_NAME_PRECAUZIONI + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_EFFETTI_INDESIDERATI + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_AVVERTENZE_SPECIALI + TEXT_TYPE + COMMA_SEP +
                         COLUMN_NAME_INTERAZIONI + TEXT_TYPE + COMMA_SEP +

@@ -3,6 +3,7 @@ package com.pharmahome.pharmahome;
 // TODO attenzione inserire unique su campo aic db
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -23,9 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.pharmahome.pharmahome.UI.NotificatoreScadenzeService;
 import com.pharmahome.pharmahome.UI.PaginaDettaglioFarmaco;
 import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.UpdateFarmaciService;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
@@ -208,7 +211,12 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
             case R.id.action_home:
                 visualizzaMessaggio("premuto home");
                 return true;
-
+            case R.id.action_update:
+                // TODO COVERTIRE IN SERVICE
+                Intent t_intent = new Intent();
+                t_intent.setAction(UpdateFarmaciService.NOME);
+                sendBroadcast(t_intent);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

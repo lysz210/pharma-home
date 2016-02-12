@@ -39,7 +39,7 @@ public class PaginaListaHome extends ListFragment implements Pagina {
 
         ListaConfezioni lista = null;
         try {
-            lista = MainActivity.getDBManager().getAllConfezioni();
+            lista = MainActivity.getDBManager().getConfezioniHome();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {

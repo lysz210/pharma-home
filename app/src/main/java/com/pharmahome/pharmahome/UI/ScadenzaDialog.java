@@ -3,6 +3,7 @@ package com.pharmahome.pharmahome.UI;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,9 @@ public class ScadenzaDialog extends DatePickerDialog {
     public ScadenzaDialog(Context context, OnDateSetListener onDateSetListener){
         super(context, onDateSetListener, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         Log.d("Dialog", "creazione dialog");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            // getDatePicker().setMinDate(oggi.getTimeInMillis());
+        }
         customTitolo = getLayoutInflater().inflate(R.layout.titolo_nuova_confezione_calendario, null);
         setCustomTitle(customTitolo);
         show();
@@ -39,6 +43,4 @@ public class ScadenzaDialog extends DatePickerDialog {
         }
         return v;
     }
-
-
 }

@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
-import com.pharmahome.pharmahome.ScadenzeManager;
+import com.pharmahome.pharmahome.BroadcastManager;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
@@ -53,7 +53,7 @@ public class NotificatoreScadenzeService extends IntentService {
                 .setContentTitle(getString(R.string.notifica_titolo_principale))
                 .setContentText(getString(R.string.notifica_contenuto_principale))
                 .setAutoCancel(true)
-                .setCategory(ScadenzeManager.NOTIFICA_CATEGORY);
+                .setCategory(BroadcastManager.NOTIFICA_CATEGORY);
 
         // test per notifica piu' grande
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -83,7 +83,7 @@ public class NotificatoreScadenzeService extends IntentService {
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
 // Builds the notification and issues it.
-        mNotifyMgr.notify(ScadenzeManager.NOTIFICA_CODE, mBuilder.build());
+        mNotifyMgr.notify(BroadcastManager.NOTIFICA_CODE, mBuilder.build());
     }
 
     /**

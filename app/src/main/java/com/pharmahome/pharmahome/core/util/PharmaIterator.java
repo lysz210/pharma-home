@@ -93,6 +93,10 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
         return this;
     }
 
+    public int length(){
+        return farmaci.length();
+    }
+
     public static void main(String args[]) throws JSONException{
         PharmaIterator a = new PharmaIterator();
         for(Farmaco f: a)
