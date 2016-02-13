@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.pharmahome.pharmahome.UI.NotificatoreScadenzeService;
 import com.pharmahome.pharmahome.UI.PaginaDettaglioFarmaco;
 import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
@@ -284,5 +283,4 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
             }
         }
     }
-
 }
