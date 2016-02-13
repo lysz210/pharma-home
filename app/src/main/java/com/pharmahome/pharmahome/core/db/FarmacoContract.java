@@ -120,7 +120,7 @@ public class FarmacoContract {
 
         public static final String VIEW_NAME = TABLE_NAME + "View";
 
-        public static String SQL_ORDERBY_SCADENZA = " ORDER BY " + COLUMN_NAME_SCADENZA + " ASC";
+        public static String SQL_ORDERBY_SCADENZA = " ORDER BY " + COLUMN_NAME_SCADENZA + ", " + Farmaco.COLUMN_NAME_NOME + " ASC";
 
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
@@ -149,7 +149,12 @@ public class FarmacoContract {
         public static String BASE_SEL =
                 "SELECT * FROM " + VIEW_NAME;
 
-        public static String CONFEZIONI_X_HOME = "SELECT * FROM " + VIEW_NAME + " GROUP BY " + COLUMN_NAME_FARMACO;
+        public static String CONFEZIONI_X_HOME = "SELECT * FROM " +
+                Farmaco.TABLE_NAME +
+                " JOIN ( SELECT min(c." + _ID + ") AS " + _ID + ", c." + COLUMN_NAME_FARMACO + ", c." + COLUMN_NAME_SCADENZA + ", c." + COLUMN_NAME_NUOVA_CONFEZIONE +
+                    " FROM " + TABLE_NAME + " c WHERE c." + COLUMN_NAME_SCADENZA + " = ( SELECT min(i." + COLUMN_NAME_SCADENZA + ") FROM " +
+                    TABLE_NAME + " i WHERE i." + COLUMN_NAME_FARMACO + " = c." + COLUMN_NAME_FARMACO + ") GROUP BY " + COLUMN_NAME_FARMACO + ") ON " +
+                Farmaco._ID + " = " + COLUMN_NAME_FARMACO + SQL_ORDERBY_SCADENZA;
 
         // query basilari
         public static String SELECT_CONFEZIONE_BY_ID = BASE_SEL + " WHERE " + _ID + "=?";

@@ -49,6 +49,7 @@ public class PaginaListaHome extends ListFragment implements Pagina {
         final Activity activity = getActivity();
         setParent((PaginatoreSingolo)activity);
         ItemListaHomeAdapter adapter = null;
+        if(lista == null) lista = new ListaConfezioni();
         adapter = new ItemListaHomeAdapter(activity, lista);
         setListAdapter(adapter);
         ((PaginatoreSingolo)activity).setActualPage(this);

@@ -34,13 +34,11 @@ public class ItemListaHomeAdapter extends ArrayAdapter<Confezione> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.farmaco_home_item, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.nome_farmaco);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.semaforo);
+        TextView nomeFarmaco = (TextView) rowView.findViewById(R.id.nome_farmaco);
+        ImageView semaforo = (ImageView) rowView.findViewById(R.id.semaforo);
         Confezione confezione = values.get(position);
-        textView.setText(confezione.getNome());
-        Log.d("NOME", confezione.getNome());
-        imageView.setImageResource(confezione.getFascia().getIdentificatore());
-
+        nomeFarmaco.setText(confezione.getNome());
+        semaforo.setImageResource(confezione.getFascia().getIdentificatore());
         return rowView;
     }
 
