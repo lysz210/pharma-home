@@ -131,6 +131,14 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         Toast toast = Toast.makeText(this, msg, dur);
         toast.show();
     }
+    @Override
+    public void visualizzaMessaggio(int msg, int dur){
+        Toast.makeText(this, msg, dur).show();
+    }
+    @Override
+    public void visualizzaMessaggio(int msg){
+        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+    }
 
     @Override
     public void visualizzaMessaggio(String msg) {

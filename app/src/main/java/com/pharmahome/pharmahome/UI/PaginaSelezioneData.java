@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 
@@ -94,11 +96,13 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     }
 
     private void salva(View v){
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
+        if(!verificaDataScadenza()) return;
         Confezione confezione = new Confezione(((InsertActivity) getActivity()).getFarmaco());
         confezione.setScadenza(scadenza);
         (new DBController(getContext())).aggiungiConfezione(confezione);
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -127,12 +131,15 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         final TextView v = view;
         new ScadenzaDialog(
             getContext(),
-            new DatePickerDialog.OnDateSetListener(){
+            new MyOnDateSetListener(){
                 @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                    v.setText(data);
-                    setScadenza(year, monthOfYear, dayOfMonth);
+                public void onDateSet(DatePicker view, Calendar data) {
+                    scadenza = data;
+                    v.setText(Utility.getDateFormatter(getContext()).format(data.getTime()));
+                }
+                @Override
+                public void onDateError(DatePicker view, Calendar data) {
+                    Log.w("date error:", "errore data");
                 }
             }
         );
@@ -143,6 +150,27 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         String titolo = getString(TITOLO_ID);
         v.setText(titolo);
         return titolo;
+    }
+
+    private boolean verificaDataScadenza(){
+        boolean dataValida = false;
+        if(scadenza == null) {
+            parent.visualizzaDialog(R.string.notifica_scadenza_vuoto_titolo, R.string.notifica_scadenza_vuoto_contenuto);
+            return false;
+        }
+        Calendar oggi = Calendar.getInstance();
+        GregorianCalendar oggi2 = new GregorianCalendar(oggi.get(Calendar.YEAR), oggi.get(Calendar.MONTH), oggi.get(Calendar.DAY_OF_MONTH));
+        switch (scadenza.compareTo(oggi2)) {
+            case 1:
+                dataValida = true;
+                break;
+            case 0:
+            case -1:
+                dataValida = false;
+                parent.visualizzaDialog(R.string.notifica_scadenza_error_titolo, R.string.notifica_scadenza_error_contenuto);
+                break;
+        }
+        return dataValida;
     }
 
     /**

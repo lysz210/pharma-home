@@ -92,5 +92,4 @@ public class Confezione extends Farmaco {
     public boolean equals(Confezione c){
         return c == this || this._confezioneId == c.getConfezioneId();
     }
-
 }

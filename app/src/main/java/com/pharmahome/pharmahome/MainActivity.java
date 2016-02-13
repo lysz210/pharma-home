@@ -67,6 +67,16 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
     }
 
+
+    @Override
+    public void visualizzaMessaggio(int msg, int dur){
+        Toast.makeText(this, msg, dur).show();
+    }
+    @Override
+    public void visualizzaMessaggio(int msg){
+        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+    }
+
     @Override
     public AlertDialog.Builder getAlertBuilder() {
         return new AlertDialog.Builder(this);

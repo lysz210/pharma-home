@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import org.json.JSONException;
 
 import java.text.ParseException;
+import java.util.Calendar;
 
 public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
@@ -139,18 +142,17 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
         new ScadenzaDialog(
                 getContext(),
-                new DatePickerDialog.OnDateSetListener(){
-
+                new MyOnDateSetListener(){
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                        try {
-                            c.setScadenza(data);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                    public void onDateSet(DatePicker view, Calendar data) {
+                        c.setScadenza(data);
                         MainActivity.getDBManager().aggiungiConfezione(c);
                         updateListaConfezioni();
+                    }
+
+                    @Override
+                    public void onDateError(DatePicker view, Calendar data) {
+                        Log.w("date error:", "errore data");
                     }
                 }
         );

@@ -36,6 +36,8 @@
     <string name="msg_nessun_farmaco_corpo">Ci spiace ma non siamo riusciti a trovare nessun farmaco.</string>
     <string name="msg_fallimento_apertura_bugiardino_titolo">Apertura bugiarnido fallita!</string>
     <string name="msg_nessuna_connessione_internet">Non e\' disponibile nessuna connessione a internet.</string>
+    <string name="msg_data_inserita_non_valida">La data inserita non e\' valida.</string>
+    <string name="msg_data_inserita_non_valida_nessuna_modifica">Data non valida, nessuna modifica effettuata.</string>
 
     <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
 
@@ -53,6 +55,11 @@
     <string name="notifica_update_aggiornamento">In fase di aggiornamento...</string>
     <string name="notifica_update_aggiornamento_fine">Aggiornamento concluso</string>
     <string name="notifica_update_aggiornamento_error">Errore in fase di aggiornamento</string>
+
+    <string name="notifica_scadenza_error_titolo">Scadenza non valida</string>
+    <string name="notifica_scadenza_error_contenuto">La data di scadenza inserita non deve essere prima di oggi, per continuare bisogna inserire una data da domani in poi.</string>
+    <string name="notifica_scadenza_vuoto_titolo">Inserire la scadenza</string>
+    <string name="notifica_scadenza_vuoto_contenuto">La data di scadenza e\' obbligatoria, non puo\' rimanere vuota.</string>
 
     <string name="DATE_PTN">dd-MM-yyyy</string>
     <string name="DATE_FORMAT"></string>

@@ -1,7 +1,9 @@
 package com.pharmahome.pharmahome.UI;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,13 @@ import android.widget.Toast;
 
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -85,23 +89,21 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     private void modifica(View view, int pos){
         final int p = pos;
         new ScadenzaDialog(
-                getContext(),
-                new DatePickerDialog.OnDateSetListener(){
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                        Confezione c = getItem(p);
-                        try {
-                            c.setScadenza(data);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        MainActivity.getDBManager().modificaConfezione(c);
-                        remove(c);
-                        insert(c, p);
-                    }
+            getContext(),
+            new MyOnDateSetListener(){
+                @Override
+                public void onDateSet(DatePicker view, Calendar data) {
+                    Confezione c = getItem(p);
+                    c.setScadenza(data);
+                    MainActivity.getDBManager().modificaConfezione(c);
+                    remove(c);
+                    insert(c, p);
                 }
+                @Override
+                public void onDateError(DatePicker view, Calendar data) {
+                    Log.w("date error:", "errore data");
+                }
+            }
         );
     }
 
@@ -116,7 +118,5 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
         for(int i=0; i<len; i++){
             insert(lc.get(i), i);
         }
-
-
     }
 }

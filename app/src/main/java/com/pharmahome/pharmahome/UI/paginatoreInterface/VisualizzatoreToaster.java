@@ -6,4 +6,6 @@ package com.pharmahome.pharmahome.UI.paginatoreInterface;
 public interface VisualizzatoreToaster {
     void visualizzaMessaggio(String msg, int dur);
     void visualizzaMessaggio(String msg);
+    void visualizzaMessaggio(int msg, int dur);
+    void visualizzaMessaggio(int msg);
 }
