@@ -4,6 +4,7 @@ package com.pharmahome.pharmahome;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 String q = v.getText().toString();
                 switch (actionId){
                     case EditorInfo.IME_ACTION_SEARCH:
-                        Log.d("NOME FARMACO", q);
+                        Log.d("ACTION_START FARMACO", q);
                         handled = true;
                         onSwitch();
                         PaginaRisultatiRicerca res = new PaginaRisultatiRicerca();
@@ -222,9 +223,11 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 return true;
             case R.id.action_update:
                 // TODO COVERTIRE IN SERVICE
-                Intent t_intent = new Intent();
-                t_intent.setAction(UpdateFarmaciService.NOME);
-                sendBroadcast(t_intent);
+                if(!UpdateFarmaciService.isUpdating()){
+                    Intent t_intent = new Intent(this, UpdateFarmaciService.class);
+                    t_intent.setAction(UpdateFarmaciService.ACTION_START);
+                    startService(t_intent);
+                }
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

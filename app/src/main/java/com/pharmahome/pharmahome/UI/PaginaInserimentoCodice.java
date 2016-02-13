@@ -146,7 +146,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
                         try {
                             ListaFarmaci lf = db.ricercaFarmacoPerNome(nome);
 
-                            Log.d("NOME FARMACO", nome + lf.size());
+                            Log.d("ACTION_START FARMACO", nome + lf.size());
                             avanti(lf);
                         } catch (JSONException e) {
                             e.printStackTrace();

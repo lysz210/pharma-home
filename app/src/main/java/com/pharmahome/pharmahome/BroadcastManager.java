@@ -43,7 +43,7 @@ public class BroadcastManager extends BroadcastReceiver {
                 // richiama la notifica da lanciare oggi
                 lanciaNotificaOggi(context, intent);
                 break;
-            case UpdateFarmaciService.NOME:
+            case UpdateFarmaciService.ACTION_START:
                 lanciaUpdateFarmaci(context, intent);
                 break;
         }

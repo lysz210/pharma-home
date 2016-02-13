@@ -97,6 +97,10 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
         return farmaci.length();
     }
 
+    public int getActualState(){
+        return nextIndex -1;
+    }
+
     public static void main(String args[]) throws JSONException{
         PharmaIterator a = new PharmaIterator();
         for(Farmaco f: a)

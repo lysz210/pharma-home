@@ -42,6 +42,7 @@
     <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
 
     <string name="btn_chiudi">chiudi</string>
+    <string name="notifica_action_annulla">Annulla</string>
 
     <string name="notifica_titolo_principale">Pharm Home avviso scadenze</string>
     <string name="notifica_contenuto_principale">Hai delle confezioni da visionare</string>
