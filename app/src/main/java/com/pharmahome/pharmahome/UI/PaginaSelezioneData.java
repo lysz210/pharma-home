@@ -3,12 +3,11 @@ package com.pharmahome.pharmahome.UI;
 // TODO VERIFICA DELLA DATA PRIMA DI SALVARE.
 // TODO MESSAGGIO DI NOTIFICA PER LA CONFERMA
 
-import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ import java.util.GregorianCalendar;
 public class PaginaSelezioneData extends Fragment implements Pagina {
 
     public final static int TITOLO_ID = R.string.titolo_pagina_selezione_data;
+    public final static String KEY_FARMACO_AIC = "PaginaSelezioneData.KEY_FARMACO_AIC";
 
     private Button salva;
     private ImageButton modifica;
@@ -58,9 +58,19 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
         salva = (Button) view.findViewById(R.id.btn_salva);
         salva.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View v){
-                salva(v);
+            @Override
+            public void onClick(final View v){
+                VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+                builder.setNegativeButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
+                builder.setPositiveButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_salva,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                salva(v);
+                            }
+                        }
+                ));
+                parent.visualizzaDialog(R.string.dialog_scadenza_data_salva_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
             }
         });
 
@@ -103,6 +113,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         confezione.setScadenza(scadenza);
         (new DBController(getContext())).aggiungiConfezione(confezione);
         Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra(KEY_FARMACO_AIC, confezione.getAic());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

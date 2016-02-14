@@ -24,7 +24,6 @@
     <string name="hint_input_cerca">Cerca</string>
     <string name="menu_item_upload">Aggiorna dati</string>
 
-    <string name="btn_dialog_negative">Chiudi</string>
 
     <string name="intestazione_risultato_aic">Risultato per aic</string>
     <string name="intestazione_risultato_nome">Risultato per nome</string>
@@ -42,6 +41,8 @@
     <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
 
     <string name="btn_chiudi">chiudi</string>
+    <string name="btn_salva">Salva</string>
+    <string name="btn_dialog_negative">Chiudi</string>
     <string name="notifica_action_annulla">Annulla</string>
 
     <string name="notifica_titolo_principale">Pharm Home avviso scadenze</string>
@@ -67,5 +68,7 @@
 
     <string name="dialog_scadenza_data_non_valida_titolo">Errore scadenza</string>
     <string name="dialog_scadenza_data_non_valida_contenuto">La data inserita non e\' valida</string>
+    <string name="dialog_scadenza_data_salva_titolo">Salvataggio confezione</string>
+    <string name="dialog_scadenza_data_salva_contenuto">Vuoi salvare la confezione con la data appena inserita?</string>
 
 </resources>

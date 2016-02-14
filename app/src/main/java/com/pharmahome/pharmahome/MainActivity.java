@@ -4,7 +4,6 @@ package com.pharmahome.pharmahome;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +27,7 @@ import android.widget.ViewSwitcher;
 import com.pharmahome.pharmahome.UI.PaginaDettaglioFarmaco;
 import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.UpdateFarmaciService;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
@@ -35,7 +35,11 @@ import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
+import org.json.JSONException;
+
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
@@ -136,14 +140,31 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 return handled;
             }
         });
-
-
+        
         findViewById(R.id.action_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onHomeClickedListener();
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        String idFarmaco = getIntent().getStringExtra(PaginaSelezioneData.KEY_FARMACO_AIC);
+        if(idFarmaco != null && idFarmaco.length() > 0){
+            DBController db = new DBController(this);
+            ListaConfezioni lConfezione = null;
+            try {
+                lConfezione = db.ricercaPerAIC(idFarmaco);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            onFarmacoSelected(lConfezione.get(0));
+        }
     }
 
     private void initMenuSecondarioHandlers(){
