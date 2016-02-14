@@ -150,6 +150,9 @@ public class DBController extends SQLiteOpenHelper {
         return confezione;
     }
     public ListaConfezioni ricercaPerAIC(String q) throws JSONException, ParseException {
+        if(q == null || q.length() <= 0){
+            return new ListaConfezioni();
+        }
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_AIC;
         String[] args = {q};
@@ -241,6 +244,9 @@ public class DBController extends SQLiteOpenHelper {
     }
 
     public ListaFarmaci ricercaFarmacoPerAIC(String q) throws JSONException {
+        if(q == null || q.length() <= 0){
+            return new ListaFarmaci();
+        }
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Farmaco.SELECT_FARMACO_BY_AIC;
         String[] args = {q};

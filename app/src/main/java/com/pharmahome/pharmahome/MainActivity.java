@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 return handled;
             }
         });
-        
+
         findViewById(R.id.action_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

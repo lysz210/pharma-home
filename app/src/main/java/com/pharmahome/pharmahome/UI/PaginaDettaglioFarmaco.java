@@ -77,6 +77,8 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         MainActivity activity = (MainActivity)getActivity();
         DBController db = new DBController(activity);
         try {
+            // TODO DA GESTIRE MEGLIO CON I BACK, IIL FARMACO POTREBBE NON ESSERE PIU' PRESENTE
+            // SE NON PRESENTE REDIRECT SU HOME
             lc = db.ricercaPerAIC(
                     activity.getConfezione().getAic()
             );

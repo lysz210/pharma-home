@@ -66,6 +66,13 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
                     + " must implement OnHeadlineSelectedListener");
         }
 
+        return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        MainActivity activity = (MainActivity)getActivity();
         db = new DBController(activity);
 
         mCallback = activity;
@@ -84,9 +91,14 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         }
         iniziaSequenzaRicerca(q);
         if(tutteLeConfezioni.size() == 0){
-            inflater.inflate(R.layout.nessun_risultato, (ViewGroup) view.findViewById(R.id.contenitore_risultati_ricerca), true);
+            inflater.inflate(R.layout.nessun_risultato, (ViewGroup) scroller.findViewById(R.id.contenitore_risultati_ricerca), true);
         }
-        return view;
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        tutteLeConfezioni = new ListaConfezioni();
     }
 
     private void iniziaSequenzaRicerca(String q){
