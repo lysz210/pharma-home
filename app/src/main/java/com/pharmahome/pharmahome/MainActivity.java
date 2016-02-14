@@ -84,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     }
 
     private HashMap<String, Object> data = new HashMap<>();
-//TODO elimminare questa parte crea problemi con versioni vecchi
-    private static DBController _db = null;
-    public static DBController getDBManager(){
-        return _db;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,17 +97,12 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         ab.setDisplayShowCustomEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
 
-        _db = new DBController(this.getApplicationContext());
-        // TODO  verifica connessione internet durante l'update
-        //_db.update();
-        //_db.onUpgrade(_db.getWritableDatabase(), 1, 2);
-
         if(findViewById(R.id.main_container) != null){
             PaginaListaHome farmaci = new PaginaListaHome();
 
             farmaci.setArguments(getIntent().getExtras());
 
-            getSupportFragmentManager().beginTransaction().add(R.id.main_container, farmaci).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).commit();
         }
         initMenuSecondarioHandlers();
 
@@ -138,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                         res.setArguments(args);
 
                         transaction.replace(R.id.main_container, res);
-                        transaction.addToBackStack(null);
+                            transaction.addToBackStack(null);
 
                         transaction.commit();
                         break;

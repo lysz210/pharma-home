@@ -13,6 +13,7 @@ import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -36,21 +37,21 @@ public class PaginaListaHome extends ListFragment implements Pagina {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        final Activity activity = getActivity();
+        DBController db = new DBController(activity);
         ListaConfezioni lista = null;
         try {
-            lista = MainActivity.getDBManager().getConfezioniHome();
+            lista = db.getConfezioniHome();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        final Activity activity = getActivity();
         setParent((PaginatoreSingolo)activity);
         ItemListaHomeAdapter adapter = null;
         if(lista == null) lista = new ListaConfezioni();
-        adapter = new ItemListaHomeAdapter(activity, lista);
+        adapter = new ItemListaHomeAdapter(activity, lista, parent);
         setListAdapter(adapter);
         ((PaginatoreSingolo)activity).setActualPage(this);
         try{
@@ -92,6 +93,11 @@ public class PaginaListaHome extends ListFragment implements Pagina {
         String titolo = getString(TITOLO_ID);
         v.setText(titolo);
         return titolo;
+    }
+
+    @Override
+    public int getTitoloId() {
+        return TITOLO_ID;
     }
 
     @Override

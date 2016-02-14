@@ -21,6 +21,7 @@ import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
+import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -46,8 +47,8 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
         }
-        Activity activity = getActivity();
-        setParent((PaginatoreSingolo)activity);
+        MainActivity activity = (MainActivity)getActivity();
+        setParent(activity);
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.pagina_dettaglio_farmaco, container, false);
@@ -56,13 +57,10 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         listView = (ListView) view.findViewById(R.id.listaConfezioni);
         Utility.disableListViewTouch(listView);
         updateListaConfezioni();
-        ((PaginatoreSingolo)activity).setActualPage(this);
+        parent.setActualPage(this);
 
         ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
-        infos.addView(new FarmacoInfoView(getContext(), (((MainActivity)activity).getConfezione().getAsInfoList())));
-        //infos.setAdapter(new ItemListaInfoFarmacoAdapter(getContext(), );
-        //Utility.disableListViewTouch(infos);
-        //Utility.updateListConfezioniHeight(infos);
+        infos.addView(new FarmacoInfoView(getContext(), (activity.getConfezione().getAsInfoList())));
 
         view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -76,10 +74,11 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
     private void updateListaConfezioni(){
         ListaConfezioni lc = null;
-        Activity activity = getActivity();
+        MainActivity activity = (MainActivity)getActivity();
+        DBController db = new DBController(activity);
         try {
-            lc = MainActivity.getDBManager().ricercaPerAIC(
-                    ((MainActivity)activity).getConfezione().getAic()
+            lc = db.ricercaPerAIC(
+                    activity.getConfezione().getAic()
             );
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,12 +88,15 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
         if(lc == null || lc.size()==0){
             PaginaListaHome farmaci = new PaginaListaHome();
-            ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().add(R.id.main_container, farmaci).commit();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_container, farmaci)
+                    .commit();
         }
 
         ItemListaConfezioniAdapter adapter = (ItemListaConfezioniAdapter) listView.getAdapter();
         if(adapter == null){
-            adapter = new ItemListaConfezioniAdapter(getContext(), lc);
+            adapter = new ItemListaConfezioniAdapter(getContext(), lc, parent);
             listView.setAdapter(adapter);
         }else {
             adapter.setNewData(lc);
@@ -102,8 +104,6 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         }
         Utility.updateListConfezioniHeight(listView);
     }
-
-
 
     @Override
     public void onStart() {
@@ -146,7 +146,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     @Override
                     public void onDateSet(DatePicker view, Calendar data) {
                         c.setScadenza(data);
-                        MainActivity.getDBManager().aggiungiConfezione(c);
+                        new DBController(getContext()).aggiungiConfezione(c);
                         updateListaConfezioni();
                     }
 
@@ -192,6 +192,11 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         String titolo = getString(TITOLO_ID);
         v.setText(titolo);
         return titolo;
+    }
+
+    @Override
+    public int getTitoloId() {
+        return TITOLO_ID;
     }
 
     @Override

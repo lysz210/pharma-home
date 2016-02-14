@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
+import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -35,12 +37,14 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     private ListaConfezioni confezioni;
     private int i = 0;
     SimpleDateFormat formatter = null;
+    private MessageCarrier messenger = null;
 
-    public ItemListaConfezioniAdapter(Context context, ListaConfezioni values) {
+    public ItemListaConfezioniAdapter(Context context, ListaConfezioni values, MessageCarrier messenger) {
         super(context, -1, values);
         formatter = Utility.getDateFormatter(context);
         this.context = context;
         this.confezioni = values;
+        this.messenger = messenger;
     }
 
     @Override
@@ -79,8 +83,8 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
     private void elimina(View view, int pos, ViewGroup viewGroup){
         Toast.makeText(getContext(), "Eliminazione confezione " + pos, Toast.LENGTH_SHORT).show();
-        Confezione confezione = (Confezione)getItem(pos);
-        MainActivity.getDBManager().eliminaConfezione(confezione);
+        Confezione confezione = getItem(pos);
+        new DBController(context).eliminaConfezione(confezione);
         remove(confezione);
         notifyDataSetChanged();
         Utility.updateListConfezioniHeight((ListView) viewGroup);
@@ -93,9 +97,10 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
             new MyOnDateSetListener(){
                 @Override
                 public void onDateSet(DatePicker view, Calendar data) {
+                    DBController db = new DBController(context);
                     Confezione c = getItem(p);
                     c.setScadenza(data);
-                    MainActivity.getDBManager().modificaConfezione(c);
+                    db.modificaConfezione(c);
                     remove(c);
                     insert(c, p);
                 }

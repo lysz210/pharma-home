@@ -152,6 +152,11 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         return titolo;
     }
 
+    @Override
+    public int getTitoloId() {
+        return TITOLO_ID;
+    }
+
     private boolean verificaDataScadenza(){
         boolean dataValida = false;
         if(scadenza == null) {

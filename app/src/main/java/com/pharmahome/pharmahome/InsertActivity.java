@@ -54,7 +54,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
             PaginaSelezioneData select = new PaginaSelezioneData();
             select.setArguments(getIntent().getExtras());
 
-            getSupportFragmentManager().beginTransaction().add(R.id.main_container, insert).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, insert).commit();
         }
 
         initMenuSecondarioHandlers();

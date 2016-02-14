@@ -9,4 +9,5 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.OnHomeClickedLi
  */
 public interface Pagina extends MenuSecondarioController, OnHomeClickedListener, ParentProvider {
     String updateTitolo(TextView v);
+    int getTitoloId();
 }

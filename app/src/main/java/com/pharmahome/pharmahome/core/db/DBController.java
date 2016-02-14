@@ -116,7 +116,9 @@ public class DBController extends SQLiteOpenHelper {
         Log.d("DB INTEROGAZIONE", select);
         String[] args = null;
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
 
 
@@ -126,7 +128,9 @@ public class DBController extends SQLiteOpenHelper {
         Log.d("DB INTEROGAZIONE", select);
         String[] args = null;
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
     public Confezione getConfezioneById(String id) {
         SQLiteDatabase db = getWritableDatabase();
@@ -141,14 +145,18 @@ public class DBController extends SQLiteOpenHelper {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return lc != null && lc.size() > 0 ? lc.get(0) : null;
+        Confezione confezione = lc != null && lc.size() > 0 ? lc.get(0) : null;
+        db.close();
+        return confezione;
     }
     public ListaConfezioni ricercaPerAIC(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_AIC;
         String[] args = {q};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
 
     public ListaConfezioni ricercaPerNome(String q) throws JSONException, ParseException {
@@ -156,7 +164,9 @@ public class DBController extends SQLiteOpenHelper {
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_NOME;
         String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
 
     public ListaConfezioni ricercaPerPA(String q) throws JSONException, ParseException {
@@ -164,21 +174,27 @@ public class DBController extends SQLiteOpenHelper {
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_PA;
         String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
     public ListaConfezioni ricercaPerProduttore(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_DITTA;
         String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
     public ListaConfezioni ricercaPerSintomi(String q) throws JSONException, ParseException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Confezione.SELECT_CONFEZIONE_BY_SINTOMI;
         String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Confezione.toListaConfezioni(cur);
+        ListaConfezioni res = FarmacoContract.Confezione.toListaConfezioni(cur);
+        db.close();
+        return res;
     }
     public void eliminaConfezione(Confezione record) {
         SQLiteDatabase db = getWritableDatabase();
@@ -188,33 +204,40 @@ public class DBController extends SQLiteOpenHelper {
                 FarmacoContract.Confezione._ID + " = ?",
                 selectionArgs
         );
+        db.close();
     }
     public long aggiungiConfezione(Confezione record) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.insert(
+        long res = db.insert(
                 FarmacoContract.Confezione.TABLE_NAME,
                 null,
                 FarmacoContract.Confezione.createRecordValues(record)
         );
+        db.close();
+        return res;
     }
     public long modificaConfezione(Confezione record) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = FarmacoContract.Confezione.createRecordValues(record);
-        return db.update(
+        long res = db.update(
                 FarmacoContract.Confezione.TABLE_NAME,
                 values,
                 FarmacoContract.Confezione._ID + " = " + record.getConfezioneId(),
                 null
         );
+        db.close();
+        return res;
     }
 
     public long aggiungiFarmaco(Farmaco record) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.insert(
+        long res = db.insert(
                 FarmacoContract.Farmaco.TABLE_NAME,
                 null,
                 FarmacoContract.Farmaco.createRecordValues(record)
         );
+        db.close();
+        return res;
     }
 
     public ListaFarmaci ricercaFarmacoPerAIC(String q) throws JSONException {
@@ -222,14 +245,18 @@ public class DBController extends SQLiteOpenHelper {
         String select = FarmacoContract.Farmaco.SELECT_FARMACO_BY_AIC;
         String[] args = {q};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Farmaco.toListaFarmaci(cur);
+        ListaFarmaci res = FarmacoContract.Farmaco.toListaFarmaci(cur);
+        db.close();
+        return res;
     }
     public ListaFarmaci ricercaFarmacoPerNome(String q) throws JSONException {
         SQLiteDatabase db = getWritableDatabase();
         String select = FarmacoContract.Farmaco.SELECT_FARMACI_BY_NOME;
         String[] args = {"%" + q + "%"};
         Cursor cur = db.rawQuery(select, args);
-        return FarmacoContract.Farmaco.toListaFarmaci(cur);
+        ListaFarmaci res = FarmacoContract.Farmaco.toListaFarmaci(cur);
+        db.close();
+        return res;
     }
     private int modificaFarmaco(Farmaco record) {
         SQLiteDatabase db = getWritableDatabase();
@@ -245,6 +272,7 @@ public class DBController extends SQLiteOpenHelper {
             aggiungiFarmaco(record);
             response = 1;
         }
+        db.close();
         return response;
     }
 }

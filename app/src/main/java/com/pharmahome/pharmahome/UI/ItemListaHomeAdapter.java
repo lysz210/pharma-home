@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
@@ -22,11 +23,13 @@ public class ItemListaHomeAdapter extends ArrayAdapter<Confezione> {
     private final ListaConfezioni values;
     private int i = 0;
     private int[] fascie = {R.drawable.led_scaduto, R.drawable.led_in_scadenza, R.drawable.led_buono};
+    private MessageCarrier messenger = null;
 
-    public ItemListaHomeAdapter(Context context, ListaConfezioni values) {
+    public ItemListaHomeAdapter(Context context, ListaConfezioni values, MessageCarrier messenger) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
+        this.messenger = messenger;
     }
 
     @Override

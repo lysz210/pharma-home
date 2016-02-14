@@ -46,9 +46,10 @@ public interface VisualizzatoreDialog {
         private DialogInterface.OnClickListener listener = null;
 
         public OnClickListenerValue(int nome){
-            this(nome, null);
+            this(nome, new VoidClickListener());
         }
         public OnClickListenerValue(int nome, DialogInterface.OnClickListener listener){
+            if(listener == null) listener = new VoidClickListener();
             this.nomeID = nome;
             this.listener = listener;
         }
@@ -58,15 +59,53 @@ public interface VisualizzatoreDialog {
         }
 
         public DialogInterface.OnClickListener getListener(){
-            if(this.listener == null){
-                return new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        return;
-                    }
-                };
-            }
             return this.listener;
+        }
+    }
+
+    /**
+     * classe per la gestione di on click senza
+     */
+    class VoidClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            return;
+        }
+    }
+
+    class HandlerBuilder {
+        private HashMap<String, OnClickListenerValue> listeners = new HashMap();
+
+        public HashMap<String, OnClickListenerValue> create() {
+            return listeners;
+        }
+
+        public HandlerBuilder setPositiveButton(OnClickListenerValue listener){
+            if(listener != null)
+                listeners.put(KEY_BTN_POSITIVE, listener);
+            return this;
+        }
+        public HandlerBuilder removePositiveButton(){
+            listeners.remove(KEY_BTN_POSITIVE);
+            return this;
+        }
+        public HandlerBuilder setNegativeButton(OnClickListenerValue listener){
+            if(listener != null)
+                listeners.put(KEY_BTN_NEGATIVE, listener);
+            return this;
+        }
+        public HandlerBuilder removeNegativeButton(){
+            listeners.remove(KEY_BTN_NEGATIVE);
+            return this;
+        }
+        public HandlerBuilder setNeutralButton(OnClickListenerValue listener){
+            if(listener != null)
+                listeners.put(KEY_BTN_NEUTRAL, listener);
+            return this;
+        }
+        public HandlerBuilder removeNeutralButton(){
+            listeners.remove(KEY_BTN_NEUTRAL);
+            return this;
         }
     }
 }

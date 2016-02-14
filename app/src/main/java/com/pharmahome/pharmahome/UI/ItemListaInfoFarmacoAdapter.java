@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
@@ -24,11 +25,13 @@ public class ItemListaInfoFarmacoAdapter extends ArrayAdapter<Farmaco.Info> {
     private final Context context;
     private final ArrayList<Farmaco.Info> values;
     private int i = 0;
+    private MessageCarrier messenger = null;
 
-    public ItemListaInfoFarmacoAdapter(Context context, ArrayList<Farmaco.Info> values) {
+    public ItemListaInfoFarmacoAdapter(Context context, ArrayList<Farmaco.Info> values, MessageCarrier messenger) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
+        this.messenger = messenger;
     }
 
     @Override

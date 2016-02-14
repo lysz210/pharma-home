@@ -66,7 +66,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
                     + " must implement OnHeadlineSelectedListener");
         }
 
-        db = activity.getDBManager();
+        db = new DBController(activity);
 
         mCallback = activity;
 
@@ -104,7 +104,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         }
         if(lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
-            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
+            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_aic, adapter);
         }
         cercaPerNome(q);
@@ -124,7 +124,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         }
         if(lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
-            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
+            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_nome, adapter);
         }
         cercaPerPrincipioAttivo(q);
@@ -144,7 +144,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         }
         if(lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
-            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
+            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
          cercaPerSintomo(q);
@@ -164,7 +164,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         }
         if(lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
-            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista);
+            ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
     }
@@ -209,6 +209,11 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         String titolo = getString(TITOLO_ID);
         v.setText(titolo);
         return titolo;
+    }
+
+    @Override
+    public int getTitoloId() {
+        return TITOLO_ID;
     }
 
     @Override

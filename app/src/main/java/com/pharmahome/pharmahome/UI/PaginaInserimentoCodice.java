@@ -246,6 +246,11 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
     }
 
     @Override
+    public int getTitoloId() {
+        return TITOLO_ID;
+    }
+
+    @Override
     public void onHomeClickedListener() {
         parent.visualizzaMessaggio("home click da inserimento codice");
     }

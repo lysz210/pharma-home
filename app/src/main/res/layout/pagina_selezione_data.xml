@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Medium Text"
+                android:text="@string/scadenza_input_hint"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageButton
@@ -51,7 +51,6 @@
             android:text="@string/salva_confezione" />
 
         <include layout="@layout/farmaco_info" />
-
 
     </LinearLayout>
 </ScrollView>
