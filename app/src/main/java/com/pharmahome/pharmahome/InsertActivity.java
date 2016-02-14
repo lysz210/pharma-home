@@ -191,6 +191,7 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
                     break;
             }
         }
+        builder.create().show();
     }
 
     @Override

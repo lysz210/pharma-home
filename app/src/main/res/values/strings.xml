@@ -65,4 +65,7 @@
     <string name="DATE_PTN">dd-MM-yyyy</string>
     <string name="scadenza_input_hint">Scadenza</string>
 
+    <string name="dialog_scadenza_data_non_valida_titolo">Errore scadenza</string>
+    <string name="dialog_scadenza_data_non_valida_contenuto">La data inserita non e\' valida</string>
+
 </resources>

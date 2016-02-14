@@ -285,5 +285,6 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                     break;
             }
         }
+        builder.create().show();
     }
 }

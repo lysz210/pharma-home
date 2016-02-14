@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
@@ -106,7 +107,9 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                 }
                 @Override
                 public void onDateError(DatePicker view, Calendar data) {
-                    Log.w("date error:", "errore data");
+                    VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+                    builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
+                    messenger.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
                 }
             }
         );

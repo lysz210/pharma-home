@@ -23,6 +23,7 @@ import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
@@ -73,10 +74,10 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
 
         scadenzaView = (TextView) view.findViewById(R.id.scadenza);
         setParent(activity);
-        ((PaginatoreSingolo)activity).setActualPage(this);
+        parent.setActualPage(this);
 
         ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
-        infos.addView(new FarmacoInfoView(getContext(), (((InsertActivity)activity).getFarmaco().getAsInfoList())));
+        infos.addView(new FarmacoInfoView(getContext(), (activity.getFarmaco().getAsInfoList())));
 
         view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -92,7 +93,8 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     @Override
     public void onStart(){
         super.onStart();
-        selezionaScadenza(scadenzaView);
+        if(scadenza == null)
+            selezionaScadenza(scadenzaView);
     }
 
     private void salva(View v){
@@ -139,7 +141,9 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
                 }
                 @Override
                 public void onDateError(DatePicker view, Calendar data) {
-                    Log.w("date error:", "errore data");
+                    VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+                    builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
+                    parent.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
                 }
             }
         );
