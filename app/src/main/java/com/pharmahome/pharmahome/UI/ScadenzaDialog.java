@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.pharmahome.pharmahome.R;
+import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 
 import java.util.Calendar;
@@ -22,12 +23,13 @@ public class ScadenzaDialog extends DatePickerDialog {
 
     private static boolean dataValida = true;
     private View customTitolo = null;
-    public ScadenzaDialog(final Context context, final MyOnDateSetListener onDateSetListener){
+    private MessageCarrier messenger = null;
+    public ScadenzaDialog(final Context context, final MyOnDateSetListener onDateSetListener, MessageCarrier messenger){
         super(context,
                 new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if(dataValida)
+                        if (dataValida)
                             onDateSetListener.onDateSet(view, new GregorianCalendar(year, monthOfYear, dayOfMonth));
                         else
                             onDateSetListener.onDateError(view, new GregorianCalendar(year, monthOfYear, dayOfMonth));
@@ -41,6 +43,7 @@ public class ScadenzaDialog extends DatePickerDialog {
         dataValida = true;
         customTitolo = getLayoutInflater().inflate(R.layout.titolo_nuova_confezione_calendario, null);
         setCustomTitle(customTitolo);
+        this.messenger = messenger;
         show();
     }
 

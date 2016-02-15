@@ -111,7 +111,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                     builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
                     messenger.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
                 }
-            }
+            }, messenger
         );
     }
 

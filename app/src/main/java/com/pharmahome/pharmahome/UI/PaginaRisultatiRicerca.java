@@ -203,7 +203,6 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         getActivity().startActivity(i);
     }
 
-
     @Override
     public void onScrollUp(View v) {
         int y = (4 * scroller.getHeight()) / 5;
@@ -231,6 +230,8 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
     @Override
     public void onHomeClickedListener() {
         parent.visualizzaMessaggio("home click da risultati ricerca");
+        PaginaListaHome farmaci = new PaginaListaHome();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).addToBackStack(null).commit();
     }
 
     @Override

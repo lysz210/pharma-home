@@ -1,8 +1,5 @@
 package com.pharmahome.pharmahome.UI;
 
-// TODO VERIFICA DELLA DATA PRIMA DI SALVARE.
-// TODO MESSAGGIO DI NOTIFICA PER LA CONFERMA
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -156,7 +153,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
                     builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
                     parent.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
                 }
-            }
+            }, parent
         );
     }
 
@@ -213,6 +210,17 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     @Override
     public void onHomeClickedListener() {
         parent.visualizzaMessaggio("Home click da selezione data");
+        VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+        builder.setNegativeButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_no));
+        builder.setPositiveButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_si, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                getActivity().startActivity(intent);
+            }
+        }));
+        parent.visualizzaDialog(R.string.notifica_interrompi_sequenza_inserimento_titolo, R.string.notifica_interrompi_sequenza_inserimento_contenuto, builder.create());
     }
 
     @Override

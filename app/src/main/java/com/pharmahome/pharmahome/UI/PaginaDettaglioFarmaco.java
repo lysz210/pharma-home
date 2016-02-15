@@ -156,7 +156,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     public void onDateError(DatePicker view, Calendar data) {
                         Log.w("date error:", "errore data");
                     }
-                }
+                }, parent
         );
     }
 
@@ -204,6 +204,8 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public void onHomeClickedListener() {
         parent.visualizzaMessaggio("premuto home da scheda dettagliata");
+        PaginaListaHome farmaci = new PaginaListaHome();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).addToBackStack(null).commit();
     }
 
     @Override

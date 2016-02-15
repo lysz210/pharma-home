@@ -3,6 +3,7 @@ package com.pharmahome.pharmahome.UI;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.pharmahome.pharmahome.InsertActivity;
+import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
@@ -253,6 +255,8 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
     @Override
     public void onHomeClickedListener() {
         parent.visualizzaMessaggio("home click da inserimento codice");
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        getActivity().startActivity(intent);
     }
 
     private PaginatoreSingolo parent = null;

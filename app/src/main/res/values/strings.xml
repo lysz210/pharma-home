@@ -44,6 +44,11 @@
     <string name="btn_salva">Salva</string>
     <string name="btn_dialog_negative">Chiudi</string>
     <string name="notifica_action_annulla">Annulla</string>
+    <string name="btn_si">Si</string>
+    <string name="btn_no">No</string>
+
+    <string name="notifica_interrompi_sequenza_inserimento_titolo">Interrozione sequenza inserimento</string>
+    <string name="notifica_interrompi_sequenza_inserimento_contenuto">Questa operazione e\' irreversibile, sei sicuro di voler interrompere?</string>
 
     <string name="notifica_titolo_principale">Pharm Home avviso scadenze</string>
     <string name="notifica_contenuto_principale">Hai delle confezioni da visionare</string>

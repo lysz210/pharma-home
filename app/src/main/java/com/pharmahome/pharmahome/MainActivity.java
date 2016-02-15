@@ -4,6 +4,7 @@ package com.pharmahome.pharmahome;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -29,6 +31,7 @@ import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
 import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.UpdateFarmaciService;
+import com.pharmahome.pharmahome.UI.Utility;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
@@ -42,7 +45,7 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
+public  class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
 
     private Pagina actualPage = null;
     public void setActualPage(Pagina pagina){
@@ -64,22 +67,21 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
     @Override
     public void visualizzaMessaggio(String msg, int dur) {
-        Toast toast = Toast.makeText(this, msg, dur);
-        toast.show();
+        Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
     @Override
     public void visualizzaMessaggio(String msg){
-        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+        visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
 
     @Override
     public void visualizzaMessaggio(int msg, int dur){
-        Toast.makeText(this, msg, dur).show();
+        Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
     @Override
     public void visualizzaMessaggio(int msg){
-        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+        visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -97,15 +99,12 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowHomeEnabled(false);
-        ab.setDisplayHomeAsUpEnabled(false);
         ab.setDisplayShowCustomEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
 
         if(findViewById(R.id.main_container) != null){
             PaginaListaHome farmaci = new PaginaListaHome();
-
             farmaci.setArguments(getIntent().getExtras());
-
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).commit();
         }
         initMenuSecondarioHandlers();
@@ -164,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 e.printStackTrace();
             }
             onFarmacoSelected(lConfezione.get(0));
+        }
+        ListView v = (ListView) findViewById(android.R.id.list);
+        if(v != null){
+            Utility.updateListConfezioniHeight(v, R.id.nome_farmaco);
         }
     }
 
@@ -254,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         searchItem.setIcon(inputIcons[searchState ? 0 : 1]);
         inputSearch.setText("");
         if(searchState){
-            getCurrentFocus().clearFocus();
+//            getCurrentFocus().clearFocus();
             imm.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         } else {

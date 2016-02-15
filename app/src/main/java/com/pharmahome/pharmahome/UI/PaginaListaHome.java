@@ -3,9 +3,14 @@ package com.pharmahome.pharmahome.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
@@ -24,7 +29,7 @@ import java.text.ParseException;
 /**
  * Created by ciao on 24/01/16.
  */
-public class PaginaListaHome extends ListFragment implements Pagina {
+public class PaginaListaHome extends Fragment implements Pagina {
 
     public static final int TITOLO_ID = R.string.titolo_pagina_lista_home;
 
@@ -32,7 +37,26 @@ public class PaginaListaHome extends ListFragment implements Pagina {
 
     private PaginatoreSingolo parent = null;
 
-    private ListView scroller = null;
+    private ScrollView scroller = null;
+
+    private ListView listView = null;
+
+    private int scrolledAmount = 0;
+
+    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.pagina_lista_home, container, false);
+        scroller = (ScrollView) view.findViewById(R.id.scrollView);
+        listView = (ListView) view.findViewById(R.id.lista_confezioni_home);
+        return view;
+    }
+
+    private void setListAdapter(ItemListaHomeAdapter adapter){
+        listView.setAdapter(adapter);
+    }
+
+    private ItemListaHomeAdapter getListAdapter(){
+        return (ItemListaHomeAdapter) listView.getAdapter();
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -48,26 +72,29 @@ public class PaginaListaHome extends ListFragment implements Pagina {
             e.printStackTrace();
         }
 
-        setParent((PaginatoreSingolo)activity);
+        setParent((PaginatoreSingolo) activity);
+        parent.setActualPage(this);
         ItemListaHomeAdapter adapter = null;
-        if(lista == null) lista = new ListaConfezioni();
+        if (lista == null) lista = new ListaConfezioni();
         adapter = new ItemListaHomeAdapter(activity, lista, parent);
-        setListAdapter(adapter);
-        ((PaginatoreSingolo)activity).setActualPage(this);
-        try{
+        listView.setAdapter(adapter);
+        Utility.disableListViewTouch(listView);
+        Utility.updateListConfezioniHeight(listView);
+        try {
             mCallback = (OnFarmacoSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
-        scroller = getListView();
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Confezione item = getListAdapter().getItem(position);
+                mCallback.onFarmacoSelected(item);
+            }
+        });
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Confezione item = (Confezione) getListAdapter().getItem(position);
-        mCallback.onFarmacoSelected(item);
-    }
 
 
     @Override

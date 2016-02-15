@@ -3,7 +3,9 @@ package com.pharmahome.pharmahome;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +27,6 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
-import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
 
 import org.json.JSONException;
@@ -45,6 +46,11 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowHomeEnabled(false);
+        ab.setDisplayShowCustomEnabled(true);
+        ab.setDisplayShowTitleEnabled(false);;
 
         if(findViewById(R.id.main_container) != null){
             PaginaInserimentoCodice insert = new PaginaInserimentoCodice();
@@ -128,21 +134,20 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     @Override
     public void visualizzaMessaggio(String msg, int dur) {
-        Toast toast = Toast.makeText(this, msg, dur);
-        toast.show();
+        Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
     @Override
     public void visualizzaMessaggio(int msg, int dur){
-        Toast.makeText(this, msg, dur).show();
+        Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
     @Override
     public void visualizzaMessaggio(int msg){
-        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+        visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
     @Override
     public void visualizzaMessaggio(String msg) {
-        visualizzaMessaggio(msg, Toast.LENGTH_SHORT);
+        visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
     @Override
@@ -209,11 +214,11 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         visualizzaMessaggio("premuto " + item.getItemId());
         switch (item.getItemId()) {
             case R.id.action_home:
-                visualizzaMessaggio("premuto home");
+                actualPage.onHomeClickedListener();
                 return true;
             case R.id.action_break:
                 visualizzaMessaggio(("premuto interrompi"));
-
+                actualPage.onHomeClickedListener();
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
