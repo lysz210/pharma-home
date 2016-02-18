@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.core.util;
+package com.pharmahome.pharmahome.core.utils;
 
 import android.app.ActionBar;
 import android.content.Context;

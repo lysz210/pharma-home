@@ -1,4 +1,4 @@
-package com.pharmahome.pharmahome.core.util;
+package com.pharmahome.pharmahome.core.utils;
 
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 

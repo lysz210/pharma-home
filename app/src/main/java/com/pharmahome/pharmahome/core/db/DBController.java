@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.pharmahome.pharmahome.core.util.Utility;
+import com.pharmahome.pharmahome.core.utils.Utility;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;

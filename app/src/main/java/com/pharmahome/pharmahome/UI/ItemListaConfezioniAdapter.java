@@ -20,7 +20,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetList
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
-import com.pharmahome.pharmahome.core.util.Utility;
+import com.pharmahome.pharmahome.core.utils.Utility;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -14,8 +14,8 @@ import android.util.Log;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
-import com.pharmahome.pharmahome.core.util.PharmaIterator;
-import com.pharmahome.pharmahome.core.util.Utility;
+import com.pharmahome.pharmahome.core.utils.PharmaIterator;
+import com.pharmahome.pharmahome.core.utils.Utility;
 
 /**
  * Created by ciao on 11/02/16.

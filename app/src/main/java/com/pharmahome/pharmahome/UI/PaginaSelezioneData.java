@@ -23,7 +23,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
-import com.pharmahome.pharmahome.core.util.Utility;
+import com.pharmahome.pharmahome.core.utils.Utility;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
