@@ -160,7 +160,7 @@ public class FarmacoContract {
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME_FARMACO, record.getFarmacoId());
             values.put(COLUMN_NAME_SCADENZA, new SimpleDateFormat("yyyy-MM-dd").format(record.getScadenza().getTime()));
-            values.put(COLUMN_NAME_NUOVA_CONFEZIONE, 1);
+            values.put(COLUMN_NAME_NUOVA_CONFEZIONE, record.isNuovaConfezione());
             return values;
         }
 

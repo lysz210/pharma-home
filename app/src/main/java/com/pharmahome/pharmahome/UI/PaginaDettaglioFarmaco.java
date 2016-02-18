@@ -21,6 +21,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetList
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.util.Utility;
 
 import org.json.JSONException;
 
@@ -38,6 +39,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     private ListView listView = null;
     private PaginatoreSingolo parent = null;
     private String aic = null;
+    private ListaConfezioni listaConfezioni = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +104,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     .replace(R.id.main_container, farmaci)
                     .commit();
         }
-
+        listaConfezioni = lc;
         if(restartedByOrientation){
             activity.setConfezione(lc.get(0));
         }
@@ -133,7 +135,16 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ((MainActivity) getActivity()).removeConfezione();
+        DBController db = new DBController(getContext());
+        Confezione c = null;
+        int len = listaConfezioni.size();
+        for(int i = 0; i < len; i += 1){
+            c = listaConfezioni.get(i);
+            if(c.isNuovaConfezione()) {
+                c.resetNuovaConfezione();
+                db.modificaConfezione(c);
+            }
+        }
     }
 
     public void updateArticleView(int position) {
@@ -142,13 +153,6 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         mCurrentPosition = position;
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        // Save the current article selection in case we need to recreate the fragment
-//        outState.putInt(ARG_POSITION, mCurrentPosition);
-//        outState.putString(KEY_AIC, ((MainActivity)parent).getConfezione().getAic());
-//    }
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
@@ -159,6 +163,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     @Override
                     public void onDateSet(DatePicker view, Calendar data) {
                         c.setScadenza(data);
+                        c.setNuovaConfezione();
                         new DBController(getContext()).aggiungiConfezione(c);
                         updateListaConfezioni();
                     }

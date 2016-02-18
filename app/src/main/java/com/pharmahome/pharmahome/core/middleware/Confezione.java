@@ -75,13 +75,15 @@ public class Confezione extends Farmaco {
         setScadenza(tmp);
     }
 
-    public boolean getNuovaConfezione() {
+    public boolean isNuovaConfezione() {
         return nuovaConfezione;
     }
 
-    public boolean resetNuovaConfezione() {
-        // todo DA COSTRUIRE IL SISTEMA PER LA CANCELLAZIONE
-        return false;
+    public void resetNuovaConfezione() {
+        this.nuovaConfezione = false;
+    }
+    public void setNuovaConfezione() {
+        this.nuovaConfezione = true;
     }
 
     public Fasce getFascia() {

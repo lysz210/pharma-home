@@ -15,6 +15,7 @@ import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.util.PharmaIterator;
+import com.pharmahome.pharmahome.core.util.Utility;
 
 /**
  * Created by ciao on 11/02/16.

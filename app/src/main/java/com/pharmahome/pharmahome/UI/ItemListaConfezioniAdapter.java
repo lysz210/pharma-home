@@ -1,6 +1,7 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetList
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.util.Utility;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,6 +76,10 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
             }
         });
 
+        if(confezione.isNuovaConfezione()){
+            rowView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.evidenziato_nuova_confezione));
+        }
+
         return rowView;
     }
 
@@ -97,6 +103,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
                         DBController db = new DBController(context);
                         Confezione c = getItem(p);
                         c.setScadenza(data);
+                        c.setNuovaConfezione();
                         db.modificaConfezione(c);
                         remove(c);
                         insert(c, p);

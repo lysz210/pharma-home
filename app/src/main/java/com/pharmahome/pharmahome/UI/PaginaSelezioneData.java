@@ -23,6 +23,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.util.Utility;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -108,6 +109,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         if (!verificaDataScadenza()) return;
         Confezione confezione = new Confezione(((InsertActivity) getActivity()).getFarmaco());
         confezione.setScadenza(scadenza);
+        confezione.setNuovaConfezione();
         (new DBController(getContext())).aggiungiConfezione(confezione);
         Intent intent = new Intent(getContext(), MainActivity.class);
         intent.putExtra(KEY_FARMACO_AIC, confezione.getAic());

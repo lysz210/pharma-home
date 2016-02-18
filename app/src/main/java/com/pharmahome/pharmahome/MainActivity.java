@@ -31,7 +31,7 @@ import com.pharmahome.pharmahome.UI.PaginaListaHome;
 import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
 import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.UpdateFarmaciService;
-import com.pharmahome.pharmahome.UI.Utility;
+import com.pharmahome.pharmahome.core.util.Utility;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;

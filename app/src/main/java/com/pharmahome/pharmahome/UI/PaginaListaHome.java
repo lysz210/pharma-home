@@ -19,6 +19,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
+import com.pharmahome.pharmahome.core.util.Utility;
 
 import org.json.JSONException;
 
@@ -77,7 +78,7 @@ public class PaginaListaHome extends Fragment implements Pagina {
         adapter = new ItemListaHomeAdapter(activity, lista, parent);
         listView.setAdapter(adapter);
         Utility.disableListViewTouch(listView);
-        Utility.updateListConfezioniHeight(listView);
+        Utility.updateListConfezioniHeight(listView, R.id.nome_farmaco);
         try {
             mCallback = (OnFarmacoSelectedListener) activity;
         } catch (ClassCastException e) {

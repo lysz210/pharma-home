@@ -13,4 +13,6 @@
     <color name="scaduto">#FF0000</color>
 
     <color name="trasparente">#00000000</color>
+
+    <color name="evidenziato_nuova_confezione">#00FFFF</color>
 </resources>
