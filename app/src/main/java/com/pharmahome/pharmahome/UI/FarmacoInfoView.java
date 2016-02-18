@@ -25,10 +25,10 @@ public class FarmacoInfoView extends LinearLayout {
         setLayoutParams(params);
         setOrientation(VERTICAL);
         View tmpview = null;
-        for(Farmaco.Info i: infos){
+        for (Farmaco.Info i : infos) {
             tmpview = LayoutInflater.from(context).inflate(R.layout.farmaco_info_item, null);
-            ((TextView)tmpview.findViewById(R.id.voce)).setText(i.voce());
-            ((TextView)tmpview.findViewById(R.id.descrizione)).setText(i.descrizione());
+            ((TextView) tmpview.findViewById(R.id.voce)).setText(i.voce());
+            ((TextView) tmpview.findViewById(R.id.descrizione)).setText(i.descrizione());
             addView(tmpview);
         }
     }

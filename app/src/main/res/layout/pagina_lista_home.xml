@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:name=".UI.DettaglioFarmaco"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView"
-    android:layout_gravity="center_horizontal" >
+    android:layout_gravity="center_horizontal">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <ListView
+            android:id="@+id/lista_confezioni_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lista_confezioni_home">
-        </ListView>
+            android:layout_height="wrap_content"></ListView>
     </LinearLayout>
 </ScrollView>

@@ -24,7 +24,8 @@ public class ScadenzaDialog extends DatePickerDialog {
     private static boolean dataValida = true;
     private View customTitolo = null;
     private MessageCarrier messenger = null;
-    public ScadenzaDialog(final Context context, final MyOnDateSetListener onDateSetListener, MessageCarrier messenger){
+
+    public ScadenzaDialog(final Context context, final MyOnDateSetListener onDateSetListener, MessageCarrier messenger) {
         super(context,
                 new OnDateSetListener() {
                     @Override
@@ -37,7 +38,7 @@ public class ScadenzaDialog extends DatePickerDialog {
                 },
                 Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
         Log.d("Dialog", "creazione dialog");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // getDatePicker().setMinDate(oggi.getTimeInMillis());
         }
         dataValida = true;
@@ -48,10 +49,10 @@ public class ScadenzaDialog extends DatePickerDialog {
     }
 
     @Override
-    public View onCreatePanelView(int featureId){
+    public View onCreatePanelView(int featureId) {
         Log.d("Dialog", "" + featureId);
         View v = super.onCreatePanelView(featureId);
-        switch(featureId){
+        switch (featureId) {
             case Window.FEATURE_CUSTOM_TITLE:
                 v = null;
         }
@@ -59,7 +60,7 @@ public class ScadenzaDialog extends DatePickerDialog {
     }
 
     @Override
-    public void onDateChanged(DatePicker view, int year, int month, int day){
+    public void onDateChanged(DatePicker view, int year, int month, int day) {
         Log.w("Clicke: ", "" + day);
         boolean dataValida = false;
         Calendar oggi = Calendar.getInstance();

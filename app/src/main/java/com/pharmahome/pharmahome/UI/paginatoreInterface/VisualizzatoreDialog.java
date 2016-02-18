@@ -16,15 +16,18 @@ public interface VisualizzatoreDialog {
     static final String KEY_BTN_NEGATIVE = "btn_negative";  // bottone per la risposta negativa
     static final String KEY_BTN_POSITIVE = "btn_positive";  // bottone per la risposta affermativa
     static final String[] KEYS_BTN_AVAILBLE = {KEY_BTN_NEUTRAL, KEY_BTN_NEGATIVE, KEY_BTN_POSITIVE};
+
     /**
      * crea un dialogBuilder con un activity che potra' essere utilizzato per la
      * creazione di un dialog da visualizzare a chermo
+     *
      * @return
      */
     AlertDialog.Builder getAlertBuilder();
 
     /**
      * Crea un dialog semplice per la visualizzazione
+     *
      * @param titoloID
      * @param contenutoID
      */
@@ -32,9 +35,10 @@ public interface VisualizzatoreDialog {
 
     /**
      * Creazione e visualizzazione di un alertDialog per la visualizzazione di una finestra modale con in abinata i listener passati
+     *
      * @param titoloID    titolo per la finestra modale
      * @param contenutoID contenuto per la finestra modlae
-     * @param listeners bottoni per la finestra modale
+     * @param listeners   bottoni per la finestra modale
      */
     void visualizzaDialog(int titoloID, int contenutoID, HashMap<String, OnClickListenerValue> listeners);
 
@@ -45,20 +49,21 @@ public interface VisualizzatoreDialog {
         private int nomeID = 0;
         private DialogInterface.OnClickListener listener = null;
 
-        public OnClickListenerValue(int nome){
+        public OnClickListenerValue(int nome) {
             this(nome, new VoidClickListener());
         }
-        public OnClickListenerValue(int nome, DialogInterface.OnClickListener listener){
-            if(listener == null) listener = new VoidClickListener();
+
+        public OnClickListenerValue(int nome, DialogInterface.OnClickListener listener) {
+            if (listener == null) listener = new VoidClickListener();
             this.nomeID = nome;
             this.listener = listener;
         }
 
-        public int getNomeID(){
+        public int getNomeID() {
             return this.nomeID;
         }
 
-        public DialogInterface.OnClickListener getListener(){
+        public DialogInterface.OnClickListener getListener() {
             return this.listener;
         }
     }
@@ -80,30 +85,35 @@ public interface VisualizzatoreDialog {
             return listeners;
         }
 
-        public HandlerBuilder setPositiveButton(OnClickListenerValue listener){
-            if(listener != null)
+        public HandlerBuilder setPositiveButton(OnClickListenerValue listener) {
+            if (listener != null)
                 listeners.put(KEY_BTN_POSITIVE, listener);
             return this;
         }
-        public HandlerBuilder removePositiveButton(){
+
+        public HandlerBuilder removePositiveButton() {
             listeners.remove(KEY_BTN_POSITIVE);
             return this;
         }
-        public HandlerBuilder setNegativeButton(OnClickListenerValue listener){
-            if(listener != null)
+
+        public HandlerBuilder setNegativeButton(OnClickListenerValue listener) {
+            if (listener != null)
                 listeners.put(KEY_BTN_NEGATIVE, listener);
             return this;
         }
-        public HandlerBuilder removeNegativeButton(){
+
+        public HandlerBuilder removeNegativeButton() {
             listeners.remove(KEY_BTN_NEGATIVE);
             return this;
         }
-        public HandlerBuilder setNeutralButton(OnClickListenerValue listener){
-            if(listener != null)
+
+        public HandlerBuilder setNeutralButton(OnClickListenerValue listener) {
+            if (listener != null)
                 listeners.put(KEY_BTN_NEUTRAL, listener);
             return this;
         }
-        public HandlerBuilder removeNeutralButton(){
+
+        public HandlerBuilder removeNeutralButton() {
             listeners.remove(KEY_BTN_NEUTRAL);
             return this;
         }

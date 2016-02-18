@@ -29,7 +29,7 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
 
     private String base_domain = PharmaIterator.SRC_DOMAIN + "/" + PharmaIterator.SRC_BASE;
 
-    public PharmaIterator(){
+    public PharmaIterator() {
         try {
             farmaci = new JSONArray(getJsonToken(base_domain + "/" + SRC_DATA_LIST));
         } catch (JSONException e) {
@@ -38,7 +38,13 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
         }
     }
 
-    private String getJsonToken(String url){
+    public static void main(String args[]) throws JSONException {
+        PharmaIterator a = new PharmaIterator();
+        for (Farmaco f : a)
+            System.out.println(f);
+    }
+
+    private String getJsonToken(String url) {
         StringBuilder tstr = null;
         try {
             URL tmp = new URL(url);
@@ -48,7 +54,7 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             tstr = new StringBuilder();
             String tdata;
-            while((tdata = reader.readLine()) != null){
+            while ((tdata = reader.readLine()) != null) {
                 //System.out.println(tdata);
                 tstr.append(tdata);
             }
@@ -71,7 +77,7 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
 
     @Override
     public Farmaco next() {
-        if(!hasNext()){
+        if (!hasNext()) {
             return null;
         }
         Farmaco f = null;
@@ -84,26 +90,21 @@ public class PharmaIterator implements Iterator<Farmaco>, Iterable<Farmaco> {
         nextIndex += 1;
         return f;
     }
+
     @Override
-    public void remove(){
+    public void remove() {
         return;
     }
 
-    public Iterator<Farmaco> iterator(){
+    public Iterator<Farmaco> iterator() {
         return this;
     }
 
-    public int length(){
+    public int length() {
         return farmaci.length();
     }
 
-    public int getActualState(){
-        return nextIndex -1;
-    }
-
-    public static void main(String args[]) throws JSONException{
-        PharmaIterator a = new PharmaIterator();
-        for(Farmaco f: a)
-            System.out.println(f);
+    public int getActualState() {
+        return nextIndex - 1;
     }
 }

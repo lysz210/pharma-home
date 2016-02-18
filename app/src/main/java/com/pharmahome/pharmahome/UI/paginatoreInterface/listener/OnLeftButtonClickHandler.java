@@ -5,7 +5,7 @@ import android.view.View;
 
 /**
  * Created by ciao on 28/01/16.
- *
+ * <p>
  * interfaccia per la gestione dell'evento aggiungi nuovo
  */
 public interface OnLeftButtonClickHandler {

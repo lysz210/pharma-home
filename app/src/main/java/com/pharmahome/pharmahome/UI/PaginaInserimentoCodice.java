@@ -37,16 +37,22 @@ import org.json.JSONException;
  */
 public class PaginaInserimentoCodice extends Fragment implements Pagina {
 
+    public final static int TITOLO_ID = R.string.titolo_pagina_inserimento_codice;
     private Button avanti;
     private ImageButton scan;
     private EditText cb;
     private String lastCb = "";
-    private void setLastCb(String s){ lastCb = s;}
     private EditText nome;
     private String lastNome = "";
-    private void setLastNome(String s){ lastNome = s;}
+    private PaginatoreSingolo parent = null;
 
-    public final static int TITOLO_ID = R.string.titolo_pagina_inserimento_codice;
+    private void setLastCb(String s) {
+        lastCb = s;
+    }
+
+    private void setLastNome(String s) {
+        lastNome = s;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +62,9 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         return view;
     }
 
-    private void initView(View view, Bundle savedInstance){
+    // handlers
+
+    private void initView(View view, Bundle savedInstance) {
         final Activity activity = getActivity();
         final DBController db = new DBController(getContext());
         avanti = (Button) view.findViewById(R.id.btn_avanti);
@@ -64,8 +72,8 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         cb = (EditText) view.findViewById(R.id.input_cb);
         nome = (EditText) view.findViewById(R.id.input_nome);
 
-        avanti.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        avanti.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 String tcb = cb.getText().toString();
                 String tnome = nome.getText().toString();
                 InputMethodManager imm =
@@ -77,10 +85,10 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
                 try {
                     if (tcb.length() >= Farmaco.MIN_LEN_AIC) {
                         avanti(db.ricercaFarmacoPerAIC(tcb));
-                    } else if(tnome.length() > 0) {
+                    } else if (tnome.length() > 0) {
                         avanti(db.ricercaFarmacoPerNome(tnome));
                     } else {
-                        ((PaginatoreSingolo)activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");
+                        ((PaginatoreSingolo) activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -164,22 +172,20 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
             }
         });
 
-        ((PaginatoreSingolo)activity).setActualPage(this);
-        setParent((PaginatoreSingolo)activity);
+        ((PaginatoreSingolo) activity).setActualPage(this);
+        setParent((PaginatoreSingolo) activity);
     }
 
-    // handlers
-
-    public void avanti(Farmaco farmaco){
+    public void avanti(Farmaco farmaco) {
         InsertActivity activity = (InsertActivity) getActivity();
         activity.setFarmaco(farmaco);
         avviaSceltaData();
     }
 
-    public void avanti(ListaFarmaci listaFarmaci){
+    public void avanti(ListaFarmaci listaFarmaci) {
         final ListaFarmaci lf = listaFarmaci;
         int len = listaFarmaci.size();
-        switch (len){
+        switch (len) {
             case 0: {
                 parent.visualizzaDialog(R.string.msg_nessun_farmaco_titolo, R.string.msg_nessun_farmaco_corpo);
                 break;
@@ -190,7 +196,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
             }
             default: {
                 String[] lista = new String[listaFarmaci.size()];
-                for(int i=0; i<len; i++) {
+                for (int i = 0; i < len; i++) {
                     lista[i] = listaFarmaci.get(i).getNome();
                 }
                 AlertDialog.Builder b = parent.getAlertBuilder();
@@ -214,7 +220,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         }
     }
 
-    private void avviaSceltaData(){
+    private void avviaSceltaData() {
         Fragment frag = (Fragment) new PaginaSelezioneData();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
@@ -259,14 +265,13 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         getActivity().startActivity(intent);
     }
 
-    private PaginatoreSingolo parent = null;
-    @Override
-    public void setParent(PaginatoreSingolo parent) {
-        this.parent = parent;
-    }
-
     @Override
     public PaginatoreSingolo getParent() {
         return this.parent;
+    }
+
+    @Override
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
     }
 }

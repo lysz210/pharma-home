@@ -1,9 +1,9 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,15 +34,11 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
     public static final int TITOLO_ID = R.string.titolo_pagina_risultati_ricerca;
 
     public static final String KEY_Q = "search_query";
-
+    OnFarmacoSelectedListener mCallback;
     private LayoutInflater inflater = null;
     private ViewGroup risultatiContainer = null;
-
     private ListaConfezioni tutteLeConfezioni = new ListaConfezioni();
-
     private DBController db = null;
-
-    OnFarmacoSelectedListener mCallback;
     private PaginatoreSingolo parent = null;
 
 
@@ -59,7 +55,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         MainActivity activity = (MainActivity) getActivity();
         setParent(activity);
 
-        try{
+        try {
             mCallback = (OnFarmacoSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -70,9 +66,9 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        MainActivity activity = (MainActivity)getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         db = new DBController(activity);
 
         mCallback = activity;
@@ -80,32 +76,32 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         activity.setActualPage(this);
 
         String q = getArguments().getString(KEY_Q);
-        if(q == null || q.length() < 1){
+        if (q == null || q.length() < 1) {
             activity.getSupportFragmentManager().popBackStack();
             FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
             Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.main_container);
-            if(currentFragment != null){
+            if (currentFragment != null) {
                 transaction.remove(currentFragment);
             }
             transaction.commit();
         }
         iniziaSequenzaRicerca(q);
-        if(tutteLeConfezioni.size() == 0){
+        if (tutteLeConfezioni.size() == 0) {
             inflater.inflate(R.layout.nessun_risultato, (ViewGroup) scroller.findViewById(R.id.contenitore_risultati_ricerca), true);
         }
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         tutteLeConfezioni = new ListaConfezioni();
     }
 
-    private void iniziaSequenzaRicerca(String q){
+    private void iniziaSequenzaRicerca(String q) {
         cercaPerAic(q);
     }
 
-    private void cercaPerAic(String q){
+    private void cercaPerAic(String q) {
         ListaConfezioni lista = null;
         try {
             lista = db.ricercaPerAIC(q);
@@ -114,7 +110,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(lista != null && lista.size() > 0) {
+        if (lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_aic, adapter);
@@ -122,7 +118,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         cercaPerNome(q);
     }
 
-    private void cercaPerNome(String q){
+    private void cercaPerNome(String q) {
         ListaConfezioni lista = null;
         try {
             lista = db.ricercaPerNome(q);
@@ -131,10 +127,10 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(Confezione c: tutteLeConfezioni){
+        for (Confezione c : tutteLeConfezioni) {
             lista.remove(c);
         }
-        if(lista != null && lista.size() > 0) {
+        if (lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_nome, adapter);
@@ -142,7 +138,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         cercaPerPrincipioAttivo(q);
     }
 
-    private void cercaPerPrincipioAttivo(String q){
+    private void cercaPerPrincipioAttivo(String q) {
         ListaConfezioni lista = null;
         try {
             lista = db.ricercaPerPA(q);
@@ -151,18 +147,18 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(Confezione c: tutteLeConfezioni){
+        for (Confezione c : tutteLeConfezioni) {
             lista.remove(c);
         }
-        if(lista != null && lista.size() > 0) {
+        if (lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
-         cercaPerSintomo(q);
+        cercaPerSintomo(q);
     }
 
-    private void cercaPerSintomo(String q){
+    private void cercaPerSintomo(String q) {
         ListaConfezioni lista = null;
         try {
             lista = db.ricercaPerPA(q);
@@ -171,17 +167,17 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(Confezione c: tutteLeConfezioni){
+        for (Confezione c : tutteLeConfezioni) {
             lista.remove(c);
         }
-        if(lista != null && lista.size() > 0) {
+        if (lista != null && lista.size() > 0) {
             tutteLeConfezioni.addAll(lista);
             ItemListaHomeAdapter adapter = new ItemListaHomeAdapter(getContext(), lista, parent);
             addListaRisultati(R.layout.search_result_principio_attivo, adapter);
         }
     }
 
-    private void addListaRisultati(int src, ItemListaHomeAdapter adapter){
+    private void addListaRisultati(int src, ItemListaHomeAdapter adapter) {
         LinearLayout view = (LinearLayout) inflater.inflate(src, risultatiContainer, true);
         ListView lv = new ListView(getContext());//(ListView)view.findViewById(R.id.lista_risultati);
         lv.setAdapter(adapter);
@@ -235,12 +231,12 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
     }
 
     @Override
-    public void setParent(PaginatoreSingolo parent) {
-        this.parent = parent;
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 
     @Override
-    public PaginatoreSingolo getParent() {
-        return this.parent;
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
     }
 }

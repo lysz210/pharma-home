@@ -14,15 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.pharmahome.pharmahome.UI.PaginaInserimentoCodice;
 import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.PaginaInserimentoCodice;
+import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
-import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
@@ -35,10 +34,10 @@ import java.util.HashMap;
 
 public class InsertActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
 
-    private HashMap<String, Object> data = new HashMap<>();
-
     public static String KEY_FARMACO = "farmaco";
     public static String KEY_LISTA_FARMACI = "lista_farmaci";
+    private HashMap<String, Object> data = new HashMap<>();
+    private Pagina actualPage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +49,13 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowHomeEnabled(false);
         ab.setDisplayShowCustomEnabled(true);
-        ab.setDisplayShowTitleEnabled(false);;
+        ab.setDisplayShowTitleEnabled(false);
+        ;
 
-        if(findViewById(R.id.main_container) != null){
+        if (findViewById(R.id.main_container) != null) {
             PaginaInserimentoCodice insert = new PaginaInserimentoCodice();
 
             insert.setArguments(getIntent().getExtras());
-
-            PaginaSelezioneData select = new PaginaSelezioneData();
-            select.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, insert).commit();
         }
@@ -73,20 +70,20 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     }
 
-    private void initMenuSecondarioHandlers(){
-        ((ImageButton)findViewById(R.id.btn_left)).setOnClickListener(new View.OnClickListener() {
+    private void initMenuSecondarioHandlers() {
+        ((ImageButton) findViewById(R.id.btn_left)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onLeftButtonClick(v, null);
             }
         });
-        ((ImageButton)findViewById(R.id.btn_center)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton) findViewById(R.id.btn_center)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onScrollDown(v);
             }
         });
-        ((ImageButton)findViewById(R.id.btn_right)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton) findViewById(R.id.btn_right)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onScrollUp(v);
@@ -94,19 +91,20 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         });
     }
 
-    public void setFarmaco(Farmaco farmaco){
-        this.data.put(KEY_FARMACO, farmaco);
-    }
-
-    public Farmaco getFarmaco(){
+    public Farmaco getFarmaco() {
         return (Farmaco) this.data.get(KEY_FARMACO);
     }
 
-    public void setListaFarmaci(String[] lista){
-        this.data.put(KEY_LISTA_FARMACI, lista);
+    public void setFarmaco(Farmaco farmaco) {
+        this.data.put(KEY_FARMACO, farmaco);
     }
-    public String[] getListaFarmaci(){
+
+    public String[] getListaFarmaci() {
         return (String[]) this.data.get(KEY_LISTA_FARMACI);
+    }
+
+    public void setListaFarmaci(String[] lista) {
+        this.data.put(KEY_LISTA_FARMACI, lista);
     }
 
     public void onFarmacoSelected(int position) {
@@ -125,10 +123,9 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     }
 
-    private Pagina actualPage = null;
     @Override
     public void setActualPage(Pagina pagina) {
-        pagina.updateTitolo((TextView)findViewById(R.id.titolo_pagina));
+        pagina.updateTitolo((TextView) findViewById(R.id.titolo_pagina));
         this.actualPage = pagina;
     }
 
@@ -136,12 +133,14 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     public void visualizzaMessaggio(String msg, int dur) {
         Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
+
     @Override
-    public void visualizzaMessaggio(int msg, int dur){
+    public void visualizzaMessaggio(int msg, int dur) {
         Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
+
     @Override
-    public void visualizzaMessaggio(int msg){
+    public void visualizzaMessaggio(int msg) {
         visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
@@ -172,19 +171,19 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     @Override
     public void visualizzaDialog(int titoloID, int contenuto, HashMap<String, OnClickListenerValue> listeners) {
         String[] keys = VisualizzatoreDialog.KEYS_BTN_AVAILBLE;
-        if(listeners.size() <= 0){
+        if (listeners.size() <= 0) {
             visualizzaDialog(titoloID, contenuto);
             return;
         }
         AlertDialog.Builder builder = getAlertBuilder();
         builder.setMessage(contenuto);
         builder.setTitle(titoloID);
-        for(String k: keys){
+        for (String k : keys) {
             VisualizzatoreDialog.OnClickListenerValue tmp = listeners.get(k);
-            if(tmp == null){
+            if (tmp == null) {
                 continue;
             }
-            switch (k){
+            switch (k) {
                 case VisualizzatoreDialog.KEY_BTN_POSITIVE:
                     builder.setPositiveButton(tmp.getNomeID(), tmp.getListener());
                     break;
@@ -229,20 +228,21 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     /**
      * all'inserimento del codice a barre viene lanciato l'inserimento
+     *
      * @param requestCode
      * @param resultCode
      * @param intent
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if(scanningResult != null){
+        if (scanningResult != null) {
             DBController db = new DBController(this);
             try {
                 String aic = scanningResult.getContents();
                 ListaFarmaci lf = db.ricercaFarmacoPerAIC(aic);
                 Farmaco farmaco = lf.size() > 0 ? lf.get(0) : null;
-                if(farmaco != null)
+                if (farmaco != null)
                     ((PaginaInserimentoCodice) actualPage).avanti(farmaco);
                 else
                     visualizzaDialog(R.string.msg_nessun_farmaco_titolo, R.string.msg_nessun_farmaco_corpo);

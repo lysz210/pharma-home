@@ -1,12 +1,9 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,22 +29,24 @@ import java.util.Calendar;
 
 public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
-    public static int TITOLO_ID = R.string.titolo_pagina_dettaglio_farmaco;
-    final static String ARG_POSITION = "position";
-    int mCurrentPosition = 0;
-
-    ScrollView scroller = null;
     public final static int SCROLL_Y = 50;
+    final static String ARG_POSITION = "position";
+    public static int TITOLO_ID = R.string.titolo_pagina_dettaglio_farmaco;
+    public static String KEY_AIC = "CHIAVE_AIC";
+    int mCurrentPosition = 0;
+    ScrollView scroller = null;
     private ListView listView = null;
     private PaginatoreSingolo parent = null;
+    private String aic = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
+            aic = savedInstanceState.getString(KEY_AIC);
         }
-        MainActivity activity = (MainActivity)getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         setParent(activity);
 
         // Inflate the layout for this fragment
@@ -72,15 +71,23 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         return view;
     }
 
-    private void updateListaConfezioni(){
+    private void updateListaConfezioni() {
         ListaConfezioni lc = null;
-        MainActivity activity = (MainActivity)getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         DBController db = new DBController(activity);
+        boolean restartedByOrientation = false;
+        String taic = null;
+        try {
+            taic = activity.getConfezione().getAic();
+        } catch (NullPointerException e) {
+            taic = aic;
+            restartedByOrientation = true;
+        }
         try {
             // TODO DA GESTIRE MEGLIO CON I BACK, IIL FARMACO POTREBBE NON ESSERE PIU' PRESENTE
             // SE NON PRESENTE REDIRECT SU HOME
             lc = db.ricercaPerAIC(
-                    activity.getConfezione().getAic()
+                    taic
             );
         } catch (JSONException e) {
             e.printStackTrace();
@@ -88,7 +95,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
             e.printStackTrace();
         }
 
-        if(lc == null || lc.size()==0){
+        if (lc == null || lc.size() == 0) {
             PaginaListaHome farmaci = new PaginaListaHome();
             activity.getSupportFragmentManager()
                     .beginTransaction()
@@ -96,11 +103,14 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     .commit();
         }
 
+        if(restartedByOrientation){
+            activity.setConfezione(lc.get(0));
+        }
         ItemListaConfezioniAdapter adapter = (ItemListaConfezioniAdapter) listView.getAdapter();
-        if(adapter == null){
+        if (adapter == null) {
             adapter = new ItemListaConfezioniAdapter(getContext(), lc, parent);
             listView.setAdapter(adapter);
-        }else {
+        } else {
             adapter.setNewData(lc);
             listView.invalidateViews();
         }
@@ -121,9 +131,9 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     }
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         super.onDestroyView();
-        ((MainActivity)getActivity()).removeConfezione();
+        ((MainActivity) getActivity()).removeConfezione();
     }
 
     public void updateArticleView(int position) {
@@ -132,19 +142,20 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         mCurrentPosition = position;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Save the current article selection in case we need to recreate the fragment
-        outState.putInt(ARG_POSITION, mCurrentPosition);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        // Save the current article selection in case we need to recreate the fragment
+//        outState.putInt(ARG_POSITION, mCurrentPosition);
+//        outState.putString(KEY_AIC, ((MainActivity)parent).getConfezione().getAic());
+//    }
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        final Confezione c = new Confezione(((MainActivity)getActivity()).getConfezione());
+        final Confezione c = new Confezione(((MainActivity) getActivity()).getConfezione());
         new ScadenzaDialog(
                 getContext(),
-                new MyOnDateSetListener(){
+                new MyOnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, Calendar data) {
                         c.setScadenza(data);
@@ -175,11 +186,12 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     /**
      * richiede ad Android per l'apertura del link al bugiardino online
      * direttamente dal sito ufficiale AIFA
-     * @param v     la view che effettua la richiesta di apertura del bugiardino
+     *
+     * @param v la view che effettua la richiesta di apertura del bugiardino
      */
     public void apriBugiardino(View v) {
-        MainActivity activity = (MainActivity)getActivity();
-        if(Utility.isNetworkAvailable(getContext())){
+        MainActivity activity = (MainActivity) getActivity();
+        if (Utility.isNetworkAvailable(getContext())) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String url = activity.getConfezione().getLinkFogliettoIllustrativo();
             intent.setData(Uri.parse(url));
@@ -209,12 +221,12 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     }
 
     @Override
-    public void setParent(PaginatoreSingolo parent) {
-        this.parent = parent;
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 
     @Override
-    public PaginatoreSingolo getParent() {
-        return this.parent;
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
     }
 }

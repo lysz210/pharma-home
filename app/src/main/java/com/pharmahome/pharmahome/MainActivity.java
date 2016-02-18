@@ -4,12 +4,12 @@ package com.pharmahome.pharmahome;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,18 +23,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
 import com.pharmahome.pharmahome.UI.PaginaDettaglioFarmaco;
 import com.pharmahome.pharmahome.UI.PaginaListaHome;
-import com.pharmahome.pharmahome.UI.OnFarmacoSelectedListener;
+import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
 import com.pharmahome.pharmahome.UI.PaginaSelezioneData;
 import com.pharmahome.pharmahome.UI.UpdateFarmaciService;
 import com.pharmahome.pharmahome.UI.Utility;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
-import com.pharmahome.pharmahome.UI.PaginaRisultatiRicerca;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
@@ -45,42 +44,46 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.HashMap;
 
-public  class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
+public class MainActivity extends AppCompatActivity implements OnFarmacoSelectedListener, PaginatoreSingolo {
 
     private Pagina actualPage = null;
-    public void setActualPage(Pagina pagina){
-        pagina.updateTitolo((TextView)findViewById(R.id.titolo_pagina));
-        this.actualPage = pagina;
-    }
-
     private ViewSwitcher switcher = null;
     private EditText inputSearch = null;
     private int[] inputIcons = {android.R.drawable.ic_menu_search, android.R.drawable.ic_menu_close_clear_cancel};
     private boolean searchState = false;
     private MenuItem searchItem = null;
-    private void setSearchState(boolean stato){
-        searchState = stato;
+    private HashMap<String, Object> data = new HashMap<>();
+
+    public void setActualPage(Pagina pagina) {
+        pagina.updateTitolo((TextView) findViewById(R.id.titolo_pagina));
+        this.actualPage = pagina;
     }
-    private boolean getSearchState(){
+
+    private boolean getSearchState() {
         return searchState;
+    }
+
+    private void setSearchState(boolean stato) {
+        searchState = stato;
     }
 
     @Override
     public void visualizzaMessaggio(String msg, int dur) {
         Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
+
     @Override
-    public void visualizzaMessaggio(String msg){
+    public void visualizzaMessaggio(String msg) {
         visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
-
     @Override
-    public void visualizzaMessaggio(int msg, int dur){
+    public void visualizzaMessaggio(int msg, int dur) {
         Snackbar.make(findViewById(R.id.cooodinator), msg, dur).show();
     }
+
     @Override
-    public void visualizzaMessaggio(int msg){
+    public void visualizzaMessaggio(int msg) {
         visualizzaMessaggio(msg, Snackbar.LENGTH_SHORT);
     }
 
@@ -89,7 +92,6 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
         return new AlertDialog.Builder(this);
     }
 
-    private HashMap<String, Object> data = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +104,7 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
         ab.setDisplayShowCustomEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
 
-        if(findViewById(R.id.main_container) != null){
+        if (findViewById(R.id.main_container) != null) {
             PaginaListaHome farmaci = new PaginaListaHome();
             farmaci.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).commit();
@@ -116,14 +118,14 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 String q = v.getText().toString();
-                switch (actionId){
+                switch (actionId) {
                     case EditorInfo.IME_ACTION_SEARCH:
                         Log.d("ACTION_START FARMACO", q);
                         handled = true;
                         onSwitch();
                         PaginaRisultatiRicerca res = new PaginaRisultatiRicerca();
                         Bundle args = getIntent().getExtras();
-                        if(args == null){
+                        if (args == null) {
                             args = new Bundle();
                         }
                         args.putString(PaginaRisultatiRicerca.KEY_Q, q);
@@ -131,7 +133,7 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
                         res.setArguments(args);
 
                         transaction.replace(R.id.main_container, res);
-                            transaction.addToBackStack(null);
+                        transaction.addToBackStack(null);
 
                         transaction.commit();
                         break;
@@ -149,10 +151,10 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         String idFarmaco = getIntent().getStringExtra(PaginaSelezioneData.KEY_FARMACO_AIC);
-        if(idFarmaco != null && idFarmaco.length() > 0){
+        if (idFarmaco != null && idFarmaco.length() > 0) {
             DBController db = new DBController(this);
             ListaConfezioni lConfezione = null;
             try {
@@ -165,15 +167,15 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
             onFarmacoSelected(lConfezione.get(0));
         }
         ListView v = (ListView) findViewById(android.R.id.list);
-        if(v != null){
+        if (v != null) {
             Utility.updateListConfezioniHeight(v, R.id.nome_farmaco);
         }
     }
 
-    private void initMenuSecondarioHandlers(){
+    private void initMenuSecondarioHandlers() {
         ImageButton leftBtn = ((ImageButton) findViewById(R.id.btn_left));
-        ImageButton centerBtn = ((ImageButton)findViewById(R.id.btn_center));
-        ImageButton rightBtn = ((ImageButton)findViewById(R.id.btn_right));
+        ImageButton centerBtn = ((ImageButton) findViewById(R.id.btn_center));
+        ImageButton rightBtn = ((ImageButton) findViewById(R.id.btn_right));
         leftBtn.setImageResource(R.drawable.icon_plus);
         leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,11 +210,16 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
         return;
     }
 
-    public Confezione getConfezione(){
+    public Confezione getConfezione() {
         return (Confezione) data.get(Confezione.KEY_CONFEZIONE);
     }
-    public void removeConfezione(){
+
+    public void removeConfezione() {
         data.remove(Confezione.KEY_CONFEZIONE);
+    }
+
+    public void setConfezione(Confezione confezione) {
+        this.data.put(Confezione.KEY_CONFEZIONE, confezione);
     }
 
     @Override
@@ -227,7 +234,7 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
         visualizzaMessaggio("premuto " + item.getItemId());
         switch (item.getItemId()) {
             case R.id.action_search:
-                if(searchItem == null){
+                if (searchItem == null) {
                     searchItem = item;
                 }
                 onSwitch();
@@ -237,7 +244,7 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
                 return true;
             case R.id.action_update:
                 // TODO COVERTIRE IN SERVICE
-                if(!UpdateFarmaciService.isUpdating()){
+                if (!UpdateFarmaciService.isUpdating()) {
                     Intent t_intent = new Intent(this, UpdateFarmaciService.class);
                     t_intent.setAction(UpdateFarmaciService.ACTION_START);
                     startService(t_intent);
@@ -251,12 +258,12 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
         }
     }
 
-    private void onSwitch(){
+    private void onSwitch() {
         InputMethodManager imm =
                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         searchItem.setIcon(inputIcons[searchState ? 0 : 1]);
         inputSearch.setText("");
-        if(searchState){
+        if (searchState) {
 //            getCurrentFocus().clearFocus();
             imm.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -285,19 +292,19 @@ public  class MainActivity extends AppCompatActivity implements OnFarmacoSelecte
     @Override
     public void visualizzaDialog(int titoloID, int contenuto, HashMap<String, OnClickListenerValue> listeners) {
         String[] keys = VisualizzatoreDialog.KEYS_BTN_AVAILBLE;
-        if(listeners.size() <= 0){
+        if (listeners.size() <= 0) {
             visualizzaDialog(titoloID, contenuto);
             return;
         }
         AlertDialog.Builder builder = getAlertBuilder();
         builder.setMessage(contenuto);
         builder.setTitle(titoloID);
-        for(String k: keys){
+        for (String k : keys) {
             VisualizzatoreDialog.OnClickListenerValue tmp = listeners.get(k);
-            if(tmp == null){
+            if (tmp == null) {
                 continue;
             }
-            switch (k){
+            switch (k) {
                 case VisualizzatoreDialog.KEY_BTN_POSITIVE:
                     builder.setPositiveButton(tmp.getNomeID(), tmp.getListener());
                     break;

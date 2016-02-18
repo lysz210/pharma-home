@@ -42,7 +42,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     private PaginatoreSingolo parent = null;
     private ScrollView scroller = null;
 
-    private void setScadenza(int anno, int mese, int giorno){
+    private void setScadenza(int anno, int mese, int giorno) {
         scadenza = new GregorianCalendar(anno, mese, giorno);
     }
 
@@ -50,13 +50,13 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pagina_selezione_data, container, false);
-        scroller = (ScrollView)view;
+        scroller = (ScrollView) view;
         InsertActivity activity = (InsertActivity) getActivity();
-        ((TextView)view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
+        ((TextView) view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
         salva = (Button) view.findViewById(R.id.btn_salva);
-        salva.setOnClickListener(new View.OnClickListener(){
+        salva.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v){
+            public void onClick(final View v) {
                 VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
                 builder.setNegativeButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
                 builder.setPositiveButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_salva,
@@ -67,12 +67,12 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
                             }
                         }
                 ));
-                parent.visualizzaDialog(R.string.dialog_scadenza_data_salva_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
+                parent.visualizzaDialog(R.string.dialog_scadenza_data_salva_titolo, R.string.dialog_scadenza_data_salva_contenuto, builder.create());
             }
         });
 
         modifica = (ImageButton) view.findViewById(R.id.modifica);
-        modifica.setOnClickListener(new View.OnClickListener(){
+        modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selezionaScadenza(scadenzaView);
@@ -98,14 +98,14 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        if(scadenza == null)
+        if (scadenza == null)
             selezionaScadenza(scadenzaView);
     }
 
-    private void salva(View v){
-        if(!verificaDataScadenza()) return;
+    private void salva(View v) {
+        if (!verificaDataScadenza()) return;
         Confezione confezione = new Confezione(((InsertActivity) getActivity()).getFarmaco());
         confezione.setScadenza(scadenza);
         (new DBController(getContext())).aggiungiConfezione(confezione);
@@ -134,26 +134,28 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
 
     /**
      * apre un selettore per scegliere una data di scadenza opportuna
-     * @param view  textview dove va inserito la data selezionata
+     *
+     * @param view textview dove va inserito la data selezionata
      */
-    private void selezionaScadenza(TextView view){
+    private void selezionaScadenza(TextView view) {
         // TODO DA IMPLEMENTARE LA SELEZIONE IN MODO TALE CHE SIA IMPOSTOTA ALLA DATA SCELTA COME PRIMO GIORNO
         final TextView v = view;
         new ScadenzaDialog(
-            getContext(),
-            new MyOnDateSetListener(){
-                @Override
-                public void onDateSet(DatePicker view, Calendar data) {
-                    scadenza = data;
-                    v.setText(Utility.getDateFormatter(getContext()).format(data.getTime()));
-                }
-                @Override
-                public void onDateError(DatePicker view, Calendar data) {
-                    VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
-                    builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
-                    parent.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
-                }
-            }, parent
+                getContext(),
+                new MyOnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, Calendar data) {
+                        scadenza = data;
+                        v.setText(Utility.getDateFormatter(getContext()).format(data.getTime()));
+                    }
+
+                    @Override
+                    public void onDateError(DatePicker view, Calendar data) {
+                        VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+                        builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
+                        parent.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
+                    }
+                }, parent
         );
     }
 
@@ -169,9 +171,9 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         return TITOLO_ID;
     }
 
-    private boolean verificaDataScadenza(){
+    private boolean verificaDataScadenza() {
         boolean dataValida = false;
-        if(scadenza == null) {
+        if (scadenza == null) {
             parent.visualizzaDialog(R.string.notifica_scadenza_vuoto_titolo, R.string.notifica_scadenza_vuoto_contenuto);
             return false;
         }
@@ -193,11 +195,12 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     /**
      * richiede ad Android per l'apertura del link al bugiardino online
      * direttamente dal sito ufficiale AIFA
-     * @param v     la view che effettua la richiesta di apertura del bugiardino
+     *
+     * @param v la view che effettua la richiesta di apertura del bugiardino
      */
     public void apriBugiardino(View v) {
-        InsertActivity activity = (InsertActivity)getActivity();
-        if(Utility.isNetworkAvailable(getContext())){
+        InsertActivity activity = (InsertActivity) getActivity();
+        if (Utility.isNetworkAvailable(getContext())) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             String url = activity.getFarmaco().getLinkFogliettoIllustrativo();
             intent.setData(Uri.parse(url));
@@ -224,12 +227,12 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     }
 
     @Override
-    public void setParent(PaginatoreSingolo parent) {
-        this.parent = parent;
+    public PaginatoreSingolo getParent() {
+        return this.parent;
     }
 
     @Override
-    public PaginatoreSingolo getParent() {
-        return this.parent;
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
     }
 }

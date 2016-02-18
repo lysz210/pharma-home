@@ -31,10 +31,11 @@ public class BroadcastManager extends BroadcastReceiver {
     public static final int DEFFAULT_SECONDS = 00;
     public static final String SHARED_NAME = "ScadenzaManager.SHARED";
     public static final int NOTIFICA_CODE = 444;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
-        switch (intent.getAction()){
+        switch (intent.getAction()) {
             case "DEBUG_TEST":
             case BOOT_INTENT_ACTION:
                 // inserimento del task per il richiamo di questa funzione domani
@@ -52,10 +53,11 @@ public class BroadcastManager extends BroadcastReceiver {
     /**
      * settaggio del task da lanciare per il giorno seguente in modo che il ciclo delle notifiche
      * si ripeta quotidianamente
-     * @param context   contesto da utilizzare
-     * @param intent    intent ricevuto dal chiamante
+     *
+     * @param context contesto da utilizzare
+     * @param intent  intent ricevuto dal chiamante
      */
-    private void setNotificaGiornaliera(Context context, Intent intent){
+    private void setNotificaGiornaliera(Context context, Intent intent) {
         Log.w("BroadcastManager", "setNofiticaGiornaliera, intent: " + intent.getAction() + " " + intent.getIntExtra("prova", -1));
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences shared = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
@@ -75,16 +77,17 @@ public class BroadcastManager extends BroadcastReceiver {
 
     /**
      * lancia la notifica sulle confezioni che sono in via di scadenza o quelle gia scadute
-     * @param context   contesto da utilizzare
+     *
+     * @param context contesto da utilizzare
      */
-    private void lanciaNotificaOggi(Context context, Intent intent){
+    private void lanciaNotificaOggi(Context context, Intent intent) {
         Log.w("lanciaNotificaOggi", "avvio notifica di oggi");
         Intent t_intent = new Intent(context, NotificatoreScadenzeService.class);
         context.startService(t_intent);
         return;
     }
 
-    private void lanciaUpdateFarmaci(Context context, Intent intent){
+    private void lanciaUpdateFarmaci(Context context, Intent intent) {
         Log.w("lanciaUpdateFarmaci", "avvio fase di aggiornamento dati farmaci");
         Intent t_intent = new Intent(context, UpdateFarmaciService.class);
         context.startService(t_intent);

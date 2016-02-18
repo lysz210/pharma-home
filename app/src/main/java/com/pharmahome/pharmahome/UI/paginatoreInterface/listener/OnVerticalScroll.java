@@ -7,5 +7,6 @@ import android.view.View;
  */
 public interface OnVerticalScroll {
     public void onScrollUp(View v);
+
     public void onScrollDown(View v);
 }

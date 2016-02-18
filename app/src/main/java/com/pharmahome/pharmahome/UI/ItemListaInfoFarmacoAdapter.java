@@ -1,19 +1,15 @@
 package com.pharmahome.pharmahome.UI;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
-import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
-import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
 import java.util.ArrayList;
 
@@ -48,7 +44,7 @@ public class ItemListaInfoFarmacoAdapter extends ArrayAdapter<Farmaco.Info> {
     }
 
     @Override
-    public boolean isEnabled(int position){
+    public boolean isEnabled(int position) {
         return false;
     }
 

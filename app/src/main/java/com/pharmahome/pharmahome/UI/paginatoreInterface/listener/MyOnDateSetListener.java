@@ -9,5 +9,6 @@ import java.util.Calendar;
  */
 public interface MyOnDateSetListener {
     void onDateSet(DatePicker view, Calendar date);
+
     void onDateError(DatePicker view, Calendar date);
 }

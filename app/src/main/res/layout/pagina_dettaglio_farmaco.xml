@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:name=".UI.DettaglioFarmaco"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView"
-    android:layout_gravity="center_horizontal" >
-<LinearLayout
-    android:id="@+id/dettaglio_farmaco"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_gravity="center_horizontal">
 
-
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/dettaglio_farmaco"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/intestazione_scheda_dettaglio" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listaConfezioni"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        />
 
-    <include layout="@layout/farmaco_info" />
-</LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/intestazione_scheda_dettaglio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/listaConfezioni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+
+        <include layout="@layout/farmaco_info" />
+    </LinearLayout>
+</ScrollView>

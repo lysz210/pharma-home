@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pharmahome.pharmahome"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pharmahome.pharmahome">
     <!-- richiesta di autorizzazioni per la connessione a internet -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- richiesta di autorizzazione per ottenere le informazioni di rete -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- richiesta di autorizzazione per avviare scripts onDeviceBoot -->
@@ -30,6 +28,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,13 +46,13 @@
         <activity
             android:name=".InsertActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".InsertActivity"
-                />
+                android:value=".InsertActivity" />
 
         </activity>
 
@@ -65,8 +64,7 @@
             android:name=".BroadcastManager"
             android:enabled="true"
             android:exported="true"
-            android:label="ScadenzeManager"
-            >
+            android:label="ScadenzeManager">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="ScadenzeManager.NOTIFICA_INTENT_ACTION" />
@@ -77,12 +75,10 @@
 
         <service
             android:name=".UI.NotificatoreScadenzeService"
-            android:enabled="true"
-            />
+            android:enabled="true" />
         <service
             android:name=".UI.UpdateFarmaciService"
-            android:enabled="true"
-            />
+            android:enabled="true" />
     </application>
 
 </manifest>

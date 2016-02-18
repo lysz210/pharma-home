@@ -23,25 +23,29 @@ public class UpdateFarmaciService extends Service {
     public final static int NOTIFICA_UPDATE_ID = 101;
     public final static String ACTION_START = "UpdateFarmaciService.START";
     public final static String ACTION_STOP = "UpdateFarmaciService.STOP";
-    private static PharmaIterator farmaciIterator = null;
-    private static NetworkWorker worker = null;
     public static final String SHARED_NAME = "UpdateFarmaciService.SHARED";
     public static final String KEY_IS_UPDATING = "UpdateFarmaciService.KEY_IS_UPDATING";
+    private static PharmaIterator farmaciIterator = null;
+    private static NetworkWorker worker = null;
+
+    public static boolean isUpdating() {
+        return farmaciIterator != null;
+    }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId){
-        if(intent == null){
-            if(worker == null){
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) {
+            if (worker == null) {
                 Log.w("UpdateService: ", "Auto call no worker... flags: " + flags + "startID: " + startId);
                 worker = new NetworkWorker(this);
                 worker.start();
             }
-        } else if(intent.getAction().equals(ACTION_STOP) || startId > 1){
+        } else if (intent.getAction().equals(ACTION_STOP) || startId > 1) {
             Log.w("UpdateService: ", "Stopping... flags: " + flags + "startID: " + startId);
             worker.termina();
             stopForeground(true);
             stopSelf();
-        }else if(intent.getAction().equals(ACTION_START)) {
+        } else if (intent.getAction().equals(ACTION_START)) {
             Log.w("UpdateService: ", "STARTING... flags: " + flags + "startID: " + startId);
             worker = new NetworkWorker(this);
             worker.start();
@@ -55,10 +59,6 @@ public class UpdateFarmaciService extends Service {
         return null;
     }
 
-    public static boolean isUpdating(){
-        return farmaciIterator != null;
-    }
-
     private class NetworkWorker extends Thread {
         Context context = null;
         NotificationCompat.Builder mBuilder = null;
@@ -66,7 +66,7 @@ public class UpdateFarmaciService extends Service {
         int iteratorLength = 0;
         boolean mustStop = false;
 
-        public NetworkWorker(Context context){
+        public NetworkWorker(Context context) {
             Intent intent = new Intent(context, UpdateFarmaciService.class);
             intent.setAction(ACTION_STOP);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
@@ -82,13 +82,13 @@ public class UpdateFarmaciService extends Service {
 
 
         @Override
-        public void run(){
+        public void run() {
             Log.w("Updating: ", "running... ");
             mNotifyManager.notify(NOTIFICA_UPDATE_ID, mBuilder.build());
             DBController db = new DBController(context);
             SharedPreferences shared = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
             shared.edit().putBoolean(KEY_IS_UPDATING, true).commit();
-            if(farmaciIterator == null){
+            if (farmaciIterator == null) {
                 farmaciIterator = new PharmaIterator();
             }
             iteratorLength = farmaciIterator.length();
@@ -99,12 +99,12 @@ public class UpdateFarmaciService extends Service {
                 db.update(f);
                 int i = farmaciIterator.getActualState() + 1;
                 // System.out.println(f.getLinkFogliettoIllustrativo());
-                if (i % 100 == 0){
+                if (i % 100 == 0) {
                     mBuilder.setProgress(iteratorLength, i, false);
                     mNotifyManager.notify(NOTIFICA_UPDATE_ID, mBuilder.build());
                     Log.w("Updating: ", "updated " + i);
                 }
-                if(mustStop){
+                if (mustStop) {
                     break;
                 }
             }
@@ -117,7 +117,7 @@ public class UpdateFarmaciService extends Service {
             farmaciIterator = null;
         }
 
-        public void termina(){
+        public void termina() {
             mustStop = true;
         }
     }

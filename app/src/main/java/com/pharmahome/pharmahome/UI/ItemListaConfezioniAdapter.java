@@ -1,9 +1,6 @@
 package com.pharmahome.pharmahome.UI;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.MessageCarrier;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
@@ -24,20 +20,18 @@ import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by ciao on 24/01/16.
  */
 public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
+    SimpleDateFormat formatter = null;
     private Context context;
     private ListaConfezioni confezioni;
     private int i = 0;
-    SimpleDateFormat formatter = null;
     private MessageCarrier messenger = null;
 
     public ItemListaConfezioniAdapter(Context context, ListaConfezioni values, MessageCarrier messenger) {
@@ -67,12 +61,14 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
         elimina.setOnClickListener(new View.OnClickListener() {
             private int pos = position;
+
             public void onClick(View v) {
                 elimina(v, pos, viewGroup);
             }
         });
         modifica.setOnClickListener(new View.OnClickListener() {
             private int pos = position;
+
             public void onClick(View v) {
                 modifica(v, pos);
             }
@@ -82,7 +78,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
     }
 
 
-    private void elimina(View view, int pos, ViewGroup viewGroup){
+    private void elimina(View view, int pos, ViewGroup viewGroup) {
         Toast.makeText(getContext(), "Eliminazione confezione " + pos, Toast.LENGTH_SHORT).show();
         Confezione confezione = getItem(pos);
         new DBController(context).eliminaConfezione(confezione);
@@ -91,39 +87,40 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
         Utility.updateListConfezioniHeight((ListView) viewGroup);
     }
 
-    private void modifica(View view, int pos){
+    private void modifica(View view, int pos) {
         final int p = pos;
         new ScadenzaDialog(
-            getContext(),
-            new MyOnDateSetListener(){
-                @Override
-                public void onDateSet(DatePicker view, Calendar data) {
-                    DBController db = new DBController(context);
-                    Confezione c = getItem(p);
-                    c.setScadenza(data);
-                    db.modificaConfezione(c);
-                    remove(c);
-                    insert(c, p);
-                }
-                @Override
-                public void onDateError(DatePicker view, Calendar data) {
-                    VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
-                    builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
-                    messenger.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
-                }
-            }, messenger
+                getContext(),
+                new MyOnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, Calendar data) {
+                        DBController db = new DBController(context);
+                        Confezione c = getItem(p);
+                        c.setScadenza(data);
+                        db.modificaConfezione(c);
+                        remove(c);
+                        insert(c, p);
+                    }
+
+                    @Override
+                    public void onDateError(DatePicker view, Calendar data) {
+                        VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
+                        builder.setNeutralButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_chiudi));
+                        messenger.visualizzaDialog(R.string.dialog_scadenza_data_non_valida_titolo, R.string.dialog_scadenza_data_non_valida_contenuto, builder.create());
+                    }
+                }, messenger
         );
     }
 
     public void setNewData(ListaConfezioni lc) {
         int len;
-        while (getCount() > 0){
+        while (getCount() > 0) {
             remove(getItem(0));
         }
         notifyDataSetChanged();
         confezioni = lc;
         len = lc.size();
-        for(int i=0; i<len; i++){
+        for (int i = 0; i < len; i++) {
             insert(lc.get(i), i);
         }
     }

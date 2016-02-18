@@ -18,7 +18,7 @@ public enum Fasce {
     private String nome;
     private int identificatore;
 
-    Fasce(int v){
+    Fasce(int v) {
         switch (v) {
             case 0:
                 colore = 0xff0000;
@@ -37,27 +37,27 @@ public enum Fasce {
         }
     }
 
-    public static Fasce getFasca(Calendar data){
+    public static Fasce getFasca(Calendar data) {
         GregorianCalendar oggi = new GregorianCalendar();
-        if(data.before(oggi)){
+        if (data.before(oggi)) {
             return SCADUTO;
         }
         oggi.add(oggi.DATE, RANGE);
-        if(data.before(oggi)){
+        if (data.before(oggi)) {
             return IN_SCADENZA;
         }
         return BUONO;
     }
 
-    public int getColore(){
+    public int getColore() {
         return colore;
     }
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
 
-    public int getIdentificatore(){
+    public int getIdentificatore() {
         return identificatore;
     }
 }

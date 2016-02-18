@@ -9,9 +9,9 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.pharmahome.pharmahome.BroadcastManager;
 import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
-import com.pharmahome.pharmahome.BroadcastManager;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.ListaConfezioni;
@@ -24,17 +24,15 @@ import java.text.ParseException;
  * Created by ciao on 06/02/16.
  */
 public class NotificatoreScadenzeService extends IntentService {
+    public static final String NOME = "Servizio notifiche scadenze";
     private int nConfezioniInScadenza = 0;
     private int nConfezioniScaduti = 0;
     private int totaleConfezioniDaNotificare = 0;
     private ListaConfezioni confezioniInScadenza = new ListaConfezioni();
     private ListaConfezioni confezioniScaduti = new ListaConfezioni();
 
-    public static final String NOME = "Servizio notifiche scadenze";
-
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
      */
     public NotificatoreScadenzeService() {
         super(NOME);
@@ -43,7 +41,7 @@ public class NotificatoreScadenzeService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.w("Servizio notivica", "service " + NOME + ", intent: " + intent.getAction());
-        if(!retrieveConfezioniDaNotificare()){
+        if (!retrieveConfezioniDaNotificare()) {
             Log.w("Servizio notivica", "Non ci sono confezioni da notificare");
             return;
         }
@@ -59,17 +57,17 @@ public class NotificatoreScadenzeService extends IntentService {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.setBigContentTitle(getString(R.string.notifica_titolo_principale));
         String sommario = getString(R.string.notifica_sommario_header);
-        if(nConfezioniInScadenza > 0){
+        if (nConfezioniInScadenza > 0) {
             sommario += String.format(getString(R.string.notifica_sommario_in_scadenza_ptn), nConfezioniInScadenza);
             inboxStyle.addLine(getString(R.string.notifica_sottotilo_in_scadenza));
-            for(Confezione c: confezioniInScadenza){
+            for (Confezione c : confezioniInScadenza) {
                 inboxStyle.addLine("  - " + c.getNome());
             }
         }
-        if(nConfezioniScaduti > 0){
+        if (nConfezioniScaduti > 0) {
             sommario += String.format(getString(R.string.notifica_sommario_scaduto_ptn), nConfezioniScaduti);
             inboxStyle.addLine(getString(R.string.notifica_sottotilo_scaduti));
-            for(Confezione c: confezioniScaduti){
+            for (Confezione c : confezioniScaduti) {
                 inboxStyle.addLine("  - " + c.getNome());
             }
         }
@@ -88,13 +86,14 @@ public class NotificatoreScadenzeService extends IntentService {
 
     /**
      * recura tutte le confezioni da notificare, restituisce true nel caso ci sia almeno una confezione
+     *
      * @return
      */
-    private boolean retrieveConfezioniDaNotificare(){
+    private boolean retrieveConfezioniDaNotificare() {
         DBController db = new DBController(getApplicationContext());
         try {
             ListaConfezioni tutte = db.getAllConfezioni();
-            for(Confezione c: tutte){
+            for (Confezione c : tutte) {
                 switch (c.getFascia()) {
                     case SCADUTO:
                         confezioniScaduti.add(c);

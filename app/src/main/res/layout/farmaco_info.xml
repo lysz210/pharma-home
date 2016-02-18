@@ -2,23 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <Button
+        android:id="@+id/link_bugiardino"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/link_bugiarni_btn"
-        android:id="@+id/link_bugiardino"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        android:text="@string/link_bugiarni_btn" />
 
     <LinearLayout
+        android:id="@+id/lista_info_farmaco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lista_info_farmaco"
-        android:weightSum="0"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:weightSum="0">
 
     </LinearLayout>
 </LinearLayout>

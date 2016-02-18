@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pharmahome.pharmahome.InsertActivity;
-import com.pharmahome.pharmahome.MainActivity;
 import com.pharmahome.pharmahome.R;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.Pagina;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.PaginatoreSingolo;
@@ -43,19 +41,19 @@ public class PaginaListaHome extends Fragment implements Pagina {
 
     private int scrolledAmount = 0;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pagina_lista_home, container, false);
         scroller = (ScrollView) view.findViewById(R.id.scrollView);
         listView = (ListView) view.findViewById(R.id.lista_confezioni_home);
         return view;
     }
 
-    private void setListAdapter(ItemListaHomeAdapter adapter){
-        listView.setAdapter(adapter);
+    private ItemListaHomeAdapter getListAdapter() {
+        return (ItemListaHomeAdapter) listView.getAdapter();
     }
 
-    private ItemListaHomeAdapter getListAdapter(){
-        return (ItemListaHomeAdapter) listView.getAdapter();
+    private void setListAdapter(ItemListaHomeAdapter adapter) {
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -96,7 +94,6 @@ public class PaginaListaHome extends Fragment implements Pagina {
     }
 
 
-
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
         Intent i = new Intent(getActivity(), InsertActivity.class);
@@ -133,12 +130,12 @@ public class PaginaListaHome extends Fragment implements Pagina {
     }
 
     @Override
-    public void setParent(PaginatoreSingolo parent) {
-        this.parent = parent;
+    public PaginatoreSingolo getParent() {
+        return parent;
     }
 
     @Override
-    public PaginatoreSingolo getParent() {
-        return parent;
+    public void setParent(PaginatoreSingolo parent) {
+        this.parent = parent;
     }
 }
