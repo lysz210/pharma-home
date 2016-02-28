@@ -68,6 +68,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="ScadenzeManager.NOTIFICA_INTENT_ACTION" />
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
                 <action android:name="UpdateFarmaciService.UPDATE" />
                 <action android:name="DEBUG_TEST" />
             </intent-filter>

@@ -57,7 +57,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
         setParent(activity);
 
         try {
-            mCallback = (OnFarmacoSelectedListener) activity;
+            mCallback = activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
@@ -162,7 +162,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
     private void cercaPerSintomo(String q) {
         ListaConfezioni lista = null;
         try {
-            lista = db.ricercaPerPA(q);
+            lista = db.ricercaPerSintomi(q);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -226,7 +226,7 @@ public class PaginaRisultatiRicerca extends Fragment implements Pagina {
 
     @Override
     public void onHomeClickedListener() {
-        parent.visualizzaMessaggio("home click da risultati ricerca");
+//        parent.visualizzaMessaggio("home click da risultati ricerca");
         PaginaListaHome farmaci = new PaginaListaHome();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).addToBackStack(null).commit();
     }

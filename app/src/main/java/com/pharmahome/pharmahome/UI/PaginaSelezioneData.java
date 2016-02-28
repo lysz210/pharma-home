@@ -23,6 +23,7 @@ import com.pharmahome.pharmahome.UI.paginatoreInterface.VisualizzatoreDialog;
 import com.pharmahome.pharmahome.UI.paginatoreInterface.listener.MyOnDateSetListener;
 import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
+import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.utils.Utility;
 
 import java.util.Calendar;
@@ -53,7 +54,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         View view = inflater.inflate(R.layout.pagina_selezione_data, container, false);
         scroller = (ScrollView) view;
         InsertActivity activity = (InsertActivity) getActivity();
-        ((TextView) view.findViewById(R.id.nome_farmaco)).setText(activity.getFarmaco().getNome());
+        ((TextView) view.findViewById(R.id.nome_farmaco)).setText(farmaco.getNome());
         salva = (Button) view.findViewById(R.id.btn_salva);
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         parent.setActualPage(this);
 
         ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
-        infos.addView(new FarmacoInfoView(getContext(), (activity.getFarmaco().getAsInfoList())));
+        infos.addView(new FarmacoInfoView(getContext(), (farmaco.getAsInfoList())));
 
         view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -107,7 +108,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
 
     private void salva(View v) {
         if (!verificaDataScadenza()) return;
-        Confezione confezione = new Confezione(((InsertActivity) getActivity()).getFarmaco());
+        Confezione confezione = new Confezione(farmaco);
         confezione.setScadenza(scadenza);
         confezione.setNuovaConfezione();
         (new DBController(getContext())).aggiungiConfezione(confezione);
@@ -204,7 +205,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
         InsertActivity activity = (InsertActivity) getActivity();
         if (Utility.isNetworkAvailable(getContext())) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            String url = activity.getFarmaco().getLinkFogliettoIllustrativo();
+            String url = farmaco.getLinkFogliettoIllustrativo();
             intent.setData(Uri.parse(url));
             activity.startActivity(intent);
         } else {
@@ -214,7 +215,7 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
 
     @Override
     public void onHomeClickedListener() {
-        parent.visualizzaMessaggio("Home click da selezione data");
+//        parent.visualizzaMessaggio("Home click da selezione data");
         VisualizzatoreDialog.HandlerBuilder builder = new VisualizzatoreDialog.HandlerBuilder();
         builder.setNegativeButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_no));
         builder.setPositiveButton(new VisualizzatoreDialog.OnClickListenerValue(R.string.btn_si, new DialogInterface.OnClickListener() {
@@ -236,5 +237,11 @@ public class PaginaSelezioneData extends Fragment implements Pagina {
     @Override
     public void setParent(PaginatoreSingolo parent) {
         this.parent = parent;
+    }
+
+    private Farmaco farmaco = null;
+
+    public void setFarmaco(Farmaco farmaco){
+        this.farmaco = farmaco;
     }
 }

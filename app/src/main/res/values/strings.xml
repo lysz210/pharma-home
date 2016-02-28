@@ -37,6 +37,9 @@
     <string name="msg_nessuna_connessione_internet">Non e\' disponibile nessuna connessione a internet.</string>
     <string name="msg_data_inserita_non_valida">La data inserita non e\' valida.</string>
     <string name="msg_data_inserita_non_valida_nessuna_modifica">Data non valida, nessuna modifica effettuata.</string>
+    <string name="msg_richiesta_input">Deve essere inserito il codice AIC oppure il nome del farmaco.</string>
+    <string name="msg_aic_corto">Il codice aic inserito non e\' corretto.</string>
+    <string name="msg_aic_non_valido">Il codice aic deve essere un valore contenenti solamente cifre.</string>
 
     <string name="msg_seleziona_farmaco_titolo">Seleziona il farmaco</string>
 

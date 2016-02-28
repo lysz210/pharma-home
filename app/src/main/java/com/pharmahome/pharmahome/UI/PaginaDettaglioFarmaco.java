@@ -40,6 +40,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     private PaginatoreSingolo parent = null;
     private String aic = null;
     private ListaConfezioni listaConfezioni = null;
+    private Confezione confezione = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +62,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         parent.setActualPage(this);
 
         ViewGroup infos = (ViewGroup) view.findViewById(R.id.lista_info_farmaco);
-        infos.addView(new FarmacoInfoView(getContext(), (activity.getConfezione().getAsInfoList())));
+        infos.addView(new FarmacoInfoView(getContext(), confezione.getAsInfoList()));
 
         view.findViewById(R.id.link_bugiardino).setOnClickListener(new View.OnClickListener() {
 
@@ -73,18 +74,17 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle dataInstance) {
+        super.onSaveInstanceState(dataInstance);
+        dataInstance.putString(KEY_AIC, this.aic);
+    }
+
     private void updateListaConfezioni() {
         ListaConfezioni lc = null;
         MainActivity activity = (MainActivity) getActivity();
         DBController db = new DBController(activity);
-        boolean restartedByOrientation = false;
-        String taic = null;
-        try {
-            taic = activity.getConfezione().getAic();
-        } catch (NullPointerException e) {
-            taic = aic;
-            restartedByOrientation = true;
-        }
+        String taic = aic;
         try {
             // TODO DA GESTIRE MEGLIO CON I BACK, IIL FARMACO POTREBBE NON ESSERE PIU' PRESENTE
             // SE NON PRESENTE REDIRECT SU HOME
@@ -105,9 +105,8 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
                     .commit();
         }
         listaConfezioni = lc;
-        if(restartedByOrientation){
-            activity.setConfezione(lc.get(0));
-        }
+        activity.setConfezione(lc.get(0));
+        this.confezione = lc.get(0);
         ItemListaConfezioniAdapter adapter = (ItemListaConfezioniAdapter) listView.getAdapter();
         if (adapter == null) {
             adapter = new ItemListaConfezioniAdapter(getContext(), lc, parent);
@@ -149,14 +148,14 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
     public void updateArticleView(int position) {
         TextView article = (TextView) getActivity().findViewById(R.id.intestazione_scheda_dettaglio);
-        article.setText(((MainActivity) getActivity()).getConfezione().getNome());
+        article.setText(confezione.getNome());
         mCurrentPosition = position;
     }
 
 
     @Override
     public void onLeftButtonClick(View v, Bundle info) {
-        final Confezione c = new Confezione(((MainActivity) getActivity()).getConfezione());
+        final Confezione c = new Confezione(confezione);
         new ScadenzaDialog(
                 getContext(),
                 new MyOnDateSetListener() {
@@ -198,7 +197,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
         MainActivity activity = (MainActivity) getActivity();
         if (Utility.isNetworkAvailable(getContext())) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            String url = activity.getConfezione().getLinkFogliettoIllustrativo();
+            String url = confezione.getLinkFogliettoIllustrativo();
             intent.setData(Uri.parse(url));
             activity.startActivity(intent);
         } else {
@@ -220,7 +219,7 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
 
     @Override
     public void onHomeClickedListener() {
-        parent.visualizzaMessaggio("premuto home da scheda dettagliata");
+//        parent.visualizzaMessaggio("premuto home da scheda dettagliata");
         PaginaListaHome farmaci = new PaginaListaHome();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).addToBackStack(null).commit();
     }
@@ -233,5 +232,9 @@ public class PaginaDettaglioFarmaco extends Fragment implements Pagina {
     @Override
     public void setParent(PaginatoreSingolo parent) {
         this.parent = parent;
+    }
+
+    public void setAic(String aic){
+        this.aic = aic;
     }
 }

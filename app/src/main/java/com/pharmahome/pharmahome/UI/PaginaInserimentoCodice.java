@@ -66,6 +66,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
 
     private void initView(View view, Bundle savedInstance) {
         final Activity activity = getActivity();
+        setParent((PaginatoreSingolo) activity);
         final DBController db = new DBController(getContext());
         avanti = (Button) view.findViewById(R.id.btn_avanti);
         scan = (ImageButton) view.findViewById(R.id.btn_scan_cb);
@@ -88,7 +89,7 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
                     } else if (tnome.length() > 0) {
                         avanti(db.ricercaFarmacoPerNome(tnome));
                     } else {
-                        ((PaginatoreSingolo) activity).visualizzaMessaggio("Deve essere inserito il codice AIC oppure il nome del farmaco.");
+                        parent.visualizzaMessaggio(R.string.msg_richiesta_input);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -119,11 +120,14 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 String aic = v.getText().toString();
-                if (aic.length() < 9) {
+                if (aic.length() < Farmaco.MIN_LEN_AIC) {
+                    parent.visualizzaMessaggio(R.string.msg_aic_corto);
+                    return handled;
+                } else if (!aic.matches("[0-9]{9}")) {
+                    parent.visualizzaMessaggio(R.string.msg_aic_non_valido);
                     return handled;
                 }
-                int ek = event.getKeyCode();
-                if (ek == KeyEvent.KEYCODE_ENTER || ek == KeyEvent.KEYCODE_TAB || ek == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     try {
                         ListaFarmaci lf = db.ricercaFarmacoPerAIC(aic);
                         avanti(lf);
@@ -155,8 +159,6 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
                     case EditorInfo.IME_ACTION_DONE:
                         try {
                             ListaFarmaci lf = db.ricercaFarmacoPerNome(nome);
-
-                            Log.d("ACTION_START FARMACO", nome + lf.size());
                             avanti(lf);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -171,15 +173,13 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
                 return handled;
             }
         });
-
-        ((PaginatoreSingolo) activity).setActualPage(this);
-        setParent((PaginatoreSingolo) activity);
+        parent.setActualPage(this);
     }
 
     public void avanti(Farmaco farmaco) {
         InsertActivity activity = (InsertActivity) getActivity();
         activity.setFarmaco(farmaco);
-        avviaSceltaData();
+        avviaSceltaData(farmaco);
     }
 
     public void avanti(ListaFarmaci listaFarmaci) {
@@ -220,8 +220,9 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
         }
     }
 
-    private void avviaSceltaData() {
-        Fragment frag = (Fragment) new PaginaSelezioneData();
+    private void avviaSceltaData(Farmaco farmaco) {
+        PaginaSelezioneData frag = new PaginaSelezioneData();
+        frag.setFarmaco(farmaco);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         frag.setArguments(getActivity().getIntent().getExtras());
@@ -260,7 +261,6 @@ public class PaginaInserimentoCodice extends Fragment implements Pagina {
 
     @Override
     public void onHomeClickedListener() {
-        parent.visualizzaMessaggio("home click da inserimento codice");
         Intent intent = new Intent(getActivity(), MainActivity.class);
         getActivity().startActivity(intent);
     }

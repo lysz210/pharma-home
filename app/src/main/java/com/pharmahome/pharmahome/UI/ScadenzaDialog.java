@@ -37,10 +37,8 @@ public class ScadenzaDialog extends DatePickerDialog {
                     }
                 },
                 Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
-        Log.d("Dialog", "creazione dialog");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // getDatePicker().setMinDate(oggi.getTimeInMillis());
-        }
+//        Log.d("Dialog", "creazione dialog");
+
         dataValida = true;
         customTitolo = getLayoutInflater().inflate(R.layout.titolo_nuova_confezione_calendario, null);
         setCustomTitle(customTitolo);

@@ -127,7 +127,7 @@ public class PaginaListaHome extends Fragment implements Pagina {
 
     @Override
     public void onHomeClickedListener() {
-        parent.visualizzaMessaggio("premuto home da lista home");
+//        parent.visualizzaMessaggio("premuto home da lista home");
     }
 
     @Override

@@ -85,7 +85,7 @@ public class ItemListaConfezioniAdapter extends ArrayAdapter<Confezione> {
 
 
     private void elimina(View view, int pos, ViewGroup viewGroup) {
-        Toast.makeText(getContext(), "Eliminazione confezione " + pos, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Eliminazione confezione " + pos, Toast.LENGTH_SHORT).show();
         Confezione confezione = getItem(pos);
         new DBController(context).eliminaConfezione(confezione);
         remove(confezione);

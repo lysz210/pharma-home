@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
         ab.setDisplayShowTitleEnabled(false);
 
         if (findViewById(R.id.main_container) != null) {
-            PaginaListaHome farmaci = new PaginaListaHome();
-            farmaci.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).commit();
+            if(savedInstanceState == null){
+                PaginaListaHome farmaci = new PaginaListaHome();
+                farmaci.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, farmaci).commit();
+            }
         }
         initMenuSecondarioHandlers();
 
@@ -201,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
     public void onFarmacoSelected(Confezione confezione) {
         data.put(Confezione.KEY_CONFEZIONE, confezione);
         PaginaDettaglioFarmaco farmaco = new PaginaDettaglioFarmaco();
+        farmaco.setAic(confezione.getAic());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.main_container, farmaco);
@@ -231,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        visualizzaMessaggio("premuto " + item.getItemId());
+//        visualizzaMessaggio("premuto " + item.getItemId());
         switch (item.getItemId()) {
             case R.id.action_search:
                 if (searchItem == null) {
@@ -240,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements OnFarmacoSelected
                 onSwitch();
                 return true;
             case R.id.action_home:
-                visualizzaMessaggio("premuto home");
+//                visualizzaMessaggio("premuto home");
                 return true;
             case R.id.action_update:
                 // TODO COVERTIRE IN SERVICE

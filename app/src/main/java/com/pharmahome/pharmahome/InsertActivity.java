@@ -27,6 +27,7 @@ import com.pharmahome.pharmahome.core.db.DBController;
 import com.pharmahome.pharmahome.core.middleware.Confezione;
 import com.pharmahome.pharmahome.core.middleware.Farmaco;
 import com.pharmahome.pharmahome.core.middleware.ListaFarmaci;
+import com.pharmahome.pharmahome.core.utils.Convertitore;
 
 import org.json.JSONException;
 
@@ -71,24 +72,24 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
     }
 
     private void initMenuSecondarioHandlers() {
-        ((ImageButton) findViewById(R.id.btn_left)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onLeftButtonClick(v, null);
             }
         });
-        ((ImageButton) findViewById(R.id.btn_center)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_center).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actualPage.onScrollDown(v);
             }
         });
-        ((ImageButton) findViewById(R.id.btn_right)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actualPage.onScrollUp(v);
-            }
-        });
+         findViewById(R.id.btn_right).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 actualPage.onScrollUp(v);
+             }
+         });
     }
 
     public Farmaco getFarmaco() {
@@ -97,25 +98,6 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
 
     public void setFarmaco(Farmaco farmaco) {
         this.data.put(KEY_FARMACO, farmaco);
-    }
-
-    public String[] getListaFarmaci() {
-        return (String[]) this.data.get(KEY_LISTA_FARMACI);
-    }
-
-    public void setListaFarmaci(String[] lista) {
-        this.data.put(KEY_LISTA_FARMACI, lista);
-    }
-
-    public void onFarmacoSelected(int position) {
-        PaginaSelezioneData selezioneData = new PaginaSelezioneData();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.main_container, selezioneData);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
     }
 
     @Override
@@ -210,13 +192,13 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        visualizzaMessaggio("premuto " + item.getItemId());
+        //visualizzaMessaggio("premuto " + item.getItemId());
         switch (item.getItemId()) {
             case R.id.action_home:
                 actualPage.onHomeClickedListener();
                 return true;
             case R.id.action_break:
-                visualizzaMessaggio(("premuto interrompi"));
+                //visualizzaMessaggio(("premuto interrompi"));
                 actualPage.onHomeClickedListener();
             default:
                 // If we got here, the user's action was not recognized.
@@ -239,7 +221,8 @@ public class InsertActivity extends AppCompatActivity implements OnFarmacoSelect
         if (scanningResult != null) {
             DBController db = new DBController(this);
             try {
-                String aic = scanningResult.getContents();
+                String strRead = scanningResult.getContents();
+                String aic = new Convertitore(strRead).ottieniOutput();
                 ListaFarmaci lf = db.ricercaFarmacoPerAIC(aic);
                 Farmaco farmaco = lf.size() > 0 ? lf.get(0) : null;
                 if (farmaco != null)

@@ -40,9 +40,9 @@ public class NotificatoreScadenzeService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.w("Servizio notivica", "service " + NOME + ", intent: " + intent.getAction());
+//        Log.w("Servizio notivica", "service " + NOME + ", intent: " + intent.getAction());
         if (!retrieveConfezioniDaNotificare()) {
-            Log.w("Servizio notivica", "Non ci sono confezioni da notificare");
+//            Log.w("Servizio notivica", "Non ci sono confezioni da notificare");
             return;
         }
         Context context = getApplicationContext();

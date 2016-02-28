@@ -37,17 +37,17 @@ public class UpdateFarmaciService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) {
             if (worker == null) {
-                Log.w("UpdateService: ", "Auto call no worker... flags: " + flags + "startID: " + startId);
+//                Log.w("UpdateService: ", "Auto call no worker... flags: " + flags + "startID: " + startId);
                 worker = new NetworkWorker(this);
                 worker.start();
             }
         } else if (intent.getAction().equals(ACTION_STOP) || startId > 1) {
-            Log.w("UpdateService: ", "Stopping... flags: " + flags + "startID: " + startId);
+//            Log.w("UpdateService: ", "Stopping... flags: " + flags + "startID: " + startId);
             worker.termina();
             stopForeground(true);
             stopSelf();
         } else if (intent.getAction().equals(ACTION_START)) {
-            Log.w("UpdateService: ", "STARTING... flags: " + flags + "startID: " + startId);
+//            Log.w("UpdateService: ", "STARTING... flags: " + flags + "startID: " + startId);
             worker = new NetworkWorker(this);
             worker.start();
         }
@@ -84,7 +84,7 @@ public class UpdateFarmaciService extends Service {
 
         @Override
         public void run() {
-            Log.w("Updating: ", "running... ");
+//            Log.w("Updating: ", "running... ");
             mNotifyManager.notify(NOTIFICA_UPDATE_ID, mBuilder.build());
             DBController db = new DBController(context);
             SharedPreferences shared = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
@@ -103,7 +103,7 @@ public class UpdateFarmaciService extends Service {
                 if (i % 100 == 0) {
                     mBuilder.setProgress(iteratorLength, i, false);
                     mNotifyManager.notify(NOTIFICA_UPDATE_ID, mBuilder.build());
-                    Log.w("Updating: ", "updated " + i);
+//                    Log.w("Updating: ", "updated " + i);
                 }
                 if (mustStop) {
                     break;

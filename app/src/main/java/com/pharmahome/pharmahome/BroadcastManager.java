@@ -22,6 +22,8 @@ public class BroadcastManager extends BroadcastReceiver {
     public static final String NOTIFICA_INTENT_ACTION = "BroadcastManager.NOTIFICA_INTENT_ACTION";
     public static final String NOTIFICA_CATEGORY = "ScadenzaManager.NOTIFICA_CATEGORY";
     public static final String BOOT_INTENT_ACTION = "android.intent.action.BOOT_COMPLETED";
+    public static final String INSTALL_INTENT_ACTION = "android.intent.action.PACKAGE_INSTALL";
+    public static final String FST_LAUNCH_INTENT_ACTION = "android.intent.action.PACKAGE_FIRST_LAUNCH";
     public static final String SHARED_KEY_DELAY = "ScadenzaManager.INTERVALLO";
     public static final String SHARED_KEY_HOUR = "ScadenzaManager.HOUR";
     public static final String SHARED_KEY_MINUTE = "ScadenzaManager.MINUTE";
@@ -34,9 +36,11 @@ public class BroadcastManager extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
+//        Log.w("ScadenzaManager", "Avvia della scadenza manager intent: " + intent.getAction());
         switch (intent.getAction()) {
             case "DEBUG_TEST":
+            case INSTALL_INTENT_ACTION:
+            case FST_LAUNCH_INTENT_ACTION:
             case BOOT_INTENT_ACTION:
                 // inserimento del task per il richiamo di questa funzione domani
                 setNotificaGiornaliera(context, intent);
@@ -58,7 +62,7 @@ public class BroadcastManager extends BroadcastReceiver {
      * @param intent  intent ricevuto dal chiamante
      */
     private void setNotificaGiornaliera(Context context, Intent intent) {
-        Log.w("BroadcastManager", "setNofiticaGiornaliera, intent: " + intent.getAction() + " " + intent.getIntExtra("prova", -1));
+//        Log.w("BroadcastManager", "setNofiticaGiornaliera, intent: " + intent.getAction() + " " + intent.getIntExtra("prova", -1));
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences shared = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
         long delay = shared.getLong(SHARED_KEY_DELAY, DEFAULT_DELAY);
@@ -81,14 +85,14 @@ public class BroadcastManager extends BroadcastReceiver {
      * @param context contesto da utilizzare
      */
     private void lanciaNotificaOggi(Context context, Intent intent) {
-        Log.w("lanciaNotificaOggi", "avvio notifica di oggi");
+//        Log.w("lanciaNotificaOggi", "avvio notifica di oggi");
         Intent t_intent = new Intent(context, NotificatoreScadenzeService.class);
         context.startService(t_intent);
         return;
     }
 
     private void lanciaUpdateFarmaci(Context context, Intent intent) {
-        Log.w("lanciaUpdateFarmaci", "avvio fase di aggiornamento dati farmaci");
+//        Log.w("lanciaUpdateFarmaci", "avvio fase di aggiornamento dati farmaci");
         Intent t_intent = new Intent(context, UpdateFarmaciService.class);
         context.startService(t_intent);
         return;
