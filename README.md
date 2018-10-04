@@ -1,29 +1,17 @@
-# README #
+PharmaHome (2015/2016)
+===
+## Progetto per il [corso di ingegneria](https://www.unive.it/data/course/89084) di [Ca' Foscari](https://www.unive.it/) di Venezia
 
-This README would normally document whatever steps are necessary to get your application up and running.
+# Progetto sviluppato in Team Sviluppo [ObrigadaTeamDevelopement](https://bitbucket.org/obrigadateamdevelopement/)
+Il team e' composto da 4 membri:
+* [Claudio Borsetto](https://www.linkedin.com/in/claudioborsetto/)
+* [Enrico Scariot](https://www.linkedin.com/in/enricoscariot/)
+* [Lingyong Sun](https://www.linkedin.com/in/lysz210/)
+* [João Rafael Veloso Cabrita](https://www.linkedin.com/in/jrvcabrita/)
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+# Promemoria scadenze farmaci
+Il progetto consiste nello sviluppo di un'applicazione [Android]() per monitorare 
+la scadenze dei farmaci in possesso dell'utente con notifiche per ricordare 
+quanto ci sono confezioni in scadenze.  
+La visualizzazione della lista permette di avere anche il monitoraggio dei farmaci
+in possesso.
