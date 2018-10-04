@@ -2,7 +2,7 @@ PharmaHome (2015/2016)
 ===
 ## Progetto per il [corso di ingegneria](https://www.unive.it/data/course/89084) di [Ca' Foscari](https://www.unive.it/) di Venezia
 
-# Progetto sviluppato in Team Sviluppo [ObrigadaTeamDevelopement](https://bitbucket.org/obrigadateamdevelopement/)
+# Team Sviluppo [ObrigadaTeamDevelopement](https://bitbucket.org/obrigadateamdevelopement/)
 Il team e' composto da 4 membri:
 * [Claudio Borsetto](https://www.linkedin.com/in/claudioborsetto/)
 * [Enrico Scariot](https://www.linkedin.com/in/enricoscariot/)
