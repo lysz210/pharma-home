@@ -15,3 +15,7 @@ la scadenze dei farmaci in possesso dell'utente con notifiche per ricordare
 quanto ci sono confezioni in scadenze.  
 La visualizzazione della lista permette di avere anche il monitoraggio dei farmaci
 in possesso.
+
+## Repositori originale su [Bitbucket](https://bitbucket.org/obrigadateamdevelopement/pharma-home/src/master/)
+Lo sviluppo e' stato fatto su Bitbucket per la possibilita' di utilizzare repository privati anche 
+con utenti normali non abbonati.
